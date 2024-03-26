@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: apiInSpringBoot
+  datasource:
+    url: ${URL_DB}
+    username: postgres
+    password: root
+  jpa:
+    properties:
+      show-sql: true
+      format_sql: true
+    hibernate:
+      ddl-auto: update
+
+server:
+  port: 6765

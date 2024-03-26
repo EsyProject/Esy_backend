@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/event")
 public class EventController {
+
+    @GetMapping
+    public String hello(){
+        return "Hello World";
+    }
     @Autowired
     private IRepositoryEvent repository; // Access the database
 

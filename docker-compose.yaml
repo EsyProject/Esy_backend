@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: root
       POSTGRES_DB: esybosch
     ports:
-      - "0.0.0.0:6968:5432"
+      - "0.0.0.0:6790:5432"
     volumes:
       - /db/data
     networks:

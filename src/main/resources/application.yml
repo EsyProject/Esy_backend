@@ -2,7 +2,7 @@ spring:
   application:
     name: apiInSpringBoot
   datasource:
-    url: ${URL_DB}
+    url: jdbc:postgresql://localhost:6578/esy_bosch
     username: postgres
     password: root
   jpa:
@@ -13,4 +13,4 @@ spring:
       ddl-auto: update
 
 server:
-  port: 6765
+  port: 6978

@@ -3,30 +3,12 @@ version: "3.1"
 services:
   esy-db:
     image: postgres
-    container_name: esy-db
+    container_name: esydb
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root
-      POSTGRES_DB: esybosch
+      POSTGRES_DB: esy_bosch
     ports:
-      - "0.0.0.0:6790:5432"
+      - "0.0.0.0:6578:5432"
     volumes:
       - /db/data
-    networks:
-      - esybridge
-
-  api:
-    depends_on:
-      - esy-db
-    build: .
-    container_name: esy_api
-    ports:
-      - "8000:6765"
-    environment:
-      - URL_DB=jdbc:postgresql://esy-db:5432/esybosch
-    networks:
-      - esybridge
-
-networks:
-  esybridge:
-    driver: bridge

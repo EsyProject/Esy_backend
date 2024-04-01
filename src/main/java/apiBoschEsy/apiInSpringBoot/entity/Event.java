@@ -1,6 +1,6 @@
 package apiBoschEsy.apiInSpringBoot.entity;
 
-import apiBoschEsy.apiInSpringBoot.dto.DataRegisterEvent;
+import apiBoschEsy.apiInSpringBoot.dto.event.DataRegisterEvent;
 import apiBoschEsy.apiInSpringBoot.place.Place;
 import jakarta.persistence.*;
 import lombok.*;

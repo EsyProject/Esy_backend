@@ -1,4 +1,4 @@
-package apiBoschEsy.apiInSpringBoot.dto;
+package apiBoschEsy.apiInSpringBoot.dto.event;
 
 import apiBoschEsy.apiInSpringBoot.place.Place;
 import jakarta.validation.constraints.NotBlank;

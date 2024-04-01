@@ -16,18 +16,18 @@ public class StorageService {
     @Autowired
     private IStorageRepository repository;
 
-    public String uploadImage(MultipartFile file) {
-        ImageData imageData = repository.save(ImageData.builder()
-                .name(file.getOriginalFilename())
-                .type(file.getContentType())
-                .imageData(file.getBytes()));
-        return "file uploaded successfully: " + file.getOriginalFilename();
-    }
-
-    public byte[] downloadImage(String fileName){
-        Optional<ImageData> dbImageData = repository.findByName(fileName);
-        byte[] images = ImageUtils.decompressImage(dbImageData.get().getImageData());
-        return images;
-    }
+//    public String uploadImage(MultipartFile file) {
+//        ImageData imageData = repository.save(ImageData.builder()
+//                .name(file.getOriginalFilename())
+//                .type(file.getContentType())
+//                .imageData(file.getBytes()));
+//        return "file uploaded successfully: " + file.getOriginalFilename();
+//    }
+//
+//    public byte[] downloadImage(String fileName){
+//        Optional<ImageData> dbImageData = repository.findByName(fileName);
+//        byte[] images = ImageUtils.decompressImage(dbImageData.get().getImageData());
+//        return images;
+//    }
 
 }

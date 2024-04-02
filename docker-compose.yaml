@@ -11,4 +11,7 @@ services:
     ports:
       - "0.0.0.0:6578:5432"
     volumes:
-      - /db/data
+      - tech-new-db:/var/lib/postgresql/data/
+
+volumes:
+  - tech-new-db-:

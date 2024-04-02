@@ -1,6 +1,2 @@
-package apiBoschEsy.apiInSpringBoot.dto.comment;
-
-public record DataComment(
-
-) {
+package apiBoschEsy.apiInSpringBoot.dto.comment;public class DataComment {
 }

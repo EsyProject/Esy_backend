@@ -40,14 +40,14 @@ public class AssessmentController {
 
     // GET ALL Assessment
     @GetMapping("/assessments")
-    public Page<DataListAssessment> listAssessment(@PageableDefault(size = 4, sort = {"id", "name"}) Pageable pageable){
+    public ResponseEntity<Page<DataListAssessment>> listAssessment(@PageableDefault(size = 4, sort = {"id", "name"}) Pageable pageable){
         var list = repositoryAssessment.findAll(pageable).map(DataListAssessment::new);
-        return list;
+        return ResponseEntity.ok(list);
     }
 
     // GET byId Assessment
     @GetMapping("/{id}")
-    public ResponseEntity<Object> listAssessmentById(@PathVariable Long id){
+    public ResponseEntity listAssessmentById(@PathVariable Long id){
         Optional<Assessment> assessment = repositoryAssessment.findById(id);
         if(assessment.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Assessment not found");
@@ -57,14 +57,14 @@ public class AssessmentController {
 
     // GET all Comments
     @GetMapping("/comments")
-    public Page<DataComment> listComment(@PageableDefault(size = 4, sort = {"id", "name"}) Pageable pageable){
+    public ResponseEntity<Page<DataComment>> listComment(@PageableDefault(size = 4, sort = {"id", "name"}) Pageable pageable){
         var listComment = repositoryAssessment.findAll(pageable).map(DataComment::new);
-        return  listComment;
+        return  ResponseEntity.ok(listComment);
     }
 
      // GET Comment by id
     @GetMapping("/comment/{id}")
-    public ResponseEntity<DataComment> listByIdComment(@PathVariable Long id){
+    public ResponseEntity listByIdComment(@PathVariable Long id){
         Optional<Assessment> commentOptional = repositoryAssessment.findById(id);
         return commentOptional.map(comment -> ResponseEntity.ok(new DataComment(comment)))
                 .orElse(ResponseEntity.notFound().build());

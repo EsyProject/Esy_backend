@@ -1,6 +1,6 @@
 package apiBoschEsy.apiInSpringBoot.place;
 
-public enum Place {
+public enum Area {
     BISB,
     PS,
     ETS,

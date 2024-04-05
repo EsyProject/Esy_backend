@@ -1,5 +1,6 @@
 package apiBoschEsy.apiInSpringBoot.controller;
 
+import apiBoschEsy.apiInSpringBoot.dto.assessment.DataDetailAssessment;
 import apiBoschEsy.apiInSpringBoot.dto.assessment.DataListAssessment;
 import apiBoschEsy.apiInSpringBoot.dto.assessment.DataRegisterAssessment;
 import apiBoschEsy.apiInSpringBoot.dto.comment.DataComment;
@@ -14,6 +15,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.xml.crypto.Data;
 import java.util.Optional;
@@ -34,8 +37,12 @@ public class AssessmentController {
     // POST Assessment
     @PostMapping
     @Transactional
-    public void registerAssessment(@RequestBody @Valid DataRegisterAssessment dataRegisterAssessment){
-        repositoryAssessment.save(new Assessment(dataRegisterAssessment));
+    public ResponseEntity registerAssessment(@RequestBody @Valid DataRegisterAssessment dataRegisterAssessment, UriComponentsBuilder uriBuilder){
+       var assessment = new Assessment(dataRegisterAssessment);
+       repositoryAssessment.save(assessment);
+
+       var uri = uriBuilder.path("/assessment/{id}").buildAndExpand(assessment.getId()).toUri();
+       return ResponseEntity.created(uri).body(new DataDetailAssessment(assessment));
     }
 
     // GET ALL Assessment

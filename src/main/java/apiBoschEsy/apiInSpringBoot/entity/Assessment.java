@@ -39,6 +39,6 @@
             this.assessment = data.assessment();
             this.hour = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
             this.suggestion = data.suggestion();
-            this.date_created = String.valueOf(LocalDate.now());
+            this.date_created = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
         }
     }

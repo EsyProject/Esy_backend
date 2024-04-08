@@ -1,4 +1,4 @@
-package apiBoschEsy.apiInSpringBoot.place;
+package apiBoschEsy.apiInSpringBoot.constants;
 
 public enum Area {
     BISB,

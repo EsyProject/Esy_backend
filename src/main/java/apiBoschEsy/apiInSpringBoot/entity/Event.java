@@ -1,13 +1,16 @@
 package apiBoschEsy.apiInSpringBoot.entity;
 
 import apiBoschEsy.apiInSpringBoot.dto.event.DataRegisterEvent;
-import apiBoschEsy.apiInSpringBoot.place.Area;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
+import apiBoschEsy.apiInSpringBoot.constants.Place;
+import apiBoschEsy.apiInSpringBoot.constants.Area;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Table(name = "events")
 @Entity(name = "Event")
@@ -15,41 +18,56 @@ import java.time.format.DateTimeFormatter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of = "event_id")
 public class Event {
     // Attributes of Events
+
+    // Description
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long event_id;
+    @Column (unique = true)
     private String nameOfEvent;
-    private String category;
-    private Area place;
-    private String date;
-    private String hourEvent;
-    private String responsible;
-    private Area constPlace;
+    @Embedded
+    private Area responsible_area;
+    @Embedded
+    private Area access_event;
     private String description;
-    private String duration;
-    private String imageUrl;
-    private Area participatingAreas;
-    private Integer numberQRCode;
-    private String numberOfParticipants;
-    private String date_created;
-    private String hour;
+    private List<String> imageUrl;
 
-    public Event(DataRegisterEvent data) {
+    // Realization
+    @Embedded
+    private Place localEvent;
+    private LocalTime initial_time;
+    private LocalTime finish_time;
+    private LocalDate initial_date;
+    private LocalDate finish_date;
+
+    // Tickets
+    private LocalDate initial_date_ticket;
+    private LocalDate finish_date_ticket;
+    private LocalTime initial_time_ticket;
+    private LocalTime finish_time_ticket;
+
+    // Date and hour request
+    private LocalDate date_created;
+    private LocalTime time_created;
+
+    public Event(DataRegisterEvent data){
         this.nameOfEvent = data.nameOfEvent();
-        this.category = data.category();
-        this.place = data.place();
-        this.date = data.data();
-        this.hourEvent = data.hourEvent();
-        this.responsible = data.responsible();
-        this.constPlace = data.costPlace();
+        this.responsible_area = data.responsible_area();
+        this.access_event = data.access_event();
         this.description = data.description();
-        this.duration = data.duration();
-        this.participatingAreas = data.participatingAreas();
-        this.numberOfParticipants = data.numberOfParticipants();
-        this.date_created = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-        this.hour = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        this.localEvent = data.localEvent();
+        this.initial_time = data.initialTime();
+        this.finish_time = data.finishTime();
+        this.initial_date = data.initialDate();
+        this.finish_date = data.finishDate();
+        this.initial_date_ticket = data.initialDateTicket();
+        this.finish_date_ticket = data.finishDateTicket();
+        this.initial_time_ticket = data.initialTimeTicket();
+        this.finish_time_ticket = data.finishTimeTicket();
+        this.date_created = LocalDate.now();
+        this.time_created = LocalTime.now();
     }
 }

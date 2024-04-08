@@ -1,53 +1,38 @@
 package apiBoschEsy.apiInSpringBoot.controller;
 
-import apiBoschEsy.apiInSpringBoot.entity.Attachment;
-import apiBoschEsy.apiInSpringBoot.ResponseData;
-import apiBoschEsy.apiInSpringBoot.service.AttachmentService;
-import org.springframework.core.io.ByteArrayResource;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @RestController
-@RequestMapping("/image")
+@RequestMapping("/images")
 public class ImageController {
 
-    private AttachmentService attachmentService;
+    @Value("${upload.dir}")
+    private String uploadDir;
 
-    public ImageController(AttachmentService attachmentService) {
-        this.attachmentService = attachmentService;
+    @GetMapping("/{fileName:.+}")
+    public ResponseEntity<Resource> getImage(@PathVariable String fileName) throws IOException {
+        Path imagePath = Paths.get(uploadDir).resolve(fileName);
+        Resource resource = new UrlResource(imagePath.toUri());
+
+        if (resource.exists() && resource.isReadable()) {
+            return ResponseEntity.ok()
+                    .contentType(MediaType.IMAGE_JPEG)
+                    .body(resource);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
-
-    @PostMapping("/upload")
-    public ResponseData uploadFile(@RequestParam("file")MultipartFile file) throws Exception {
-        Attachment attachment = null;
-        String downloadURl = "";
-        attachment = attachmentService.saveAttachment(file);
-        downloadURl = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/download/")
-                .path(attachment.getId())
-                .toUriString();
-
-        return new ResponseData(attachment.getFileName(),
-                downloadURl,
-                file.getContentType(),
-                file.getSize());
-    }
-
-    @GetMapping("/download/{fileId}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileId) throws Exception {
-        Attachment attachment = null;
-        attachment = attachmentService.getAttachment(fileId);
-        return  ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(attachment.getFileType()))
-                .header(HttpHeaders.CONTENT_DISPOSITION,
-                        "attachment; filename=\"" + attachment.getFileName()
-                                + "\"")
-                .body(new ByteArrayResource(attachment.getData()));
-    }
-
 }

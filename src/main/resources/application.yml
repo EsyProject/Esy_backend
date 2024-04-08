@@ -1,11 +1,4 @@
 spring:
-  servlet:
-    multipart:
-      enabled: true
-      file-size-threshold: 2KB
-      max-file-size: 200MB
-      max-request-size: 215MB
-
   application:
     name: apiInSpringBoot
   datasource:
@@ -18,6 +11,10 @@ spring:
       format_sql: true
     hibernate:
       ddl-auto: update
+  error:
+    include-stacktrace: never
+upload:
+  dir: ${user.dir}/eventsUploads
 
 server:
   port: 6967

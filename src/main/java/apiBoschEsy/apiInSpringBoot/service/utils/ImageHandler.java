@@ -15,6 +15,7 @@ public class ImageHandler {
 
     @Value("${upload.dir}")
     private String uploadDir;
+    private final String baseUrl = "http://localhost:6967";
 
 
     public String saveImageToUploadDir(MultipartFile multipartImage) {
@@ -27,10 +28,10 @@ public class ImageHandler {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            // Retornar o caminho completo do arquivo
-            return String.format("%s/images/%s", uploadDir, fileName);
+
+            return String.format("%s/images/%s", baseUrl, fileName);
         } else {
-            return null; // Ou você pode retornar uma string vazia ou tratar esse caso de outra forma
+            return null;
         }
     }
 

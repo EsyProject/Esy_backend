@@ -1,5 +1,8 @@
 package apiBoschEsy.apiInSpringBoot.constants;
 
+import jakarta.persistence.Embeddable;
+
+
 public enum Place {
     Ca300,
     Ca600,

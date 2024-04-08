@@ -9,7 +9,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 public record DataDetailEvent(
-        Long id,
+        Long event_id,
         String nameOfEvent,
         Area responsible_area,
         Area access_event,

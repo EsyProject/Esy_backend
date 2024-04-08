@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: root
       POSTGRES_DB: esy_bosch
     ports:
-      - "0.0.0.0:6578:5432"
+      - "6578:5432"
     volumes:
       - tech-new-db:/var/lib/postgresql/data/
 

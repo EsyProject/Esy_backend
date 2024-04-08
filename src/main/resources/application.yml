@@ -11,10 +11,10 @@ spring:
       format_sql: true
     hibernate:
       ddl-auto: update
-  error:
-    include-stacktrace: never
 upload:
   dir: ${user.dir}/eventsUploads
 
 server:
+  error:
+    include-stacktrace: never
   port: 6967

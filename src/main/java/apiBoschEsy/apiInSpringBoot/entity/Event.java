@@ -1,18 +1,16 @@
 package apiBoschEsy.apiInSpringBoot.entity;
 
+import apiBoschEsy.apiInSpringBoot.constants.Area;
+import apiBoschEsy.apiInSpringBoot.constants.Place;
 import apiBoschEsy.apiInSpringBoot.dto.event.DataRegisterEvent;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
-import apiBoschEsy.apiInSpringBoot.constants.Place;
-import apiBoschEsy.apiInSpringBoot.constants.Area;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-@Table(name = "events")
+@Table(name = "event")
 @Entity(name = "Event")
 @Getter
 @Setter
@@ -28,15 +26,12 @@ public class Event {
     private Long event_id;
     @Column (unique = true)
     private String nameOfEvent;
-    @Embedded
     private Area responsible_area;
-    @Embedded
     private Area access_event;
     private String description;
     private List<String> imageUrl;
 
     // Realization
-    @Embedded
     private Place localEvent;
     private LocalTime initial_time;
     private LocalTime finish_time;
@@ -52,6 +47,9 @@ public class Event {
     // Date and hour request
     private LocalDate date_created;
     private LocalTime time_created;
+
+
+
 
     public Event(DataRegisterEvent data){
         this.nameOfEvent = data.nameOfEvent();

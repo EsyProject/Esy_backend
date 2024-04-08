@@ -6,9 +6,10 @@ import apiBoschEsy.apiInSpringBoot.entity.Event;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 public record DataListEvent(
-        Long id,
+        Long event_id,
         String nameOfEvent,
         Area responsible_area,
         Area access_event,
@@ -21,7 +22,8 @@ public record DataListEvent(
         LocalDate initialDateTicket,
         LocalDate finishDateTicket,
         LocalTime initialTimeTicket,
-        LocalTime finishTimeTicket
+        LocalTime finishTimeTicket,
+        List<String> imageUrl
 ) {
     public DataListEvent(Event event){
         this(
@@ -38,7 +40,8 @@ public record DataListEvent(
                 event.getInitial_date_ticket(),
                 event.getFinish_date_ticket(),
                 event.getInitial_time_ticket(),
-                event.getFinish_time_ticket()
+                event.getFinish_time_ticket(),
+                event.getImageUrl()
         );
     }
 

@@ -14,4 +14,4 @@ services:
       - tech-new-db:/var/lib/postgresql/data/
 
 volumes:
-  tech-new-db:
+  tech-new-db: ./data/docker

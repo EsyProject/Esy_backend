@@ -4,6 +4,7 @@ import apiBoschEsy.apiInSpringBoot.constants.Place;
 import apiBoschEsy.apiInSpringBoot.entity.Event;
 import apiBoschEsy.apiInSpringBoot.constants.Area;
 
+import javax.xml.crypto.Data;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -34,7 +35,7 @@ public record DataDetailEvent(
                event.getResponsible_area(),
                event.getAccess_event(),
                event.getDescription(),
-               event.getImageUrl(),
+               event.getImgUrl(),
                event.getLocalEvent(),
                event.getInitial_date(),
                event.getFinish_date(),
@@ -48,4 +49,5 @@ public record DataDetailEvent(
                event.getTime_created()
        );
     }
-}
+
+    }

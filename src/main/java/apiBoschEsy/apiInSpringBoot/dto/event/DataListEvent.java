@@ -23,7 +23,7 @@ public record DataListEvent(
         LocalDate finishDateTicket,
         LocalTime initialTimeTicket,
         LocalTime finishTimeTicket,
-        List<String> imageUrl
+        List<String> imgUrl
 ) {
     public DataListEvent(Event event){
         this(
@@ -41,7 +41,7 @@ public record DataListEvent(
                 event.getFinish_date_ticket(),
                 event.getInitial_time_ticket(),
                 event.getFinish_time_ticket(),
-                event.getImageUrl()
+                event.getImgUrl()
         );
     }
 

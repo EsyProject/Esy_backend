@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.xml.crypto.Data;
 import java.util.List;
 
 
@@ -42,7 +43,7 @@ public class EventController {
 
         if(!(images == null) && !images.isEmpty()){
             List<String> imageUrl = imageService.saveImages(event, images);
-            event.setImageUrl(imageUrl);
+            event.setImgUrl(imageUrl);
         }
         repositoryEvent.save(event);
         var uri = uriBuilder.path("/event/{id}").buildAndExpand(event.getEvent_id()).toUri();
@@ -51,8 +52,8 @@ public class EventController {
     }
     // GET ALL Event
     @GetMapping("/events")
-    public ResponseEntity<Page<DataListEvent>> listAllEvents(@PageableDefault(size = 10, sort = {"event_id", "nameOfEvent"}) Pageable pageable){
-        var list = repositoryEvent.findAll(pageable).map(DataListEvent::new);
+    public ResponseEntity<Page<DataListEvent>> listAllEvents(@PageableDefault(size = 10, sort = {"nameOfEvent"}) Pageable pageable){
+        var list = repositoryEvent.findAllByDeleteFalse(pageable).map(DataListEvent::new);
         return ResponseEntity.status(HttpStatus.OK).body(list);
     }
     // Get By Id
@@ -67,7 +68,7 @@ public class EventController {
     // GET (Return date_event, nameOfEvent, area and descriptions_event)
     @GetMapping("/card")
     public ResponseEntity<Page<DataCardEvent>> getCardEvent(@PageableDefault(size = 3, sort = {"nameOfEvent"}) Pageable pageable){
-        var cardEvent = repositoryEvent.findAll(pageable).map(DataCardEvent::new);
+        var cardEvent = repositoryEvent.findAllByDeleteFalse(pageable).map(DataCardEvent::new);
         return ResponseEntity.status(HttpStatus.OK).body(cardEvent);
     }
     // GET (Return name_event)
@@ -89,6 +90,20 @@ public class EventController {
         return ResponseEntity.status(HttpStatus.OK).body(my_event);
     }
     // PUT Event
+    @PutMapping
+    @Transactional
+    public ResponseEntity changeInfoEvent(@RequestBody @Valid DataToUpdate data){
+        var event = repositoryEvent.getReferenceById(data.event_id());
+        event.toUpdateInfoEvent(data);
+        return ResponseEntity.status(HttpStatus.OK).body(new DataDetailEvent(event));
+    }
+
     // DELETE Event
+    @DeleteMapping("/{event_id}")
+    public ResponseEntity deleteEvent(@PathVariable Long event_id){
+        var event = repositoryEvent.getReferenceById(event_id);
+        event.delete();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 
 }

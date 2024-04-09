@@ -3,6 +3,7 @@ package apiBoschEsy.apiInSpringBoot.entity;
 import apiBoschEsy.apiInSpringBoot.constants.Area;
 import apiBoschEsy.apiInSpringBoot.constants.Place;
 import apiBoschEsy.apiInSpringBoot.dto.event.DataRegisterEvent;
+import apiBoschEsy.apiInSpringBoot.dto.event.DataToUpdate;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,7 +30,7 @@ public class Event {
     private Area responsible_area;
     private Area access_event;
     private String description;
-    private List<String> imageUrl;
+    private List<String> imgUrl;
 
     // Realization
     private Place localEvent;
@@ -48,8 +49,49 @@ public class Event {
     private LocalDate date_created;
     private LocalTime time_created;
 
+    // Deleted ?
+    private Boolean delete;
 
 
+    // Creating a method for put event
+    public void toUpdateInfoEvent(DataToUpdate dataToUpdate){
+        if(dataToUpdate.description() != null){
+            this.description = dataToUpdate.description();
+        }
+        if(dataToUpdate.imgUrl() != null){
+            this.imgUrl = dataToUpdate.imgUrl();
+        }
+        if(dataToUpdate.initialDate() != null){
+            this.initial_date = dataToUpdate.initialDate();
+        }
+        if(dataToUpdate.finishDate() != null){
+            this.finish_date = dataToUpdate.finishDate();
+        }
+        if(dataToUpdate.initialTime() != null){
+            this.initial_time = dataToUpdate.initialTime();
+        }
+        if(dataToUpdate.finishTime() !=null){
+            this.finish_time = dataToUpdate.finishTime();
+        }
+        if(dataToUpdate.initialDateTicket() !=null){
+            this.initial_date_ticket = dataToUpdate.initialDateTicket();
+        }
+        if(dataToUpdate.finishDateTicket() !=null){
+            this.finish_date_ticket = dataToUpdate.finishDateTicket();
+        }
+        if(dataToUpdate.initialTimeTicket() !=null){
+            this.initial_time_ticket = dataToUpdate.initialTimeTicket();
+        }
+        if(dataToUpdate.finishTimeTicket() !=null){
+            this.finish_time_ticket = dataToUpdate.finishTimeTicket();
+        }
+    }
+
+    // Method for delete Event
+    public Boolean delete(){
+        this.delete = true;
+        return true;
+    }
 
     public Event(DataRegisterEvent data){
         this.nameOfEvent = data.nameOfEvent();
@@ -67,5 +109,6 @@ public class Event {
         this.finish_time_ticket = data.finishTimeTicket();
         this.date_created = LocalDate.now();
         this.time_created = LocalTime.now();
+        this.delete = false;
     }
 }

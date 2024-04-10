@@ -1,6 +1,5 @@
 package apiBoschEsy.apiInSpringBoot.service;
 
-import apiBoschEsy.apiInSpringBoot.repository.IRepositoryEvent;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

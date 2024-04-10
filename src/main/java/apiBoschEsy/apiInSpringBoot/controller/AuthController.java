@@ -2,6 +2,7 @@ package apiBoschEsy.apiInSpringBoot.controller;
 
 
 import apiBoschEsy.apiInSpringBoot.dto.auth.DataAuth;
+import apiBoschEsy.apiInSpringBoot.dto.auth.DataTokenJWT;
 import apiBoschEsy.apiInSpringBoot.entity.User;
 import apiBoschEsy.apiInSpringBoot.infra.security.TokenService;
 import jakarta.validation.Valid;
@@ -28,10 +29,11 @@ public class AuthController {
 
     @PostMapping
     public ResponseEntity doLogin(@RequestBody @Valid DataAuth data){
-        var token = new UsernamePasswordAuthenticationToken(data.login(), data.password()); // Esse token não reconhece DTO, então precisa passar o DTO que ele entende
-        var auth = manager.authenticate(token); // Representa o usuario
+        var authToken = new UsernamePasswordAuthenticationToken(data.login(), data.password()); // Esse token não reconhece DTO, então precisa passar o DTO que ele entende
+        var auth = manager.authenticate(authToken); // Representa o usuario
 
-        return ResponseEntity.status(HttpStatus.OK).body(tokenService.generateToken((User) auth.getPrincipal()));
+        var tokenJWT = tokenService.generateToken((User) auth.getPrincipal());
+        return ResponseEntity.status(HttpStatus.OK).body(new DataTokenJWT(tokenJWT));
     }
 
 }

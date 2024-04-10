@@ -53,7 +53,7 @@ public class EventController {
     // GET ALL Event
     @GetMapping("/events")
     public ResponseEntity<Page<DataListEvent>> listAllEvents(@PageableDefault(size = 10, sort = {"nameOfEvent"}) Pageable pageable){
-        var list = repositoryEvent.findAllByDeleteFalse(pageable).map(DataListEvent::new);
+        var list = repositoryEvent.findAll(pageable).map(DataListEvent::new);
         return ResponseEntity.status(HttpStatus.OK).body(list);
     }
     // Get By Id
@@ -68,7 +68,7 @@ public class EventController {
     // GET (Return date_event, nameOfEvent, area and descriptions_event)
     @GetMapping("/card")
     public ResponseEntity<Page<DataCardEvent>> getCardEvent(@PageableDefault(size = 3, sort = {"nameOfEvent"}) Pageable pageable){
-        var cardEvent = repositoryEvent.findAllByDeleteFalse(pageable).map(DataCardEvent::new);
+        var cardEvent = repositoryEvent.findAll(pageable).map(DataCardEvent::new);
         return ResponseEntity.status(HttpStatus.OK).body(cardEvent);
     }
     // GET (Return name_event)

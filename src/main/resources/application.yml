@@ -18,3 +18,8 @@ server:
   error:
     include-stacktrace: never
   port: 6967
+
+api:
+  security:
+    token:
+      secret: ${JWT_SECRET:12345678}

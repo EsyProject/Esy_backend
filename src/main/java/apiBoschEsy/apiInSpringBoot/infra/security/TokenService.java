@@ -2,21 +2,23 @@ package apiBoschEsy.apiInSpringBoot.infra.security;
 
 import apiBoschEsy.apiInSpringBoot.entity.User;
 import com.auth0.jwt.JWT;
-import org.springframework.stereotype.Service;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 @Service
 public class TokenService {
+
+    @Value("${api.security.token.secret}") // Faz o Spring relacionar essa variável, com a variável da file application.yaml
+    private String secret;
     public String generateToken(User user){
-        // Criando uma lógica para criação de Token
         try {
-            var algorithm = Algorithm.HMAC256("12345678");
+            var algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
                     .withIssuer("API Esy Bosch")
                     .withSubject(user.getLogin()) // Role relacioned with Token

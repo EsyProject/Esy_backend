@@ -3,6 +3,7 @@ package apiBoschEsy.apiInSpringBoot.dto.event;
 import apiBoschEsy.apiInSpringBoot.constants.Place;
 import apiBoschEsy.apiInSpringBoot.entity.Event;
 import apiBoschEsy.apiInSpringBoot.constants.Area;
+import apiBoschEsy.apiInSpringBoot.entity.Ticket;
 
 import javax.xml.crypto.Data;
 import java.time.LocalDate;
@@ -21,10 +22,6 @@ public record DataDetailEvent(
         LocalDate finishDate,
         LocalTime initialTime,
         LocalTime finishTime,
-        LocalDate initialDateTicket,
-        LocalDate finishDateTicket,
-        LocalTime initialTimeTicket,
-        LocalTime finishTimeTicket,
         LocalDate date_created,
         LocalTime hour_created
 ) {
@@ -41,10 +38,6 @@ public record DataDetailEvent(
                event.getFinish_date(),
                event.getInitial_time(),
                event.getFinish_time(),
-               event.getInitial_date_ticket(),
-               event.getFinish_date_ticket(),
-               event.getInitial_time_ticket(),
-               event.getFinish_time_ticket(),
                event.getDate_created(),
                event.getTime_created()
        );

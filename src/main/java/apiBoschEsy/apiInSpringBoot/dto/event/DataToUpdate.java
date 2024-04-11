@@ -14,10 +14,6 @@ public record DataToUpdate(
         LocalDate initialDate,
         LocalDate finishDate,
         LocalTime initialTime,
-        LocalTime finishTime,
-        LocalDate initialDateTicket,
-        LocalDate finishDateTicket,
-        LocalTime initialTimeTicket,
-        LocalTime finishTimeTicket
+        LocalTime finishTime
 ) {
 }

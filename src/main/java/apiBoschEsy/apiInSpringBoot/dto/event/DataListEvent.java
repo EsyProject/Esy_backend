@@ -19,10 +19,6 @@ public record DataListEvent(
         LocalDate finishDate,
         LocalTime initialTime,
         LocalTime finishTime,
-        LocalDate initialDateTicket,
-        LocalDate finishDateTicket,
-        LocalTime initialTimeTicket,
-        LocalTime finishTimeTicket,
         List<String> imgUrl
 ) {
     public DataListEvent(Event event){
@@ -37,10 +33,6 @@ public record DataListEvent(
                 event.getFinish_date(),
                 event.getInitial_time(),
                 event.getFinish_time(),
-                event.getInitial_date_ticket(),
-                event.getFinish_date_ticket(),
-                event.getInitial_time_ticket(),
-                event.getFinish_time_ticket(),
                 event.getImgUrl()
         );
     }

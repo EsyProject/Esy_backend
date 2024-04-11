@@ -36,17 +36,7 @@ public record DataRegisterEvent(
         @NotNull
         LocalTime initialTime,
         @NotNull
-        LocalTime finishTime,
-        @NotNull
-        @DateTimeFormat(pattern = "dd/MM/yyyy")
-        LocalDate initialDateTicket,
-        @NotNull
-        @DateTimeFormat(pattern = "dd/MM/yyyy")
-        LocalDate finishDateTicket,
-        @NotNull
-        LocalTime initialTimeTicket,
-        @NotNull
-        LocalTime finishTimeTicket
+        LocalTime finishTime
 ) {
 
 }

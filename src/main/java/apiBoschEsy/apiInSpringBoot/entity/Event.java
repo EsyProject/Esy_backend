@@ -39,12 +39,6 @@ public class Event {
     private LocalDate initial_date;
     private LocalDate finish_date;
 
-    // Tickets
-    private LocalDate initial_date_ticket;
-    private LocalDate finish_date_ticket;
-    private LocalTime initial_time_ticket;
-    private LocalTime finish_time_ticket;
-
     // Date and hour request
     private LocalDate date_created;
     private LocalTime time_created;
@@ -73,18 +67,6 @@ public class Event {
         if(dataToUpdate.finishTime() !=null){
             this.finish_time = dataToUpdate.finishTime();
         }
-        if(dataToUpdate.initialDateTicket() !=null){
-            this.initial_date_ticket = dataToUpdate.initialDateTicket();
-        }
-        if(dataToUpdate.finishDateTicket() !=null){
-            this.finish_date_ticket = dataToUpdate.finishDateTicket();
-        }
-        if(dataToUpdate.initialTimeTicket() !=null){
-            this.initial_time_ticket = dataToUpdate.initialTimeTicket();
-        }
-        if(dataToUpdate.finishTimeTicket() !=null){
-            this.finish_time_ticket = dataToUpdate.finishTimeTicket();
-        }
     }
 
     // Method for delete Event
@@ -103,10 +85,6 @@ public class Event {
         this.finish_time = data.finishTime();
         this.initial_date = data.initialDate();
         this.finish_date = data.finishDate();
-        this.initial_date_ticket = data.initialDateTicket();
-        this.finish_date_ticket = data.finishDateTicket();
-        this.initial_time_ticket = data.initialTimeTicket();
-        this.finish_time_ticket = data.finishTimeTicket();
         this.date_created = LocalDate.now();
         this.time_created = LocalTime.now();
         this.delete = false;

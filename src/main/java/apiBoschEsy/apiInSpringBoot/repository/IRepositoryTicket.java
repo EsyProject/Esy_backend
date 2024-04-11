@@ -1,9 +1,9 @@
 package apiBoschEsy.apiInSpringBoot.repository;
 
-import apiBoschEsy.apiInSpringBoot.entity.Assessment;
+import apiBoschEsy.apiInSpringBoot.entity.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface IRepositoryAssessment extends JpaRepository<Assessment, Long> {
+public interface IRepositoryTicket extends JpaRepository<Ticket, Long> {
 }

@@ -100,8 +100,9 @@ public class EventController {
 
     // DELETE Event
     @DeleteMapping("/{event_id}")
+    @Transactional
     public ResponseEntity deleteEvent(@PathVariable Long event_id){
-        var event = repositoryEvent.getReferenceById(event_id);
+        var event  = repositoryEvent.getReferenceById(event_id);
         event.delete();
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

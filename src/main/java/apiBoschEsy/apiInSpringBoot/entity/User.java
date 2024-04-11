@@ -24,6 +24,10 @@ public class User implements UserDetails {
     private String login;
     private String password;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = true)
+    private List<Ticket> tickets;
+
     public User(String login, String password){
         this.login = login;
         this.password = password;

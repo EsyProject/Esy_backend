@@ -28,6 +28,10 @@ public class Ticket {
 
     private Boolean presence;
 
+    @ManyToOne
+    private User user;
+
+
     // Creating a constructor for DataRegisterTicker
     public Ticket(DataRegisterTicket data){
         this.initialDateTicket = data.initialDateTicket();

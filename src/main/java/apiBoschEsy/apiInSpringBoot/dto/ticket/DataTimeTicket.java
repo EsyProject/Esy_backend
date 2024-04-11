@@ -3,15 +3,18 @@ package apiBoschEsy.apiInSpringBoot.dto.ticket;
 import apiBoschEsy.apiInSpringBoot.entity.Ticket;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 public record DataTimeTicket(
-        LocalDate initialDate,
-        LocalDate finishDate
+        Long id,
+        LocalTime initialTime,
+        LocalTime finishTime
 ) {
     public DataTimeTicket(Ticket ticket){
         this(
-                ticket.getInitialDate(),
-                ticket.getFinishDate()
+                ticket.getTicket_id(),
+                ticket.getInitialTimeTicket(),
+                ticket.getFinishTimeTicket()
         );
     }
 }

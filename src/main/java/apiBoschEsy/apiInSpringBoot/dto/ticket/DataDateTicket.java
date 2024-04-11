@@ -4,14 +4,16 @@ import apiBoschEsy.apiInSpringBoot.entity.Ticket;
 
 import java.time.LocalDate;
 
-public record DateDateTicket(
+public record DataDateTicket(
+        Long id,
         LocalDate initialDate,
         LocalDate finishDate
 ) {
-    public DateDateTicket(Ticket ticket){
+    public DataDateTicket(Ticket ticket){
         this(
-                ticket.getInitialDate(),
-                ticket.getFinishDate()
+                ticket.getTicket_id(),
+                ticket.getInitialDateTicket(),
+                ticket.getFinishDateTicket()
         );
     }
 }

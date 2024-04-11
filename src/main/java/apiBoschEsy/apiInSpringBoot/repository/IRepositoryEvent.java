@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IRepositoryEvent extends JpaRepository<Event, Long> {
-    Page<Event> findAllByDeleteFalse(Pageable pageable);
+    Page<Event> findAll(Pageable pageable);
 }

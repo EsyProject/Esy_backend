@@ -18,22 +18,22 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ticket_id;
-    private LocalDate initialDate;
+    private LocalDate initialDateTicket;
 
-    private LocalDate finishDate;
+    private LocalDate finishDateTicket;
 
-    private LocalTime initialTime;
+    private LocalTime initialTimeTicket;
 
-    private LocalTime finishTime;
+    private LocalTime finishTimeTicket;
 
     private Boolean presence;
 
     // Creating a constructor for DataRegisterTicker
     public Ticket(DataRegisterTicket data){
-        this.initialDate = data.initialDateTicket();
-        this.finishDate = data.finishDateTicket();
-        this.initialTime = data.initialTimeTicket();
-        this.finishTime = data.finishTimeTicket();
+        this.initialDateTicket = data.initialDateTicket();
+        this.finishDateTicket = data.finishDateTicket();
+        this.initialTimeTicket = data.initialTimeTicket();
+        this.finishTimeTicket = data.finishTimeTicket();
         this.presence = false;
     }
 }

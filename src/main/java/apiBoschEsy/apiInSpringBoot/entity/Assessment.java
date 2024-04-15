@@ -33,6 +33,11 @@
         private String suggestion;
         private String assessment;
 
+        // Creating a relationship with others tables
+            // Assessment and Events
+            @ManyToOne
+            private Event event;
+
         public Assessment(DataRegisterAssessment data){
             this.name = data.name();
             this.description_comment = data.description_comment();

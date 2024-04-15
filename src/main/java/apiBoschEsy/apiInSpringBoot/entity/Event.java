@@ -46,6 +46,15 @@ public class Event {
     // Deleted ?
     private Boolean delete;
 
+    // Creating a Relationship with others tables
+        // Event with Ticket
+        @OneToMany
+        @JoinColumn(name = "ticket_id", nullable  = true) // Posso criar um evento, sem criar um ticket ?
+        private List<Ticket> tickets;
+        // Event with Assessment
+        @OneToMany
+        @JoinColumn(name = "assessment_id", nullable = true)
+        private List<Assessment> assessments;
 
     // Creating a method for put event
     public void toUpdateInfoEvent(DataToUpdate dataToUpdate){

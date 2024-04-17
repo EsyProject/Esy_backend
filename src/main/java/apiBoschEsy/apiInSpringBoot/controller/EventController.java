@@ -1,6 +1,7 @@
 package apiBoschEsy.apiInSpringBoot.controller;
 
 import apiBoschEsy.apiInSpringBoot.dto.event.*;
+import apiBoschEsy.apiInSpringBoot.infra.exception.ExceptionDateInvalid;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryEvent;
 import apiBoschEsy.apiInSpringBoot.service.ImageService;
 import apiBoschEsy.apiInSpringBoot.service.event.EventService;
@@ -32,7 +33,7 @@ public class EventController {
 
     // POST Event
     @PostMapping
-    public ResponseEntity registerEvent(@ModelAttribute @Valid DataRegisterEvent dataRegisterEvent, UriComponentsBuilder uriBuilder){
+    public ResponseEntity registerEvent(@ModelAttribute @Valid DataRegisterEvent dataRegisterEvent, UriComponentsBuilder uriBuilder) throws ExceptionDateInvalid {
         var event = eventService.dataDetailEvent(dataRegisterEvent);
         var uri = uriBuilder.path("/event/{id}").build(event.event_id());
 

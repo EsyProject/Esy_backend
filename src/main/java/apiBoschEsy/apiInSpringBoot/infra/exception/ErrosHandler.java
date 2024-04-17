@@ -22,4 +22,8 @@ public class ErrosHandler {
         var errors = exception.getFieldErrors(); // Get list of Erros
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors.stream().map(DataErrorValidation::new).toList()); // (errors.stream().map()) -> This convert field error for DataErrorValidation
     }
+    @ExceptionHandler(ExceptionDateInvalid.class)
+    public ResponseEntity handlerErrorDate400(ExceptionDateInvalid exception){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+    }
 }

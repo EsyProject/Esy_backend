@@ -1,5 +1,6 @@
 package apiBoschEsy.apiInSpringBoot.service.utils;
 
+import apiBoschEsy.apiInSpringBoot.infra.exception.ExceptionDateInvalid;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -23,5 +24,9 @@ public class FormatService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return date.format(formatter);
     }
-
+    // Analyse the Date is Past, Future or Present
+    public boolean error(LocalDate initialDate, LocalDate finishDate) throws ExceptionDateInvalid{
+        var currentDate = LocalDate.now();
+        return initialDate.isAfter(currentDate) || !initialDate.equals(currentDate);
+    }
 }

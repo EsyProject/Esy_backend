@@ -5,6 +5,7 @@ import apiBoschEsy.apiInSpringBoot.dto.event.DataDetailEvent;
 import apiBoschEsy.apiInSpringBoot.dto.event.DataListEvent;
 import apiBoschEsy.apiInSpringBoot.dto.event.DataRegisterEvent;
 import apiBoschEsy.apiInSpringBoot.entity.Event;
+import apiBoschEsy.apiInSpringBoot.infra.exception.ExceptionDateInvalid;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryEvent;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryImage;
 import apiBoschEsy.apiInSpringBoot.service.ImageService;
@@ -39,12 +40,18 @@ public class EventService {
 
     // Method POST
     @Transactional
-    public DataDetailEvent dataDetailEvent(DataRegisterEvent dataRegisterEvent){
+    public DataDetailEvent dataDetailEvent(DataRegisterEvent dataRegisterEvent) throws ExceptionDateInvalid {
         FormatService formatService = new FormatService();
 
         String timeCurrent = formatService.getCurrentTimeFormatted();
         LocalDate dateCurrent = formatService.getCurrentDate();
         Event event = new Event(dataRegisterEvent);
+
+        if(event.getInitial_date().isAfter(dateCurrent) || event.getInitial_date().equals(dateCurrent)){
+            repositoryEvent.save(event);
+        }else {
+            throw new ExceptionDateInvalid("Invalid date! You entered a date that has already passed. Enter a future or current date!");
+        }
 
         List<MultipartFile> images = dataRegisterEvent.images();
         if(!(images == null) && !images.isEmpty()){
@@ -55,13 +62,8 @@ public class EventService {
         event.setTime_created(LocalTime.parse(timeCurrent));
         event.setDateCreated(dateCurrent);
 
-        // Get the dates Input
-        var initialDate = formatService.formattedDate(event.getInitial_date());
-        var finishDate = formatService.formattedDate(event.getFinish_date());
 
-
-        repositoryEvent.save(event);
-         return new DataDetailEvent(event, initialDate, finishDate);
+        return new DataDetailEvent(event, formatService.formattedDate(event.getInitial_date()), formatService.formattedDate(event.getFinish_date()));
     }
 
     // Method GET all Events

@@ -23,7 +23,7 @@ public class Image {
     private String imgUrl;
 
     @ManyToOne
-    @JoinColumn(name = "event_id")
+    @JoinColumn(name = "event_id", nullable = true)
     private Event event;
 
     public Image(String imageUrl, Event product) {

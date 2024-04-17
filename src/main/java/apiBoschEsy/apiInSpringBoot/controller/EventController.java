@@ -4,6 +4,7 @@ import apiBoschEsy.apiInSpringBoot.dto.event.*;
 import apiBoschEsy.apiInSpringBoot.entity.Event;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryEvent;
 import apiBoschEsy.apiInSpringBoot.service.ImageService;
+import apiBoschEsy.apiInSpringBoot.service.event.EventService;
 import apiBoschEsy.apiInSpringBoot.service.utils.ImageHandler;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -31,43 +32,34 @@ public class EventController {
     private ImageHandler imageHandler;
     @Autowired
     private ImageService imageService;
+    @Autowired
+    private EventService eventService;
 
     // POST Event
     @PostMapping
-    @Transactional
     public ResponseEntity registerEvent(@ModelAttribute @Valid DataRegisterEvent dataRegisterEvent, UriComponentsBuilder uriBuilder){
-        var event = new Event(dataRegisterEvent);
-        List<MultipartFile> images = dataRegisterEvent.images();
+        var event = eventService.dataDetailEvent(dataRegisterEvent);
+        var uri = uriBuilder.path("/event/{id}").build(event.event_id());
 
-        if(!(images == null) && !images.isEmpty()){
-            List<String> imageUrl = imageService.saveImages(event, images);
-            event.setImgUrl(imageUrl);
-        }
-        repositoryEvent.save(event);
-        var uri = uriBuilder.path("/event/{id}").buildAndExpand(event.getEvent_id()).toUri();
-
-        return ResponseEntity.created(uri).body(new DataDetailEvent(event));
+        return ResponseEntity.created(uri).body(event);
     }
     // GET ALL Event
     @GetMapping("/events")
-    public ResponseEntity<Page<DataListEvent>> listAllEvents(@PageableDefault(size = 10, sort = {"nameOfEvent"}) Pageable pageable){
-        var list = repositoryEvent.findAll(pageable).map(DataListEvent::new);
+    public ResponseEntity listAllEvents(@PageableDefault(size = 10, sort = {"nameOfEvent"}) Pageable pageable){
+        var list = eventService.getAllEvents(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(list);
     }
     // Get By Id
     @GetMapping("/{event_id}")
     public ResponseEntity getEventById(@PathVariable Long event_id){
-        var eventById = repositoryEvent.findById(event_id);
-        if(eventById.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found this event!");
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(eventById.get());
+        var eventById = eventService.getEventById(event_id);
+        return ResponseEntity.status(HttpStatus.OK).body(eventById);
     }
     // GET (Return date_event, nameOfEvent, area and descriptions_event)
     @GetMapping("/card")
-    public ResponseEntity<Page<DataCardEvent>> getCardEvent(@PageableDefault(size = 3, sort = {"nameOfEvent"}) Pageable pageable){
-        var cardEvent = repositoryEvent.findAll(pageable).map(DataCardEvent::new);
-        return ResponseEntity.status(HttpStatus.OK).body(cardEvent);
+    public ResponseEntity getCardEvent(@PageableDefault(size = 3, sort = {"nameOfEvent"}) Pageable pageable){
+        var card = eventService.cardReturn(pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(card);
     }
     // GET (Return name_event)
     @GetMapping("/name")

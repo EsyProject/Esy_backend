@@ -4,8 +4,10 @@ import apiBoschEsy.apiInSpringBoot.constants.Area;
 import apiBoschEsy.apiInSpringBoot.constants.Place;
 import apiBoschEsy.apiInSpringBoot.dto.event.DataRegisterEvent;
 import apiBoschEsy.apiInSpringBoot.dto.event.DataToUpdate;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -19,8 +21,8 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(of = "event_id")
 public class Event {
-    // Attributes of Events
 
+    // Attributes of Events
     // Description
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +42,9 @@ public class Event {
     private LocalDate finish_date;
 
     // Date and hour request
-    private LocalDate date_created;
+    @JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING)
+    @Column(name = "date_created")
+    private LocalDate dateCreated;
     private LocalTime time_created;
 
     // Deleted ?
@@ -94,7 +98,7 @@ public class Event {
         this.finish_time = data.finishTime();
         this.initial_date = data.initialDate();
         this.finish_date = data.finishDate();
-        this.date_created = LocalDate.now();
+        this.dateCreated = LocalDate.now();
         this.time_created = LocalTime.now();
         this.delete = false;
     }

@@ -3,6 +3,7 @@ package apiBoschEsy.apiInSpringBoot.dto.event;
 import apiBoschEsy.apiInSpringBoot.constants.Area;
 import apiBoschEsy.apiInSpringBoot.constants.Place;
 import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -28,10 +29,12 @@ public record DataRegisterEvent(
         @NotNull
         Place localEvent,
         @NotNull
-        @DateTimeFormat(pattern = "dd/MM/yyyy")
+        @DateTimeFormat( iso = DateTimeFormat.ISO.DATE, pattern = "dd/MM/yyyy")
+//       @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
         LocalDate initialDate,
         @NotNull
-        @DateTimeFormat(pattern = "dd/MM/yyyy")
+        @DateTimeFormat( iso = DateTimeFormat.ISO.DATE, pattern = "dd/MM/yyyy")
+//       @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
         LocalDate finishDate,
         @NotNull
         LocalTime initialTime,

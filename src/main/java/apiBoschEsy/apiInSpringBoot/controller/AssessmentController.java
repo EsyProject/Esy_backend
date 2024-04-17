@@ -36,7 +36,7 @@ public class AssessmentController {
     @PostMapping("/{eventId}")
     @Transactional
     public ResponseEntity registerAssessment(@PathVariable Long eventId, @RequestBody @Valid DataRegisterAssessment dataRegisterAssessment, UriComponentsBuilder uriBuilder){
-       var assessment = new Assessment(eventId, dataRegisterAssessment);
+       var assessment = new Assessment(dataRegisterAssessment);
        repositoryAssessment.save(assessment);
 
        var uri = uriBuilder.path("/assessment/{id}").buildAndExpand(assessment.getId()).toUri();

@@ -4,6 +4,7 @@ import apiBoschEsy.apiInSpringBoot.constants.Place;
 import apiBoschEsy.apiInSpringBoot.entity.Event;
 import apiBoschEsy.apiInSpringBoot.constants.Area;
 import apiBoschEsy.apiInSpringBoot.entity.Ticket;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.xml.crypto.Data;
 import java.time.LocalDate;
@@ -19,6 +20,7 @@ public record DataDetailEvent(
         List<String> imgUrl,
         Place localEvent,
         LocalDate initialDate,
+
         LocalDate finishDate,
         LocalTime initialTime,
         LocalTime finishTime,
@@ -38,7 +40,7 @@ public record DataDetailEvent(
                event.getFinish_date(),
                event.getInitial_time(),
                event.getFinish_time(),
-               event.getDate_created(),
+               event.getDateCreated(),
                event.getTime_created()
        );
     }

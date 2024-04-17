@@ -1,7 +1,6 @@
 package apiBoschEsy.apiInSpringBoot.controller;
 
 import apiBoschEsy.apiInSpringBoot.dto.event.*;
-import apiBoschEsy.apiInSpringBoot.entity.Event;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryEvent;
 import apiBoschEsy.apiInSpringBoot.service.ImageService;
 import apiBoschEsy.apiInSpringBoot.service.event.EventService;
@@ -9,16 +8,12 @@ import apiBoschEsy.apiInSpringBoot.service.utils.ImageHandler;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.List;
 
 
 @RestController
@@ -80,13 +75,13 @@ public class EventController {
         return ResponseEntity.status(HttpStatus.OK).body(my_event);
     }
     // PUT Event
-    @PutMapping
-    @Transactional
-    public ResponseEntity changeInfoEvent(@RequestBody @Valid DataToUpdate data){
-        var event = repositoryEvent.getReferenceById(data.event_id());
-        event.toUpdateInfoEvent(data);
-        return ResponseEntity.status(HttpStatus.OK).body(new DataDetailEvent(event));
-    }
+//    @PutMapping
+//    @Transactional
+//    public ResponseEntity changeInfoEvent(@RequestBody @Valid DataToUpdate data){
+//        var event = repositoryEvent.getReferenceById(data.event_id());
+//        event.toUpdateInfoEvent(data);
+//        return ResponseEntity.status(HttpStatus.OK).body(new DataDetailEvent(event));
+//    }
 
     // DELETE Event
     @DeleteMapping("/{event_id}")

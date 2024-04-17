@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 
 @Table(name = "event")
@@ -69,7 +70,7 @@ public class Event {
             this.imgUrl = dataToUpdate.imgUrl();
         }
         if(dataToUpdate.initialDate() != null){
-            this.initial_date = dataToUpdate.initialDate();
+            this.finish_date = dataToUpdate.initialDate();
         }
         if(dataToUpdate.finishDate() != null){
             this.finish_date = dataToUpdate.finishDate();
@@ -98,8 +99,6 @@ public class Event {
         this.finish_time = data.finishTime();
         this.initial_date = data.initialDate();
         this.finish_date = data.finishDate();
-        this.dateCreated = LocalDate.now();
-        this.time_created = LocalTime.now();
         this.delete = false;
     }
 }

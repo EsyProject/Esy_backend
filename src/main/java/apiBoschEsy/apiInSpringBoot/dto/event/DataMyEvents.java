@@ -6,6 +6,7 @@ import apiBoschEsy.apiInSpringBoot.entity.Event;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Date;
 
 public record DataMyEvents(
         Long event_id,

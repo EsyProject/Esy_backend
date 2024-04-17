@@ -3,10 +3,7 @@ package apiBoschEsy.apiInSpringBoot.dto.event;
 import apiBoschEsy.apiInSpringBoot.constants.Place;
 import apiBoschEsy.apiInSpringBoot.entity.Event;
 import apiBoschEsy.apiInSpringBoot.constants.Area;
-import apiBoschEsy.apiInSpringBoot.entity.Ticket;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.xml.crypto.Data;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -19,15 +16,14 @@ public record DataDetailEvent(
         String description,
         List<String> imgUrl,
         Place localEvent,
-        LocalDate initialDate,
-
-        LocalDate finishDate,
+        String initialDate,
+        String finishDate,
         LocalTime initialTime,
         LocalTime finishTime,
         LocalDate date_created,
-        LocalTime hour_created
+        LocalTime time_created
 ) {
-    public DataDetailEvent(Event event){
+    public DataDetailEvent(Event event, String initialDate, String finishDate){
        this(
                event.getEvent_id(),
                event.getNameOfEvent(),
@@ -36,13 +32,13 @@ public record DataDetailEvent(
                event.getDescription(),
                event.getImgUrl(),
                event.getLocalEvent(),
-               event.getInitial_date(),
-               event.getFinish_date(),
+               initialDate,
+               finishDate,
                event.getInitial_time(),
                event.getFinish_time(),
                event.getDateCreated(),
                event.getTime_created()
-       );
+               );
     }
 
     }

@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 
 public record DataRegisterEvent(
@@ -30,11 +31,11 @@ public record DataRegisterEvent(
         Place localEvent,
         @NotNull
         @DateTimeFormat( iso = DateTimeFormat.ISO.DATE, pattern = "dd/MM/yyyy")
-//       @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+        @JsonFormat(pattern = "dd/MM/yyyy")
         LocalDate initialDate,
         @NotNull
         @DateTimeFormat( iso = DateTimeFormat.ISO.DATE, pattern = "dd/MM/yyyy")
-//       @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+        @JsonFormat(pattern = "dd/MM/yyyy")
         LocalDate finishDate,
         @NotNull
         LocalTime initialTime,

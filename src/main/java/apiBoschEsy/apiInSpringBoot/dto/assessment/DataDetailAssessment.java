@@ -3,7 +3,7 @@ package apiBoschEsy.apiInSpringBoot.dto.assessment;
 import apiBoschEsy.apiInSpringBoot.entity.Assessment;
 
 public record DataDetailAssessment(
-        Long id,
+        Long assessment_id,
         String name,
         String suggestion,
         String description_comment,
@@ -14,7 +14,7 @@ public record DataDetailAssessment(
 ) {
     public DataDetailAssessment(Assessment assessment, String date_created){
         this(
-                assessment.getId(),
+                assessment.getAssessment_id(),
                 assessment.getName(),
                 assessment.getSuggestion(),
                 assessment.getDescription_comment(),

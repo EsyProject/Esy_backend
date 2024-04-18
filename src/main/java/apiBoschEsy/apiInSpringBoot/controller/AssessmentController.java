@@ -34,9 +34,17 @@ public class AssessmentController {
     @PostMapping("/{event_id}")
     public ResponseEntity registerAssesment(@PathVariable Long event_id, @RequestBody @Valid DataRegisterAssessment dataRegisterAssessment, UriComponentsBuilder uriBuild) throws EventNotFoundException {
         var assessment = assessmentService.createAssessment(dataRegisterAssessment, event_id);
-        var uri = uriBuild.path("/assessment/{id}").build(assessment.id());
+        var uri = uriBuild.path("/assessment/{id}").build(assessment.assessment_id());
         return ResponseEntity.created(uri).body(assessment);
     }
+
+    // GET events with assessment
+    @GetMapping("/assessments/{event_id}")
+    public ResponseEntity returnEventWithAssessment(@PathVariable Long event_id){
+        var list = assessmentService.eventAssessment(event_id);
+        return ResponseEntity.status(HttpStatus.OK).body(list);
+    }
+
 
 //    // GET ALL Assessment
 //    @GetMapping("/assessments")

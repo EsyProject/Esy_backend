@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,6 +33,7 @@ public class Event {
     private String nameOfEvent;
     private Area responsible_area;
     private Area access_event;
+    @Column(columnDefinition = "TEXT")
     private String description;
     private List<String> imgUrl;
 
@@ -57,9 +59,8 @@ public class Event {
         @JoinColumn(name = "ticket_id", nullable  = true) // Posso criar um evento, sem criar um ticket ?
         private List<Ticket> tickets;
         // Event with Assessment
-        @OneToMany
-        @JoinColumn(name = "assessment_id", nullable = true)
-        private List<Assessment> assessments;
+        @OneToMany(mappedBy = "event", cascade = CascadeType.REMOVE)
+        private List<Assessment> assessments = new ArrayList<>();
 
     // Creating a method for put event
     public void toUpdateInfoEvent(DataToUpdate dataToUpdate){

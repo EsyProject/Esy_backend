@@ -9,6 +9,7 @@ import apiBoschEsy.apiInSpringBoot.service.utils.ImageHandler;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -70,12 +71,13 @@ public class EventController {
        var eventFeed = eventService.returnFeed();
        return ResponseEntity.status(HttpStatus.OK).body(eventFeed);
     }
-    // GET Page Control Event (Return NameOfEvent, initial_date, initial_time, local, area, presença?)
+    // GET Page Control Event (Return NameOfEvent, initial_date, initial_time, local, area, presença?) -> My Event
     @GetMapping("/myEvent")
-    public ResponseEntity getMyEvents(){
-        var my_event = repositoryEvent.findAll().stream().map(DataMyEvents::new);
-        return ResponseEntity.status(HttpStatus.OK).body(my_event);
+    public ResponseEntity getMyEvents(@PageableDefault(size = 6, sort = {"nameOfEvent"}) Pageable pageable){
+        var myEvents = eventService.returnMyEvents(pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(myEvents);
     }
+
     // PUT Event
 //    @PutMapping
 //    @Transactional

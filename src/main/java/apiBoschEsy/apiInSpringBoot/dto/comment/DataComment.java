@@ -10,6 +10,6 @@ public record DataComment(
         String assessment
 ) {
     public DataComment(Assessment assessment, String date_created){
-        this(assessment.getId(),assessment.getName(), assessment.getDescription_comment(), date_created, assessment.getAssessment());
+        this(assessment.getAssessment_id(),assessment.getName(), assessment.getDescription_comment(), date_created, assessment.getAssessment());
     }
 }

@@ -17,12 +17,12 @@
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    @EqualsAndHashCode(of = "id")
+    @EqualsAndHashCode(of = "assessment_id")
     public class Assessment {
         // Attributes of Assessment
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
+        private Long assessment_id;
 
         @DateTimeFormat(pattern = "dd-MM-yyyy")
         private LocalDate date_created;
@@ -37,6 +37,7 @@
         // Creating a relationship with others tables
             // Assessment and Events
             @ManyToOne
+            @JoinColumn(name = "event_id", nullable = true)
             private Event event;
 
         public Assessment(DataRegisterAssessment data){

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 
 public record DataListAssessment(
-        Long id,
+        Long assessment_id,
         String name,
         String suggestion,
         String description_comment,
@@ -13,6 +13,6 @@ public record DataListAssessment(
         String hour,
         String date_created) {
     public DataListAssessment(Assessment assessment, String date_created){
-        this(assessment.getId(),assessment.getName(), assessment.getSuggestion(), assessment.getDescription_comment(), assessment.getAssessment(), assessment.getHour(), date_created);
+        this(assessment.getAssessment_id(),assessment.getName(), assessment.getSuggestion(), assessment.getDescription_comment(), assessment.getAssessment(), assessment.getHour(), date_created);
     }
 }

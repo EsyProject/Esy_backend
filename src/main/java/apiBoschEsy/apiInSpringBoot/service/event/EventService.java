@@ -91,6 +91,12 @@ public class EventService {
         return events.map(event -> new DataEventFeed(event, formatService.formattedDate(event.getInitial_date())));
     }
 
+    // Method GET My Events
+    public Page returnMyEvents(@PageableDefault(size = 6, sort = {"nameOfEvent"})Pageable pageable){
+        var events = repositoryEvent.findAll(pageable);
+        return events.map(event -> new DataMyEvents(event, formatService.formattedDate(event.getInitial_date())));
+    }
+
     // PUT
     // DELETE
 

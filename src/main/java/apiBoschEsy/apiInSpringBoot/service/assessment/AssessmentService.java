@@ -1,8 +1,8 @@
 package apiBoschEsy.apiInSpringBoot.service.assessment;
 
+import apiBoschEsy.apiInSpringBoot.dto.assessment.DataAssessmentEvent;
 import apiBoschEsy.apiInSpringBoot.dto.assessment.DataDetailAssessment;
 import apiBoschEsy.apiInSpringBoot.dto.assessment.DataRegisterAssessment;
-import apiBoschEsy.apiInSpringBoot.dto.event.DataRegisterEvent;
 import apiBoschEsy.apiInSpringBoot.entity.Assessment;
 import apiBoschEsy.apiInSpringBoot.entity.Event;
 import apiBoschEsy.apiInSpringBoot.infra.exception.EventNotFoundException;
@@ -10,12 +10,11 @@ import apiBoschEsy.apiInSpringBoot.repository.IRepositoryAssessment;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryEvent;
 import apiBoschEsy.apiInSpringBoot.service.utils.FormatService;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.stream.Stream;
 
 @Service
 public class AssessmentService {
@@ -38,7 +37,7 @@ public class AssessmentService {
 
     // POST Assessment (Based in a Event)
     @Transactional
-    public DataDetailAssessment createAssessment(@RequestBody @Valid DataRegisterAssessment dataRegisterAssessment, @PathVariable Long event_id) throws EventNotFoundException {
+    public DataDetailAssessment createAssessment(DataRegisterAssessment dataRegisterAssessment, Long event_id) throws EventNotFoundException {
         // Get event
         Event event = iRepositoryEvent.findById(event_id).orElseThrow(() -> new EventNotFoundException("Event Not found with ID: " + event_id));
         // Connect Event with assessment
@@ -48,6 +47,10 @@ public class AssessmentService {
 
         return new DataDetailAssessment(assessment, formatService.formattedDate(assessment.getDate_created()));
     }
-    // GET all_Assessment
+    // Get reviews, but from a single event by ID
+    public Stream eventAssessment(@PathVariable Long event_id){
+        var events = iRepositoryEvent.findById(event_id).stream();
+        return events.map(event -> new DataAssessmentEvent(event, formatService.formattedDate(event.getInitial_date()), formatService.formattedDate(event.getFinish_date())));
+    }
     // GET Assessment_by_id
 }

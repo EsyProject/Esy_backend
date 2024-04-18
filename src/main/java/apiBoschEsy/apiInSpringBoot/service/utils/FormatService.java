@@ -25,6 +25,7 @@ public class FormatService {
         return date.format(formatter);
     }
     // Analyse the Date is Past, Future or Present
+    @Deprecated
     public boolean error(LocalDate initialDate, LocalDate finishDate) throws ExceptionDateInvalid{
         var currentDate = LocalDate.now();
         return initialDate.isAfter(currentDate) || !initialDate.equals(currentDate);

@@ -26,4 +26,8 @@ public class ErrosHandler {
     public ResponseEntity handlerErrorDate400(ExceptionDateInvalid exception){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
     }
+    @ExceptionHandler(EventNotFoundException.class)
+    public ResponseEntity handlerErrorEvent404(EventNotFoundException exception){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+    }
 }

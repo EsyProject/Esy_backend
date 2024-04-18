@@ -7,29 +7,31 @@ import apiBoschEsy.apiInSpringBoot.entity.Event;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
 
 public record DataEventFeed(
         Long event_id,
         String nameOfEvent,
-        LocalDate initialDate,
+        String initialDate,
         LocalTime initialTime,
         LocalTime finishTime,
         String description,
         Place local,
-        Area responsible_area
+        Area responsible_area,
+        List<String> imgUrl
 
 ) {
-    public DataEventFeed(Event event){
+    public DataEventFeed(Event event, String initialDate){
         this(
                 event.getEvent_id(),
                 event.getNameOfEvent(),
-                event.getInitial_date(),
+                initialDate,
                 event.getInitial_time(),
                 event.getFinish_time(),
                 event.getDescription(),
                 event.getLocalEvent(),
-                event.getResponsible_area()
-
+                event.getResponsible_area(),
+                event.getImgUrl()
         );
     }
 }

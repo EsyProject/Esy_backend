@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -34,7 +35,7 @@ public class EventController {
     // POST Event
     @PostMapping
     public ResponseEntity registerEvent(@ModelAttribute @Valid DataRegisterEvent dataRegisterEvent, UriComponentsBuilder uriBuilder) throws ExceptionDateInvalid {
-        var event = eventService.dataDetailEvent(dataRegisterEvent);
+        var event = eventService.createEvent(dataRegisterEvent);
         var uri = uriBuilder.path("/event/{id}").build(event.event_id());
 
         return ResponseEntity.created(uri).body(event);
@@ -59,15 +60,15 @@ public class EventController {
     }
     // GET (Return name_event)
     @GetMapping("/name")
-    public ResponseEntity getNameOfEvent(){
-        var nameOfEvent = repositoryEvent.findAll().stream().map(DataNameEvent::new);
+    public ResponseEntity getNameOfEvent(@PageableDefault(size = 10, sort = {"nameOfEvent"})Pageable pageable){
+        var nameOfEvent = eventService.returnNameOfEvent(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(nameOfEvent);
     }
     // GET (Return name_event, date_event, hour_initial_start_event, local_event, description_event, hour_initial_and_finish_event, image_event)
     @GetMapping("/feed")
     public ResponseEntity getEventFeed(){
-        var eventFeed = repositoryEvent.findAll().stream().map(DataEventFeed::new);
-        return ResponseEntity.status(HttpStatus.OK).body(eventFeed);
+       var eventFeed = eventService.returnFeed();
+       return ResponseEntity.status(HttpStatus.OK).body(eventFeed);
     }
     // GET Page Control Event (Return NameOfEvent, initial_date, initial_time, local, area, presença?)
     @GetMapping("/myEvent")
@@ -84,13 +85,12 @@ public class EventController {
 //        return ResponseEntity.status(HttpStatus.OK).body(new DataDetailEvent(event));
 //    }
 
-    // DELETE Event
-    @DeleteMapping("/{event_id}")
-    @Transactional
-    public ResponseEntity deleteEvent(@PathVariable Long event_id){
-        var event  = repositoryEvent.getReferenceById(event_id);
-        event.delete();
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
-
+//    // DELETE Event
+//    @DeleteMapping("/{event_id}")
+//    @Transactional
+//    public ResponseEntity deleteEvent(@PathVariable Long event_id){
+//        var event  = repositoryEvent.getReferenceById(event_id);
+//        event.delete();
+//        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+//    }
 }

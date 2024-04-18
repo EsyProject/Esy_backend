@@ -12,7 +12,14 @@ public record DataDetailAssessment(
         String date_created
 
 ) {
-    public DataDetailAssessment(Assessment assessment){
-        this(assessment.getId(), assessment.getName(), assessment.getSuggestion(), assessment.getDescription_comment(), assessment.getAssessment(), assessment.getHour(), assessment.getDate_created());
+    public DataDetailAssessment(Assessment assessment, String date_created){
+        this(
+                assessment.getId(),
+                assessment.getName(),
+                assessment.getSuggestion(),
+                assessment.getDescription_comment(),
+                assessment.getAssessment(),
+                assessment.getHour(),
+                date_created);
     }
 }

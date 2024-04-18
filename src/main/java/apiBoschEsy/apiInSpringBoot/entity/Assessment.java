@@ -4,6 +4,7 @@
     import com.fasterxml.jackson.annotation.JsonFormat;
     import jakarta.persistence.*;
     import lombok.*;
+    import org.springframework.cglib.core.Local;
     import org.springframework.format.annotation.DateTimeFormat;
 
     import java.time.LocalDate;
@@ -24,7 +25,7 @@
         private Long id;
 
         @DateTimeFormat(pattern = "dd-MM-yyyy")
-        private String date_created;
+        private LocalDate date_created;
         @JsonFormat(pattern = "HH:mm:ss")
         private String hour;
         @Column(unique = true)
@@ -44,6 +45,6 @@
             this.assessment = data.assessment();
             this.hour = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
             this.suggestion = data.suggestion();
-            this.date_created = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            this.date_created = LocalDate.now();
         }
     }

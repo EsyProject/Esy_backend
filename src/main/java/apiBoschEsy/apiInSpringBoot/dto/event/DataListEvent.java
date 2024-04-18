@@ -16,13 +16,13 @@ public record DataListEvent(
         Area access_event,
         String description,
         Place localEvent,
-        LocalDate initialDate,
-        LocalDate finishDate,
+        String initialDate,
+        String finishDate,
         LocalTime initialTime,
         LocalTime finishTime,
         List<String> imgUrl
 ) {
-    public DataListEvent(Event event){
+    public DataListEvent(Event event, String initialDate, String finishDate){
         this(
                 event.getEvent_id(),
                 event.getNameOfEvent(),
@@ -30,8 +30,8 @@ public record DataListEvent(
                 event.getAccess_event(),
                 event.getDescription(),
                 event.getLocalEvent(),
-                event.getInitial_date(),
-                event.getFinish_date(),
+                initialDate,
+                finishDate,
                 event.getInitial_time(),
                 event.getFinish_time(),
                 event.getImgUrl()

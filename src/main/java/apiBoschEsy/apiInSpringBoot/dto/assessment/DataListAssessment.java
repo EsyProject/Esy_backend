@@ -12,7 +12,7 @@ public record DataListAssessment(
         String assessment,
         String hour,
         String date_created) {
-    public DataListAssessment(Assessment assessment){
-        this(assessment.getId(),assessment.getName(), assessment.getSuggestion(), assessment.getDescription_comment(), assessment.getAssessment(), assessment.getHour(), assessment.getDate_created());
+    public DataListAssessment(Assessment assessment, String date_created){
+        this(assessment.getId(),assessment.getName(), assessment.getSuggestion(), assessment.getDescription_comment(), assessment.getAssessment(), assessment.getHour(), date_created);
     }
 }

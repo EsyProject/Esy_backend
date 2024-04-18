@@ -8,14 +8,14 @@ import java.util.Date;
 
 public record DataCardEvent(
         Long event_id,
-        LocalDate initialDate,
+        String initialDate,
         String nameOfEvent,
         String description
 ) {
-    public DataCardEvent(Event event){
+    public DataCardEvent(Event event, String initialDate){
         this(
                 event.getEvent_id(),
-                event.getInitial_date(),
+                initialDate,
                 event.getNameOfEvent(),
                 event.getDescription()
         );

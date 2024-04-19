@@ -3,6 +3,8 @@ package apiBoschEsy.apiInSpringBoot.service.assessment;
 import apiBoschEsy.apiInSpringBoot.dto.assessment.DataAssessmentEvent;
 import apiBoschEsy.apiInSpringBoot.dto.assessment.DataDetailAssessment;
 import apiBoschEsy.apiInSpringBoot.dto.assessment.DataRegisterAssessment;
+import apiBoschEsy.apiInSpringBoot.dto.comment.DataComment;
+import apiBoschEsy.apiInSpringBoot.dto.comment.DataEventWithComments_feed;
 import apiBoschEsy.apiInSpringBoot.entity.Assessment;
 import apiBoschEsy.apiInSpringBoot.entity.Event;
 import apiBoschEsy.apiInSpringBoot.infra.exception.EventNotFoundException;
@@ -33,8 +35,6 @@ public class AssessmentService {
     private FormatService formatService;
 
 
-
-
     // POST Assessment (Based in a Event)
     @Transactional
     public DataDetailAssessment createAssessment(DataRegisterAssessment dataRegisterAssessment, Long event_id) throws EventNotFoundException {
@@ -47,10 +47,24 @@ public class AssessmentService {
 
         return new DataDetailAssessment(assessment, formatService.formattedDate(assessment.getDate_created()));
     }
-    // Get reviews, but from a single event by ID
-    public Stream eventAssessment(@PathVariable Long event_id){
+
+    // Get Event with all comments
+    // Method Stream -> A interface Stream é uma sequência de elementos que suporta várias operações, como filtragem, mapeamento, redução, etc.
+    public Stream eventComment(@PathVariable Long event_id) {
+        var events = iRepositoryEvent.findById(event_id).stream();
+        return events.map(event -> new DataEventWithComments_feed(event, formatService.formattedDate(event.getInitial_date()), formatService.formattedDate(event.getFinish_date())));
+    }
+
+    // Get Event with all Assessments
+    public Stream eventAssessment(@PathVariable Long event_id) {
         var events = iRepositoryEvent.findById(event_id).stream();
         return events.map(event -> new DataAssessmentEvent(event, formatService.formattedDate(event.getInitial_date()), formatService.formattedDate(event.getFinish_date())));
     }
-    // GET Assessment_by_id
+
+    // Get comments
+    public Stream commentEvent(@PathVariable Long event_id) {
+        var assessment = iRepositoryAssessment.findById(event_id).stream();
+        return assessment.map(assessment1 -> new DataComment(assessment1, formatService.formattedDate(assessment1.getDate_created())));
+    }
+
 }

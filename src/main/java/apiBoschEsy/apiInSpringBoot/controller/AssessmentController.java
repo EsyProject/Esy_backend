@@ -31,19 +31,23 @@ public class AssessmentController {
     }
 
     // GET events with assessment
+    @GetMapping("/comments/{event_id}")
+    public ResponseEntity returnEventWithComment(@PathVariable Long event_id){
+        var list = assessmentService.eventComment(event_id);
+        return ResponseEntity.status(HttpStatus.OK).body(list);
+    }
     @GetMapping("/assessments/{event_id}")
     public ResponseEntity returnEventWithAssessment(@PathVariable Long event_id){
         var list = assessmentService.eventAssessment(event_id);
         return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 
+
     // GET comment based in assessment (Each event)
-    @GetMapping("/comments/{assessment_id}")
-    public ResponseEntity returnCommentEvent(@PathVariable Long assessment_id){
-        var comment = assessmentService.commentEvent(assessment_id);
-        return ResponseEntity.status(HttpStatus.OK).body(comment);
-    }
-    
+
+
+    // GET only comments of Event
+
 //
 //    // GET byId Assessment
 //    @GetMapping("/{id}")

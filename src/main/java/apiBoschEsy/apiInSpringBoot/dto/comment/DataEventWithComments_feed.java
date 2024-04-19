@@ -1,4 +1,4 @@
-package apiBoschEsy.apiInSpringBoot.dto.assessment;
+package apiBoschEsy.apiInSpringBoot.dto.comment;
 
 import apiBoschEsy.apiInSpringBoot.constants.Area;
 import apiBoschEsy.apiInSpringBoot.constants.Place;
@@ -6,11 +6,12 @@ import apiBoschEsy.apiInSpringBoot.entity.Assessment;
 import apiBoschEsy.apiInSpringBoot.entity.Event;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.time.LocalDate;
+import javax.xml.crypto.Data;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public record DataAssessmentEvent(
+public record DataEventWithComments_feed(
         Long event_id,
         String nameOfEvent,
         Area responsible_area,
@@ -23,9 +24,9 @@ public record DataAssessmentEvent(
         LocalTime initialTime,
         LocalTime finishTime,
         @JsonIgnoreProperties("event")
-        List<Assessment> assessments
+        List<DataComment> comments
 ) {
-    public DataAssessmentEvent(Event event, String initialDate, String finishDate){
+    public DataEventWithComments_feed(Event event, String initialDate, String finishDate){
         this(
                 event.getEvent_id(),
                 event.getNameOfEvent(),
@@ -38,7 +39,8 @@ public record DataAssessmentEvent(
                 finishDate,
                 event.getInitial_time(),
                 event.getFinish_time(),
-                event.getAssessments()
+                event.getAssessments().stream().map(
+                        comments -> new DataComment(comments, initialDate)).collect(Collectors.toList())
         );
     }
 }

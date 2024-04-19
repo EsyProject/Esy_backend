@@ -28,7 +28,6 @@
         private LocalDate date_created;
         @JsonFormat(pattern = "HH:mm:ss")
         private String hour;
-        @Column(unique = true)
         private String name;
         private String description_comment;
         private String suggestion;

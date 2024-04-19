@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice // Annotation for class of errosHandler
-public class ErrosHandler {
+public class ErrorHandler {
     // For which Exception this method is work
     // ERROR 404 -> Not Found
     @ExceptionHandler(EntityNotFoundException.class)
@@ -24,7 +24,7 @@ public class ErrosHandler {
     }
     @ExceptionHandler(ExceptionDateInvalid.class)
     public ResponseEntity handlerErrorDate400(ExceptionDateInvalid exception){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DataErrorValidation("", exception.getMessage()));
     }
     @ExceptionHandler(EventNotFoundException.class)
     public ResponseEntity handlerErrorEvent404(EventNotFoundException exception){

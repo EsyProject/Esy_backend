@@ -1,25 +1,17 @@
 package apiBoschEsy.apiInSpringBoot.controller;
 
-import apiBoschEsy.apiInSpringBoot.dto.assessment.DataDetailAssessment;
-import apiBoschEsy.apiInSpringBoot.dto.assessment.DataListAssessment;
 import apiBoschEsy.apiInSpringBoot.dto.assessment.DataRegisterAssessment;
-import apiBoschEsy.apiInSpringBoot.dto.comment.DataComment;
-import apiBoschEsy.apiInSpringBoot.entity.Assessment;
 import apiBoschEsy.apiInSpringBoot.infra.exception.EventNotFoundException;
-import apiBoschEsy.apiInSpringBoot.repository.IRepositoryAssessment;
 import apiBoschEsy.apiInSpringBoot.service.assessment.AssessmentService;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.Optional;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/assessment")
@@ -45,13 +37,13 @@ public class AssessmentController {
         return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 
-
-//    // GET ALL Assessment
-//    @GetMapping("/assessments")
-//    public ResponseEntity<Page<DataListAssessment>> listAssessment(@PageableDefault(size = 4, sort = {"id", "name"}) Pageable pageable){
-//        var list = repositoryAssessment.findAll(pageable).map(DataListAssessment::new);
-//        return ResponseEntity.ok(list);
-//    }
+    // GET comment based in assessment (Each event)
+    @GetMapping("/comments/{assessment_id}")
+    public ResponseEntity returnCommentEvent(@PathVariable Long assessment_id){
+        var comment = assessmentService.commentEvent(assessment_id);
+        return ResponseEntity.status(HttpStatus.OK).body(comment);
+    }
+    
 //
 //    // GET byId Assessment
 //    @GetMapping("/{id}")

@@ -9,7 +9,7 @@ public record DataListAssessment(
         String name,
         String suggestion,
         String description_comment,
-        String assessment,
+        Integer assessment,
         String hour,
         String date_created) {
     public DataListAssessment(Assessment assessment, String date_created){

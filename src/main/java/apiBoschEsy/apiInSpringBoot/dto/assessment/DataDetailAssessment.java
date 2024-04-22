@@ -7,7 +7,7 @@ public record DataDetailAssessment(
         String name,
         String suggestion,
         String description_comment,
-        String assessment,
+        Integer assessment,
         String hour,
         String date_created
 

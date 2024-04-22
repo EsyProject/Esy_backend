@@ -7,7 +7,7 @@ public record DataComment(
         String name,
         String description_comment,
         String date_created,
-        String assessment
+        Integer assessment
 ) {
     public DataComment(Assessment assessment, String date_created){
         this(

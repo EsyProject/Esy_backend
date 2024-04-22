@@ -4,7 +4,6 @@
     import com.fasterxml.jackson.annotation.JsonFormat;
     import jakarta.persistence.*;
     import lombok.*;
-    import org.springframework.cglib.core.Local;
     import org.springframework.format.annotation.DateTimeFormat;
 
     import java.time.LocalDate;
@@ -31,7 +30,8 @@
         private String name;
         private String description_comment;
         private String suggestion;
-        private String assessment;
+        @Column(columnDefinition = "integer")
+        private Integer assessment;
 
         // Creating a relationship with others tables
             // Assessment and Events

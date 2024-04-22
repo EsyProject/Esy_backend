@@ -10,15 +10,19 @@ public record DataDeitalTicket(
         LocalDate initialDate,
         LocalDate finishDate,
         LocalTime initialTime,
-        LocalTime finishTime
+        LocalTime finishTime,
+        String date_created,
+        String timeCreated
 ) {
-    public DataDeitalTicket(Ticket ticket){
+    public DataDeitalTicket(Ticket ticket, String initialDate, String finishDate){
         this(
                 ticket.getTicket_id(),
                 ticket.getInitialDateTicket(),
                 ticket.getFinishDateTicket(),
                 ticket.getInitialTimeTicket(),
-                ticket.getFinishTimeTicket()
+                ticket.getFinishTimeTicket(),
+                initialDate,
+                finishDate
         );
     }
 }

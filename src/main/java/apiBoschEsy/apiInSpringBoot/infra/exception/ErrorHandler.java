@@ -24,7 +24,7 @@ public class ErrorHandler {
     }
     @ExceptionHandler(ExceptionDateInvalid.class)
     public ResponseEntity handlerErrorDate400(ExceptionDateInvalid exception){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DataErrorValidation("", exception.getMessage()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DataErrorValidation("" , exception.getMessage()));
     }
     @ExceptionHandler(EventNotFoundException.class)
     public ResponseEntity handlerErrorEvent404(EventNotFoundException exception){

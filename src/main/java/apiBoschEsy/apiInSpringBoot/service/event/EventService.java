@@ -7,6 +7,7 @@ import apiBoschEsy.apiInSpringBoot.repository.IRepositoryEvent;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryImage;
 import apiBoschEsy.apiInSpringBoot.service.ImageService;
 import apiBoschEsy.apiInSpringBoot.service.utils.FormatService;
+import apiBoschEsy.apiInSpringBoot.service.utils.GenerateNumberQRCode;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,6 +34,8 @@ public class EventService {
     private ImageService imageService;
     @Autowired
     private FormatService formatService;
+    @Autowired
+    private GenerateNumberQRCode generateNumberQRCode;
 
     // Method POST
     @Transactional
@@ -42,11 +45,10 @@ public class EventService {
         LocalDate dateCurrent = formatService.getCurrentDate();
         Event event = new Event(dataRegisterEvent);
 
-        if(event.getInitial_date().isAfter(dateCurrent) || event.getInitial_date().equals(dateCurrent)){
-            repositoryEvent.save(event);
-        }else {
+        if (!(event.getInitial_date().isAfter(dateCurrent) || event.getInitial_date().equals(dateCurrent))) {
             throw new ExceptionDateInvalid("Invalid date! You entered a date that has already passed. Enter a future or current date!");
         }
+        repositoryEvent.save(event);
 
         List<MultipartFile> images = dataRegisterEvent.images();
         if(!(images == null) && !images.isEmpty()){
@@ -56,6 +58,8 @@ public class EventService {
 
         event.setTime_created(LocalTime.parse(timeCurrent));
         event.setDateCreated(dateCurrent);
+
+
 
 
         return new DataDetailEvent(event, formatService.formattedDate(event.getInitial_date()), formatService.formattedDate(event.getFinish_date()));

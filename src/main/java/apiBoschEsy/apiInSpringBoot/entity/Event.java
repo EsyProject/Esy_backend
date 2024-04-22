@@ -55,9 +55,9 @@ public class Event {
 
     // Creating a Relationship with others tables
         // Event with Ticket
-        @OneToMany
-        @JoinColumn(name = "ticket_id", nullable  = true) // Posso criar um evento, sem criar um ticket ?
-        private List<Ticket> tickets;
+//        @OneToMany
+//        @JoinColumn(name = "ticket_id", nullable  = true) // Posso criar um evento, sem criar um ticket ?
+//        private List<Ticket> tickets;
         // Event with Assessment
         @OneToMany(mappedBy = "event", cascade = CascadeType.REMOVE)
         private List<Assessment> assessments = new ArrayList<>();

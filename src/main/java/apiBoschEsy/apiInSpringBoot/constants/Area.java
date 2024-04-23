@@ -7,6 +7,5 @@ public enum Area {
     PT,
     BD,
     FCM,
-    GS,
-    ALL
+    GS
 }

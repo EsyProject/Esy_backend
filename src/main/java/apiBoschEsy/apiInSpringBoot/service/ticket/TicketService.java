@@ -7,6 +7,7 @@ import apiBoschEsy.apiInSpringBoot.infra.exception.ExceptionDateInvalid;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryTicket;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryUser;
 import apiBoschEsy.apiInSpringBoot.service.utils.FormatService;
+import apiBoschEsy.apiInSpringBoot.service.utils.GenerateNumberQRCode;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ public class TicketService {
     private IRepositoryUser repositoryUser;
     @Autowired
     private FormatService formatService;
+    @Autowired
+    private GenerateNumberQRCode qrCode;
 
     // Methods Controller
 
@@ -37,8 +40,12 @@ public class TicketService {
         var dateCurrent = formatService.getCurrentDate();
         String timeCurrent = formatService.getCurrentTimeFormatted();
 
+
         // Creating a ticket
         var ticket = new Ticket(dataRegisterTicket);
+
+        // Generate the number of QRCode
+        var qrCodeNumber = qrCode.generateRandomNumbers(7);
 
         if (!(ticket.getInitialDateTicket().isAfter(dateCurrent) || ticket.getInitialDateTicket().equals(dateCurrent))) {
             throw new ExceptionDateInvalid("Invalid date! You entered a date that has already passed. Enter a future or current date!");
@@ -48,8 +55,11 @@ public class TicketService {
         ticket.setDate_created(dateCurrent);
         ticket.setTime_create(LocalTime.parse(timeCurrent));
 
-        return new DataDeitalTicket(ticket, formatService.formattedDate(ticket.getInitialDateTicket()), formatService.formattedDate(ticket.getFinishDateTicket()));
+
+        return new DataDeitalTicket(ticket, formatService.formattedDate(ticket.getInitialDateTicket()), formatService.formattedDate(ticket.getFinishDateTicket()), qrCodeNumber);
     }
+
+    //
 
 
 

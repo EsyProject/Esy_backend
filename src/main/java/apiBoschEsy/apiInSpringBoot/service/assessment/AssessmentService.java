@@ -1,9 +1,6 @@
 package apiBoschEsy.apiInSpringBoot.service.assessment;
 
-import apiBoschEsy.apiInSpringBoot.dto.assessment.DataAssessmentEvent;
-import apiBoschEsy.apiInSpringBoot.dto.assessment.DataDetailAssessment;
-import apiBoschEsy.apiInSpringBoot.dto.assessment.DataEvaluationAverage;
-import apiBoschEsy.apiInSpringBoot.dto.assessment.DataRegisterAssessment;
+import apiBoschEsy.apiInSpringBoot.dto.assessment.*;
 import apiBoschEsy.apiInSpringBoot.dto.comment.DataComment;
 import apiBoschEsy.apiInSpringBoot.dto.comment.DataEventWithComments_feed;
 import apiBoschEsy.apiInSpringBoot.entity.Assessment;
@@ -15,12 +12,9 @@ import apiBoschEsy.apiInSpringBoot.service.utils.EvaluationAverage;
 import apiBoschEsy.apiInSpringBoot.service.utils.FormatService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import javax.xml.crypto.Data;
-import java.util.List;
 import java.util.stream.Stream;
 
 @Service
@@ -38,8 +32,10 @@ public class AssessmentService {
     // Service Date
     @Autowired
     private FormatService formatService;
+
     @Autowired
     private EvaluationAverage evaluationAverage;
+
 
 
     // POST Assessment (Based in a Event)

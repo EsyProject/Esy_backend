@@ -26,9 +26,9 @@ public class User implements UserDetails {
 
     // Creating a relationship with other tables
         // User and Tickets (One user can have a many Tickets)
-        @OneToMany(cascade = {CascadeType.PERSIST}, fetch =  FetchType.LAZY)
-        @JoinColumn(name = "ticket_id", nullable = true)// Persist together and Fetch lazy, para não pesar o banco de dados
-        private List<Ticket> tickets;
+//        @OneToMany(cascade = {CascadeType.PERSIST}, fetch =  FetchType.LAZY)
+//        @JoinColumn(name = "ticket_id", nullable = true)// Persist together and Fetch lazy, para não pesar o banco de dados
+//        private List<Ticket> tickets;
 
 
     public User(String login, String password){

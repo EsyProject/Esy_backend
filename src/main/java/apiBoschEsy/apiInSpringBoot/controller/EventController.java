@@ -3,10 +3,9 @@ package apiBoschEsy.apiInSpringBoot.controller;
 import apiBoschEsy.apiInSpringBoot.dto.event.*;
 import apiBoschEsy.apiInSpringBoot.infra.exception.ExceptionDateInvalid;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryEvent;
-import apiBoschEsy.apiInSpringBoot.service.ImageService;
+import apiBoschEsy.apiInSpringBoot.service.image.ImageService;
 import apiBoschEsy.apiInSpringBoot.service.event.EventService;
 import apiBoschEsy.apiInSpringBoot.service.utils.ImageHandler;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -25,7 +23,6 @@ import java.util.stream.Stream;
 @RestController
 @RequestMapping("/event")
 public class EventController {
-
 
     @Autowired
     private IRepositoryEvent repositoryEvent;

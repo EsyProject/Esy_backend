@@ -5,7 +5,7 @@ import apiBoschEsy.apiInSpringBoot.entity.Event;
 import apiBoschEsy.apiInSpringBoot.infra.exception.ExceptionDateInvalid;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryEvent;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryImage;
-import apiBoschEsy.apiInSpringBoot.service.ImageService;
+import apiBoschEsy.apiInSpringBoot.service.image.ImageService;
 import apiBoschEsy.apiInSpringBoot.service.utils.FormatService;
 import apiBoschEsy.apiInSpringBoot.service.utils.GenerateNumberQRCode;
 import jakarta.transaction.Transactional;

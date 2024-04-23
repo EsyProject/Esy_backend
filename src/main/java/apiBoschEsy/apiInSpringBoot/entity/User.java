@@ -38,7 +38,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER")); // Apenas quando há controle de perfil
+        return List.of(new SimpleGrantedAuthority("ROLE_USER")); // Only when there is profile control
     }
 
     @Override

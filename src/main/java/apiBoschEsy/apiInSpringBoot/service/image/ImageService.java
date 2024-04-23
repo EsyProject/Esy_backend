@@ -1,4 +1,4 @@
-package apiBoschEsy.apiInSpringBoot.service;
+package apiBoschEsy.apiInSpringBoot.service.image;
 
 import apiBoschEsy.apiInSpringBoot.entity.Event;
 import apiBoschEsy.apiInSpringBoot.entity.Image;

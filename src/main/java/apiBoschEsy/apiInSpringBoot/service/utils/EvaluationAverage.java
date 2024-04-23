@@ -26,6 +26,11 @@ public class EvaluationAverage {
 
         List<Double> assessmentsValue = new ArrayList<>();
 
+        // Validation isPresent assessment
+        if (assessmentsList.isEmpty()) {
+            return 0.0;
+        }
+
         // For each in List
         for (Assessment assessment : assessmentsList){
             double value= assessment.getAssessment();

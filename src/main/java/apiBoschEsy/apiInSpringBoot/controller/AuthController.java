@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/login")
 public class AuthController {
 
-    // AuthManager -> Roda o nosso serviço criado, por baixo dos panos
+    // AuthManager -> Runs our created service, under the hood
     @Autowired
     private AuthenticationManager manager;
 
@@ -29,8 +29,8 @@ public class AuthController {
 
     @PostMapping
     public ResponseEntity doLogin(@RequestBody @Valid DataAuth data){
-        var authToken = new UsernamePasswordAuthenticationToken(data.login(), data.password()); // Esse token não reconhece DTO, então precisa passar o DTO que ele entende
-        var auth = manager.authenticate(authToken); // Representa o usuario
+        var authToken = new UsernamePasswordAuthenticationToken(data.login(), data.password()); // This token does not recognize DTO, so it needs to pass the DTO that it understands
+        var auth = manager.authenticate(authToken); // Represents the user
 
         var tokenJWT = tokenService.generateToken((User) auth.getPrincipal());
         return ResponseEntity.status(HttpStatus.OK).body(new DataTokenJWT(tokenJWT));

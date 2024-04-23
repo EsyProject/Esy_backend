@@ -1,4 +1,4 @@
-package apiBoschEsy.apiInSpringBoot.service;
+package apiBoschEsy.apiInSpringBoot.service.auth;
 
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryUser;
 import org.springframework.beans.factory.annotation.Autowired;

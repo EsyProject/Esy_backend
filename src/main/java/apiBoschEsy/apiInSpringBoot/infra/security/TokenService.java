@@ -4,6 +4,7 @@ import apiBoschEsy.apiInSpringBoot.entity.User;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import java.time.ZoneOffset;
 @Service
 public class TokenService {
 
-    @Value("${api.security.token.secret}") // Faz o Spring relacionar essa variável, com a variável da file application.yaml
+    @Value("${api.security.token.secret}") //Makes Spring relate this variable to the application.yaml file variable
     private String secret;
     public String generateToken(User user){
         try {
@@ -26,6 +27,20 @@ public class TokenService {
                     .sign(algorithm);
         } catch (JWTCreationException exception){
             throw new RuntimeException("Error a generator token JWT", exception);
+        }
+    }
+
+    // Method for getSubject
+    public String getSubject(String tokenJWT){
+        try {
+            var algorithm = Algorithm.HMAC256(secret);
+            return JWT.require(algorithm)
+                    .withIssuer("Api Esy Bosch")
+                    .build()
+                    .verify(tokenJWT)
+                    .getSubject();
+        } catch (JWTVerificationException exception) {
+            throw new RuntimeException("Invalid or expired JWT token!");
         }
     }
 

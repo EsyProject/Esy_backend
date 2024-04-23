@@ -9,20 +9,22 @@ public record DataDeitalTicket(
         Long ticket_id,
         LocalDate initialDate,
         LocalDate finishDate,
-        LocalTime initialTime,
-        LocalTime finishTime,
-        String date_created,
-        String timeCreated
+        String initialTime,
+        String finishTime,
+        LocalDate date_created,
+        LocalTime timeCreated,
+        String qrCodeNumber
 ) {
-    public DataDeitalTicket(Ticket ticket, String initialDate, String finishDate){
+    public DataDeitalTicket(Ticket ticket, String initialDate, String finishDate, String qrCodeNumber){
         this(
                 ticket.getTicket_id(),
                 ticket.getInitialDateTicket(),
                 ticket.getFinishDateTicket(),
-                ticket.getInitialTimeTicket(),
-                ticket.getFinishTimeTicket(),
                 initialDate,
-                finishDate
+                finishDate,
+                ticket.getDate_created(),
+                ticket.getTime_create(),
+                qrCodeNumber
         );
     }
 }

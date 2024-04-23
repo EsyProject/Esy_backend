@@ -32,36 +32,13 @@ public class TicketController {
 
     // POST Ticket
     @PostMapping
-    public ResponseEntity registerTicket(@RequestBody @Valid DataRegisterTicket dataRegisterTicket, UriComponentsBuilder uriBuilder) throws ExceptionDateInvalid {
+    public ResponseEntity<DataDeitalTicket> registerTicket(@RequestBody @Valid DataRegisterTicket dataRegisterTicket, UriComponentsBuilder uriBuilder) throws ExceptionDateInvalid {
         var ticket = ticketService.createTicket(dataRegisterTicket);
         var uri = uriBuilder.path("ticket/{id}").build(ticket.ticket_id());
 
         return ResponseEntity.created(uri).body(ticket);
     }
-//
-//    @GetMapping("/avarage")
-//    public ResponseEntity returnAv
-//    @GetMapping("/tickets")
-//    public ResponseEntity<Page<DataListTicket>> listTicket(@PageableDefault(size = 10) Pageable pageable){
-//        var list = iRepositoryTicket.findAll(pageable).map(DataListTicket::new);
-//        return ResponseEntity.status(HttpStatus.OK).body(list);
-//    }
-//    @GetMapping("/time")
-//    public ResponseEntity timeTicket(){
-//        var timeTicket = iRepositoryTicket.findAll().stream().map(DataTimeTicket::new);
-//        return ResponseEntity.status(HttpStatus.OK).body(timeTicket);
-//    }
-//    @GetMapping("/date")
-//    public ResponseEntity dateTicket(){
-//        var dateTicket = iRepositoryTicket.findAll().stream().map(DataDateTicket::new);
-//        return ResponseEntity.status(HttpStatus.OK).body(dateTicket);
-//    }
-//    @GetMapping("/{id}")
-//    public ResponseEntity ticketById(@PathVariable Long id){
-//        var ticketId = iRepositoryTicket.findById(id);
-//        if(ticketId.isEmpty()){
-//            return ResponseEntity.status(HttpStatus.OK).body("Not Found the ticket");
-//        }
-//        return ResponseEntity.status(HttpStatus.OK).body(ticketId.get());
-//    }
+
+    // GET ticket user
+
 }

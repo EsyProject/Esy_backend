@@ -1,5 +1,6 @@
     package apiBoschEsy.apiInSpringBoot.entity;
 
+    import apiBoschEsy.apiInSpringBoot.constants.HighlightPoint;
     import apiBoschEsy.apiInSpringBoot.dto.assessment.DataRegisterAssessment;
     import com.fasterxml.jackson.annotation.JsonFormat;
     import jakarta.persistence.*;
@@ -30,6 +31,7 @@
         private String name;
         private String description_comment;
         private String suggestion;
+        private HighlightPoint highlightPoint;
         @Column(columnDefinition = "integer")
         private Integer assessment;
 
@@ -43,6 +45,7 @@
             this.name = data.name();
             this.description_comment = data.description_comment();
             this.assessment = data.assessment();
+            this.highlightPoint = data.highlightPoint();
             this.hour = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
             this.suggestion = data.suggestion();
             this.date_created = LocalDate.now();

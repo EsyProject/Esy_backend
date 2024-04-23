@@ -2,7 +2,7 @@ package apiBoschEsy.apiInSpringBoot.constants;
 
 public enum HighlightPoint {
     Tematicas_Abordadas,
-    Alimentaccao,
+    Alimentacao,
     Pontualidade,
     Interacoes_Sociais
 }

@@ -35,7 +35,7 @@ public class TokenService {
         try {
             var algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
-                    .withIssuer("Api Esy Bosch")
+                    .withIssuer("API Esy Bosch")
                     .build()
                     .verify(tokenJWT)
                     .getSubject();

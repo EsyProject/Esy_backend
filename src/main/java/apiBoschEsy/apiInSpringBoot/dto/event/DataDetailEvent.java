@@ -21,9 +21,10 @@ public record DataDetailEvent(
         LocalTime initialTime,
         LocalTime finishTime,
         LocalDate date_created,
-        LocalTime time_created
+        LocalTime time_created,
+        String author
 ) {
-    public DataDetailEvent(Event event, String initialDate, String finishDate){
+    public DataDetailEvent(Event event, String initialDate, String finishDate, String author){
        this(
                event.getEvent_id(),
                event.getNameOfEvent(),
@@ -37,7 +38,8 @@ public record DataDetailEvent(
                event.getInitial_time(),
                event.getFinish_time(),
                event.getDateCreated(),
-               event.getTime_created()
+               event.getTime_created(),
+               author
                );
     }
 

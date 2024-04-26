@@ -1,6 +1,7 @@
 package apiBoschEsy.apiInSpringBoot.service.assessment;
 
 import apiBoschEsy.apiInSpringBoot.dto.assessment.*;
+import apiBoschEsy.apiInSpringBoot.dto.auth.DataAuth;
 import apiBoschEsy.apiInSpringBoot.dto.comment.DataComment;
 import apiBoschEsy.apiInSpringBoot.dto.comment.DataEventWithComments_feed;
 import apiBoschEsy.apiInSpringBoot.entity.Assessment;
@@ -35,7 +36,6 @@ public class AssessmentService {
 
     @Autowired
     private EvaluationAverage evaluationAverage;
-
 
 
     // POST Assessment (Based in a Event)

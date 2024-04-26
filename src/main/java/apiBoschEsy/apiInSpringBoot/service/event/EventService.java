@@ -1,5 +1,6 @@
 package apiBoschEsy.apiInSpringBoot.service.event;
 
+import apiBoschEsy.apiInSpringBoot.dto.auth.DataAuth;
 import apiBoschEsy.apiInSpringBoot.dto.event.*;
 import apiBoschEsy.apiInSpringBoot.entity.Event;
 import apiBoschEsy.apiInSpringBoot.infra.exception.ExceptionDateInvalid;
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,8 +42,8 @@ public class EventService {
 
     // Method POST
     @Transactional
-    public DataDetailEvent createEvent(DataRegisterEvent dataRegisterEvent) throws ExceptionDateInvalid {
-
+    public DataDetailEvent createEvent(DataRegisterEvent dataRegisterEvent, @AuthenticationPrincipal Jwt jwt) throws ExceptionDateInvalid {
+        DataAuth user = new DataAuth(jwt);
         String timeCurrent = formatService.getCurrentTimeFormatted();
         LocalDate dateCurrent = formatService.getCurrentDate();
         Event event = new Event(dataRegisterEvent);
@@ -58,11 +61,12 @@ public class EventService {
 
         event.setTime_created(LocalTime.parse(timeCurrent));
         event.setDateCreated(dateCurrent);
+        event.setAuthor(user.userName());
 
 
 
 
-        return new DataDetailEvent(event, formatService.formattedDate(event.getInitial_date()), formatService.formattedDate(event.getFinish_date()));
+        return new DataDetailEvent(event, formatService.formattedDate(event.getInitial_date()), formatService.formattedDate(event.getFinish_date()), user.userName());
     }
 
     // Method GET all Events
@@ -74,7 +78,7 @@ public class EventService {
     // Method GET by Id
     public Optional getEventById(@PathVariable Long event_id){
         var events = repositoryEvent.findById(event_id);
-        return events.map(event -> new DataDetailEvent(event, formatService.formattedDate(event.getInitial_date()), formatService.formattedDate(event.getFinish_date())));
+        return events.map(event -> new DataDetailEvent(event, formatService.formattedDate(event.getInitial_date()), formatService.formattedDate(event.getFinish_date()), event.getAuthor()));
     }
 
     // Method GET card

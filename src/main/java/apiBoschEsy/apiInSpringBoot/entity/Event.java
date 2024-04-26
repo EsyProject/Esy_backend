@@ -52,6 +52,7 @@ public class Event {
 
     // Deleted ?
     private Boolean delete;
+    private String author;
 
     // Creating a Relationship with others tables
         // Event with Ticket

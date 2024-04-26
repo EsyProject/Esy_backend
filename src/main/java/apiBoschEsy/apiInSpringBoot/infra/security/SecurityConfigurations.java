@@ -1,6 +1,7 @@
 package apiBoschEsy.apiInSpringBoot.infra.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -11,40 +12,40 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+
 
 @Configuration
 @EnableWebSecurity // Mostra que vamos personalizar a configuração de segurança
 public class SecurityConfigurations {
+
     // This class, you out the logic security
     // Personalizar logica de segurança
 
-    @Autowired
-    private SecurityFilter securityFilter;
+//    @Autowired
+//    private SecurityFilter securityFilter;
 
-    @Bean // Serve para exportar uma classe para o Spring, fazendo com que ele consiga carregá-la e realize a sua injeção de dependência em outras classes
+    @Value("${spring.security.oauth2.client.provider.azure-ad.jwk-set-uri}")
+    private String jwkUri;
+
+    @Bean // Used to export a class to Spring, allowing it to load it and perform dependency injection into other classes
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http.csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> req
-                        .requestMatchers(HttpMethod.POST,"/login").permitAll()
                         .anyRequest().authenticated())
-                        .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
-
-
+                .oauth2ResourceServer(conf -> conf
+                        .jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder())));
         return http.build();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception{
-        return configuration.getAuthenticationManager();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
+    public JwtDecoder jwtDecoder() {
+        return NimbusJwtDecoder.withJwkSetUri(jwkUri).build();
     }
 
 }

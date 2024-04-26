@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: apiInSpringBoot
+  datasource:
+    url: jdbc:postgresql://localhost:5432/esy_bosch
+    username: postgres
+    password: root
+  jpa:
+    properties:
+      show-sql: true
+      format_sql: true
+    hibernate:
+      ddl-auto: update
+
+upload:
+  dir: ${user.dir}/eventsUploads
+
+server:
+  error:
+    include-stacktrace: never
+  port: 6967

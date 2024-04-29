@@ -1,6 +1,7 @@
 package apiBoschEsy.apiInSpringBoot.service.utils;
 
 import apiBoschEsy.apiInSpringBoot.entity.Assessment;
+import apiBoschEsy.apiInSpringBoot.infra.exception.EventNotFoundException;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryAssessment;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,12 @@ public class EvaluationAverage {
     @Autowired
     private IRepositoryEvent repositoryEvent;
 
-    public double avarageOfAssessmentEvent(Long event_id){
+    public double avarageOfAssessmentEvent(Long event_id) throws EventNotFoundException {
         // Access the event by ID
         var event = repositoryEvent.findById(event_id);
+        if(!event.isPresent()){
+            throw new EventNotFoundException("Event not Found!");
+        }
         // Access the assessmentList based in Event (event_id)
         var assessmentsList = event.get().getAssessments();
 

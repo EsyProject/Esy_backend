@@ -4,6 +4,7 @@ import apiBoschEsy.apiInSpringBoot.dto.assessment.*;
 import apiBoschEsy.apiInSpringBoot.dto.auth.DataAuth;
 import apiBoschEsy.apiInSpringBoot.dto.comment.DataComment;
 import apiBoschEsy.apiInSpringBoot.dto.comment.DataEventWithComments_feed;
+import apiBoschEsy.apiInSpringBoot.dto.dashboard.DataSuggestion;
 import apiBoschEsy.apiInSpringBoot.entity.Assessment;
 import apiBoschEsy.apiInSpringBoot.entity.Event;
 import apiBoschEsy.apiInSpringBoot.infra.exception.EventNotFoundException;
@@ -13,9 +14,12 @@ import apiBoschEsy.apiInSpringBoot.service.utils.EvaluationAverage;
 import apiBoschEsy.apiInSpringBoot.service.utils.FormatService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.xml.crypto.Data;
 import java.util.stream.Stream;
 
 @Service
@@ -40,22 +44,30 @@ public class AssessmentService {
 
     // POST Assessment (Based in a Event)
     @Transactional
-    public DataDetailAssessment createAssessment(DataRegisterAssessment dataRegisterAssessment, Long event_id) throws EventNotFoundException {
+    public DataDetailAssessment createAssessment(DataRegisterAssessment dataRegisterAssessment, Long event_id, @AuthenticationPrincipal Jwt jwt) throws EventNotFoundException {
+        // Get the Token JWT SSO
+        DataAuth user = new DataAuth(jwt);
         // Get event
         Event event = iRepositoryEvent.findById(event_id).orElseThrow(() -> new EventNotFoundException("Event Not found with ID: " + event_id));
         // Connect Event with assessment
         var assessment = new Assessment(dataRegisterAssessment);
         assessment.setEvent(event);
+        assessment.setAuthor(user.userName());
         iRepositoryAssessment.save(assessment);
 
-        return new DataDetailAssessment(assessment, formatService.formattedDate(assessment.getDate_created()));
+        return new DataDetailAssessment(assessment, formatService.formattedDate(assessment.getDate_created()), user.userName());
     }
 
-    // Get Event with all comments
-    // Method Stream -> A interface Stream é uma sequência de elementos que suporta várias operações, como filtragem, mapeamento, redução, etc.
-    public Stream eventComment(@PathVariable Long event_id) {
-        var events = iRepositoryEvent.findById(event_id).stream();
-        return events.map(event -> new DataEventWithComments_feed(event, formatService.formattedDate(event.getInitial_date()), formatService.formattedDate(event.getFinish_date())));
+    // Gets the Event with all comments
+    // Stream Method -> The Stream interface is a sequence of elements that supports various operations such as filtering, mapping, reduction, etc.
+    public Stream eventComment(@PathVariable Long event_id) throws EventNotFoundException {
+        var event = iRepositoryEvent.findById(event_id);
+        if(!event.isPresent()){
+            throw new EventNotFoundException("Event Not Found!");
+        }
+        var eventWithAssessment = event.get();
+        var assessment = eventWithAssessment.getAssessments();
+        return assessment.stream().map(assessment1 -> new DataComment(assessment1, formatService.formattedDate(assessment1.getDate_created())));
     }
 
     // Get Event with all Assessments
@@ -63,17 +75,4 @@ public class AssessmentService {
         var events = iRepositoryEvent.findById(event_id).stream();
         return events.map(event -> new DataAssessmentEvent(event, formatService.formattedDate(event.getInitial_date()), formatService.formattedDate(event.getFinish_date())));
     }
-
-    // Get comments
-    public Stream commentEvent(@PathVariable Long event_id) {
-        var assessment = iRepositoryAssessment.findById(event_id).stream();
-        return assessment.map(assessment1 -> new DataComment(assessment1, formatService.formattedDate(assessment1.getDate_created())));
-    }
-
-    // Nota of Event (All asessment)
-    public DataEvaluationAverage average(@PathVariable Long event_id) throws EventNotFoundException {
-        var average = evaluationAverage.avarageOfAssessmentEvent(event_id);
-        return new DataEvaluationAverage(average);
-    }
-
 }

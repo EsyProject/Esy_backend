@@ -1,4 +1,4 @@
-package apiBoschEsy.apiInSpringBoot.dto.assessment;
+package apiBoschEsy.apiInSpringBoot.dto.dashboard;
 
 public record DataEvaluationAverage(
         Double average

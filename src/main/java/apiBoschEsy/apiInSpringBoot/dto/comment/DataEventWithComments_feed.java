@@ -6,7 +6,6 @@ import apiBoschEsy.apiInSpringBoot.entity.Assessment;
 import apiBoschEsy.apiInSpringBoot.entity.Event;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.xml.crypto.Data;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +25,7 @@ public record DataEventWithComments_feed(
         @JsonIgnoreProperties("event")
         List<DataComment> comments
 ) {
-    public DataEventWithComments_feed(Event event, String initialDate, String finishDate){
+    public DataEventWithComments_feed(Event event, String initialDate, String finishDate, String date_created){
         this(
                 event.getEvent_id(),
                 event.getNameOfEvent(),
@@ -40,7 +39,7 @@ public record DataEventWithComments_feed(
                 event.getInitial_time(),
                 event.getFinish_time(),
                 event.getAssessments().stream().map(
-                        comments -> new DataComment(comments, initialDate)).collect(Collectors.toList())
+                        comments -> new DataComment(new Assessment(), date_created)).collect(Collectors.toList())
         );
     }
 }

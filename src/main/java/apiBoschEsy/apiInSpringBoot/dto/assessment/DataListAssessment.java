@@ -6,13 +6,13 @@ import jakarta.validation.constraints.NotBlank;
 
 public record DataListAssessment(
         Long assessment_id,
-        String name,
+        String author,
         String suggestion,
         String description_comment,
         Integer assessment,
         String hour,
         String date_created) {
     public DataListAssessment(Assessment assessment, String date_created){
-        this(assessment.getAssessment_id(),assessment.getName(), assessment.getSuggestion(), assessment.getDescription_comment(), assessment.getAssessment(), assessment.getHour(), date_created);
+        this(assessment.getAssessment_id(),assessment.getAuthor(), assessment.getSuggestion(), assessment.getDescription_comment(), assessment.getAssessment(), assessment.getHour(), date_created);
     }
 }

@@ -5,7 +5,7 @@ import apiBoschEsy.apiInSpringBoot.entity.Assessment;
 
 public record DataDetailAssessment(
         Long assessment_id,
-        String name,
+        String author,
         String suggestion,
         String description_comment,
         Integer assessment,
@@ -14,10 +14,10 @@ public record DataDetailAssessment(
         HighlightPoint highlightPoint
 
 ) {
-    public DataDetailAssessment(Assessment assessment, String date_created){
+    public DataDetailAssessment(Assessment assessment, String date_created, String author){
         this(
                 assessment.getAssessment_id(),
-                assessment.getName(),
+                author,
                 assessment.getSuggestion(),
                 assessment.getDescription_comment(),
                 assessment.getAssessment(),

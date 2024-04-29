@@ -3,6 +3,7 @@ package apiBoschEsy.apiInSpringBoot.service.event;
 import apiBoschEsy.apiInSpringBoot.dto.auth.DataAuth;
 import apiBoschEsy.apiInSpringBoot.dto.event.*;
 import apiBoschEsy.apiInSpringBoot.entity.Event;
+import apiBoschEsy.apiInSpringBoot.infra.exception.EventNotFoundException;
 import apiBoschEsy.apiInSpringBoot.infra.exception.ExceptionDateInvalid;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryEvent;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryImage;
@@ -64,8 +65,6 @@ public class EventService {
         event.setAuthor(user.userName());
 
 
-
-
         return new DataDetailEvent(event, formatService.formattedDate(event.getInitial_date()), formatService.formattedDate(event.getFinish_date()), user.userName());
     }
 
@@ -76,8 +75,11 @@ public class EventService {
     }
 
     // Method GET by Id
-    public Optional getEventById(@PathVariable Long event_id){
+    public Optional getEventById(@PathVariable Long event_id) throws EventNotFoundException {
         var events = repositoryEvent.findById(event_id);
+        if(events.isEmpty()){
+            throw new EventNotFoundException("Event not Found");
+        }
         return events.map(event -> new DataDetailEvent(event, formatService.formattedDate(event.getInitial_date()), formatService.formattedDate(event.getFinish_date()), event.getAuthor()));
     }
 

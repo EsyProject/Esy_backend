@@ -1,6 +1,7 @@
 package apiBoschEsy.apiInSpringBoot.controller;
 
 import apiBoschEsy.apiInSpringBoot.dto.event.*;
+import apiBoschEsy.apiInSpringBoot.infra.exception.EventNotFoundException;
 import apiBoschEsy.apiInSpringBoot.infra.exception.ExceptionDateInvalid;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryEvent;
 import apiBoschEsy.apiInSpringBoot.service.image.ImageService;
@@ -55,7 +56,7 @@ public class EventController {
     }
     // Get By Id
     @GetMapping("/{event_id}")
-    public ResponseEntity<Optional> getEventById(@PathVariable Long event_id){
+    public ResponseEntity<Optional> getEventById(@PathVariable Long event_id) throws EventNotFoundException {
         var eventById = eventService.getEventById(event_id);
         return ResponseEntity.status(HttpStatus.OK).body(eventById);
     }

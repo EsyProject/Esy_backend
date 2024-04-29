@@ -2,13 +2,11 @@ package apiBoschEsy.apiInSpringBoot.dto.error;
 
 import org.springframework.validation.FieldError;
 
-public record DataErrorValidation(
-        String field,
+public record DataError(
         String message
 ) {
-    public DataErrorValidation(FieldError error){
+    public DataError(FieldError error){
         this(
-                error.getField(),
                 error.getDefaultMessage()
         );
     }

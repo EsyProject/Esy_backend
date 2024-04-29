@@ -1,9 +1,5 @@
 package apiBoschEsy.apiInSpringBoot.constants;
 
-import java.util.Iterator;
-import java.util.Spliterator;
-import java.util.function.Consumer;
-
 public enum HighlightPoint {
     TOPICS_ADDRESSED("Temáticas abordadas"),
     FOOD("Alimentação"),

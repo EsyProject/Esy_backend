@@ -28,7 +28,8 @@
         private LocalDate date_created;
         @JsonFormat(pattern = "HH:mm:ss")
         private String hour;
-        private String name;
+//        @Column(unique = true)
+        private String author;
         private String description_comment;
         private String suggestion;
         private HighlightPoint highlightPoint;
@@ -42,7 +43,6 @@
             private Event event;
 
         public Assessment(DataRegisterAssessment data){
-            this.name = data.name();
             this.description_comment = data.description_comment();
             this.assessment = data.assessment();
             this.highlightPoint = data.highlightPoint();

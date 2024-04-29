@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
+@Deprecated
 public class ValidationEntity {
 
     // Access the database
@@ -29,8 +30,4 @@ public class ValidationEntity {
 
         return eventExists && ticketExists && assessmentExists;
     }
-
-
-
-
 }

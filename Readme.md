@@ -199,18 +199,18 @@ Return:
 
 ~~~json
 {
-		"event_id": "Long",
-		"nameOfEvent": "String",
-		"responsible_area": "String",
-		"access_event": "String",
-		"description": "String",
-		"imgUrl": "List<String> Url",
-		"localEvent": "String",
-		"initialDate": "Date",
-		"finishDate": "Date",
-		"initialTime": "Time",
-		"finishTime": "Time",
-		"assessments": "List<Assessment>"
+	"event_id": "Long",
+	"nameOfEvent": "String",
+	"responsible_area": "String",
+	"access_event": "String",
+	"description": "String",
+	"imgUrl": "List<String> Url",
+	"localEvent": "String",
+	"initialDate": "Date",
+	"finishDate": "Date",
+	"initialTime": "Time",
+	"finishTime": "Time",
+	"assessments": "List<Assessment>"
 }
 ~~~
 

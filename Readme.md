@@ -29,20 +29,20 @@ Return:
 
 ~~~json
 {
-	"event_id": Long,
-	"nameOfEvent": String,
-	"responsible_area": String,
-	"access_event": String,
-	"description": String,
-	"imgUrl": List<String> url,
-	"localEvent": String,
-	"initialDate": Date,
-	"finishDate": Date,
-	"initialTime": Time,
-	"finishTime": Time,
-	"date_created": LocalDate,
-	"time_created": LocalTime,
-	"author": String
+	"event_id": "Long",
+	"nameOfEvent": "String",
+	"responsible_area": "String",
+	"access_event": "String",
+	"description": "String",
+	"imgUrl": "List<String> url",
+	"localEvent": "String",
+	"initialDate": "Date",
+	"finishDate": "Date",
+	"initialTime": "Time",
+	"finishTime": "Time",
+	"date_created": "LocalDate",
+	"time_created": "LocalTime",
+	"author": "String"
 }
 ~~~
 
@@ -55,17 +55,17 @@ Return:
 ~~~json
 [
     {
-		"event_id": Long,
-		"nameOfEvent": String,
-		"responsible_area": String,
-		"access_event": String,
-		"description": String,
-		"localEvent": String,
-		"initialDate": Date,
-		"finishDate": Date,
-		"initialTime": Time,
-		"finishTime":Time,
-		"imgUrl": List<String> url
+		"event_id": "Long",
+		"nameOfEvent": "String",
+		"responsible_area": "String",
+		"access_event": "String",
+		"description": "String",
+		"localEvent": "String",
+		"initialDate": "Date",
+		"finishDate": "Date",
+		"initialTime": "Time",
+		"finishTime":"Time",
+		"imgUrl": "List<String> url"
 	}
 ]
 ~~~
@@ -78,20 +78,20 @@ Return:
 
 ~~~json
 {
-	"event_id": Long,
-	"nameOfEvent": String,
-	"responsible_area": String,
-	"access_event": String,
-	"description": String,
-	"imgUrl": List<String> url,
-	"localEvent": String,
-	"initialDate": Date,
-	"finishDate": Date,
-	"initialTime": Time,
-	"finishTime": Time,
-	"date_created": LocalDate,
-	"time_created": LocalTime,
-	"author": String
+	"event_id": "Long",
+	"nameOfEvent": "String",
+	"responsible_area": "String",
+	"access_event": "String",
+	"description": "String",
+	"imgUrl": "List<String> url",
+	"localEvent": "String",
+	"initialDate": "Date",
+	"finishDate": "Date",
+	"initialTime": "Time",
+	"finishTime": "Time",
+	"date_created": "LocalDate",
+	"time_created": "LocalTime",
+	"author": "String"
 }
 ~~~
 
@@ -103,8 +103,8 @@ Return:
 
 ~~~json
 {
-	"event_id": Long,
-	"nameOfEvent": String
+	"event_id": "Long",
+	"nameOfEvent": "String"
 }
 ~~~
 
@@ -116,12 +116,12 @@ Return:
 
 ~~~json
 {
-	"event_id": Long,
-	"nameOfEvent": String,
-	"initialDate": Date,
-	"initialTime": Time,
-	"local": String,
-	"responsible_are": String
+	"event_id": "Long",
+	"nameOfEvent": "String",
+	"initialDate": "Date",
+	"initialTime": "Time",
+	"local": "String",
+	"responsible_are": "String"
 }
 ~~~
 
@@ -134,15 +134,15 @@ Return:
 
 ~~~json
 {
-	"event_id": Long,
-	"nameOfEvent": String,
-	"initialDate": Date,
-	"initialTime": Time,
-	"finishTime": Time,
-	"description": String,
-	"local": Time,
-	"responsible_area": String,
-	"imgUrl": List<String> Url
+	"event_id": "Long",
+	"nameOfEvent": "String",
+	"initialDate": "Date",
+	"initialTime": "Time",
+	"finishTime": "Time",
+	"description": "String",
+	"local": "Time",
+	"responsible_area": "String",
+	"imgUrl": "List<String> Url"
 }
 ~~~
 
@@ -154,10 +154,10 @@ Return:
 
 ~~~json
 {
-	"event_id": Long,
-	"initialDate": Date,
-	"nameOfEvent": String,
-	"description": String
+	"event_id": "Long",
+	"initialDate": "Date",
+	"nameOfEvent": "String",
+	"description": "String"
 }
 ~~~
 
@@ -180,14 +180,14 @@ Return:
 
 ~~~json
 {
-	"assessment_id": Long,
-	"author": String,
-	"suggestion": String,
-	"description_comment": String,
-	"assessment": Integer,
-	"hour": LocalTime,
-	"date_created": LocalDate,
-	"highlightPoint": String
+	"assessment_id": "Long",
+	"author": "String",
+	"suggestion": "String",
+	"description_comment": "String",
+	"assessment": "Integer",
+	"hour": "LocalTime",
+	"date_created": "LocalDate",
+	"highlightPoint": "String"
 }
 ~~~
 
@@ -199,18 +199,18 @@ Return:
 
 ~~~json
 {
-		"event_id": Long,
-		"nameOfEvent": String,
-		"responsible_area": String,
-		"access_event": String,
-		"description": String,
-		"imgUrl": List<String> Url,
-		"localEvent": String,
-		"initialDate": Date,
-		"finishDate": Date,
-		"initialTime": Time,
-		"finishTime": Time,
-		"assessments": List<Assessment>
+		"event_id": "Long",
+		"nameOfEvent": "String",
+		"responsible_area": "String",
+		"access_event": "String",
+		"description": "String",
+		"imgUrl": "List<String> Url",
+		"localEvent": "String",
+		"initialDate": "Date",
+		"finishDate": "Date",
+		"initialTime": "Time",
+		"finishTime": "Time",
+		"assessments": "List<Assessment>"
 }
 ~~~
 
@@ -218,14 +218,14 @@ Assessment return:
 
 ~~~json
 {
-	"assessment_id": 1,
-	"date_created": "2024-04-29",
-	"hour": "13:20:20",
-	"author": "Gomes Bruno (CaP/ETS2)",
-	"description_comment": "Para mim foi muito bom, muito bom meso",
-	"suggestion": "1",
-	"highlightPoint": "FOOD",
-	"assessment": 5
+	"assessment_id": "Long",
+	"date_created": "Local Date",
+	"hour": "Local Time",
+	"author": "String",
+	"description_comment": "String",
+	"suggestion": "String",
+	"highlightPoint": "String",
+	"assessment": "Integer"
 }
 ~~~
 
@@ -240,11 +240,11 @@ Return:
 ~~~json
 [
 	{
-		"comment_id": Long,
-		"author": String,
-		"description_comment": String,
-		"date_created": Date,
-		"assessment": Integer
+		"comment_id": "Long",
+		"author": "String",
+		"description_comment": "String",
+		"date_created": "Date",
+		"assessment": "Integer"
 	}
 ]
 ~~~
@@ -260,7 +260,7 @@ Return:
 
 ~~~json
 {
-	"average": Integer
+	"average": "Integer"
 }
 ~~~
 
@@ -272,11 +272,11 @@ Return:
 
 ~~~json
 {
-	"event_id": Long,
-	"food": Integer,
-	"topics_addressed": Integer,
-	"punctuality": Integer,
-	"social_interactions": Integer
+	"event_id": "Long",
+	"food": "Integer",
+	"topics_addressed": "Integer",
+	"punctuality": "Integer",
+	"social_interactions": "Integer"
 }
 ~~~
 
@@ -289,9 +289,9 @@ Rerturn:
 ~~~json
 [
 	{
-		"id": Long,
-		"date_suggestion": Date,
-		"message_suggestion": String
+		"id": "Long",
+		"date_suggestion": "Date",
+		"message_suggestion": "String"
 	}
 ]
 ~~~
@@ -317,13 +317,13 @@ Return:
 
 ~~~json
 {
-	"ticket_id": Long,
-	"initialDate": Date,
-	"finishDate": Date,
-	"initialTime": Time,
-	"finishTime": Time,
-	"date_created": LocalDate,
-	"timeCreated": LocalTime,
-	"qrCodeNumber": Integer
+	"ticket_id": "Long",
+	"initialDate": "Date",
+	"finishDate": "Date",
+	"initialTime": "Time",
+	"finishTime": "Time",
+	"date_created": "LocalDate",
+	"timeCreated": "LocalTime",
+	"qrCodeNumber": "Integer"
 }
 ~~~

@@ -1,11 +1,11 @@
 package apiBoschEsy.apiInSpringBoot.controller;
 
 import apiBoschEsy.apiInSpringBoot.dto.auth.DataAuth;
+import apiBoschEsy.apiInSpringBoot.dto.email.DataDetailEmail;
 import apiBoschEsy.apiInSpringBoot.dto.email.DataRegisterEmail;
 import apiBoschEsy.apiInSpringBoot.entity.Email;
 import apiBoschEsy.apiInSpringBoot.service.email.EmailService;
 import jakarta.validation.Valid;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,14 +23,15 @@ public class EmailController {
     @Autowired
     private EmailService emailService;
 
-    @PostMapping
-    public ResponseEntity<Email> sendingEmail(@RequestBody @Valid DataRegisterEmail dataRegisterEmail, UriComponentsBuilder uriComponentsBuilder, @AuthenticationPrincipal Jwt jwt){
-       // Auth
-        DataAuth dataAuth = new DataAuth(jwt);
-        var email = new Email();
-        BeanUtils.copyProperties(dataRegisterEmail, email);
-        emailService.sendEmail(email);
-        // Return URI
-        return new ResponseEntity<>(email, HttpStatus.CREATED);
-    }
+//    @PostMapping
+//    public ResponseEntity<DataDetailEmail> sendingEmail(
+//            @RequestBody @Valid DataRegisterEmail dataRegisterEmail,
+//            UriComponentsBuilder uriBuilder
+//            ){
+//        var email = emailService.sendEmail(dataRegisterEmail);
+//        var uri = uriBuilder.path("/email/{email_id}").build(emailModel.getEmail_id());
+//
+//        return ResponseEntity.created(uri).body(email);
+//    }
+
 }

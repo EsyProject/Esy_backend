@@ -5,7 +5,6 @@ import apiBoschEsy.apiInSpringBoot.dto.ticket.DataRegisterTicket;
 import apiBoschEsy.apiInSpringBoot.entity.Ticket;
 import apiBoschEsy.apiInSpringBoot.infra.exception.ExceptionDateInvalid;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryTicket;
-import apiBoschEsy.apiInSpringBoot.repository.IRepositoryUser;
 import apiBoschEsy.apiInSpringBoot.service.utils.FormatService;
 import apiBoschEsy.apiInSpringBoot.service.utils.GenerateNumberQRCode;
 import jakarta.transaction.Transactional;
@@ -14,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.xml.crypto.Data;
-import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Service
@@ -24,8 +21,6 @@ public class TicketService {
     // Access the database
     @Autowired
     private IRepositoryTicket repositoryTicket;
-    @Autowired
-    private IRepositoryUser repositoryUser;
     @Autowired
     private FormatService formatService;
     @Autowired

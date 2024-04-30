@@ -1,4 +1,4 @@
-# Bosch Esy Documentation API 🧠
+# Documentation API 🧠 -  Bosch Esy
 
 BaseUrl: `http://172.28.69.4:6967`
 

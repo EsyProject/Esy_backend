@@ -1,30 +1,36 @@
 package apiBoschEsy.apiInSpringBoot.dto.ticket;
 
+import apiBoschEsy.apiInSpringBoot.entity.Event;
 import apiBoschEsy.apiInSpringBoot.entity.Ticket;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Optional;
 
 public record DataDeitalTicket(
         Long ticket_id,
-        LocalDate initialDate,
-        LocalDate finishDate,
-        String initialTime,
-        String finishTime,
+        String event_name,
+        String initialDate,
+        String finishDate,
+        LocalTime initialTime,
+        LocalTime finishTime,
+        String qrCodeNumber,
+        String user,
         LocalDate date_created,
-        LocalTime timeCreated,
-        String qrCodeNumber
+        LocalTime timeCreated
 ) {
-    public DataDeitalTicket(Ticket ticket, String initialDate, String finishDate, String qrCodeNumber){
+    public DataDeitalTicket(Ticket ticket, String initialDate, String finishDate, String qrCodeNumber, String user, String name_event){
         this(
                 ticket.getTicket_id(),
-                ticket.getInitialDateTicket(),
-                ticket.getFinishDateTicket(),
+                name_event,
                 initialDate,
                 finishDate,
+                ticket.getInitialTimeTicket(),
+                ticket.getFinishTimeTicket(),
+                qrCodeNumber,
+                user,
                 ticket.getDate_created(),
-                ticket.getTime_create(),
-                qrCodeNumber
+                ticket.getTime_create()
         );
     }
 }

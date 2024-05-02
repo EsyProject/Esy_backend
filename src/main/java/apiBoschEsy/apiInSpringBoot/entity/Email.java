@@ -13,7 +13,7 @@ import java.time.LocalTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "email")
+@EqualsAndHashCode(of = "email_id")
 public class Email {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -17,6 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -31,14 +33,24 @@ public class TicketController {
     private TicketService ticketService;
 
     // POST Ticket
-    @PostMapping
-    public ResponseEntity<DataDeitalTicket> registerTicket(@RequestBody @Valid DataRegisterTicket dataRegisterTicket, UriComponentsBuilder uriBuilder) throws ExceptionDateInvalid {
-        var ticket = ticketService.createTicket(dataRegisterTicket);
+    @PostMapping("/{event_id}")
+    public ResponseEntity<DataDeitalTicket> registerTicket(@ModelAttribute @Valid DataRegisterTicket dataRegisterTicket,
+                                                           UriComponentsBuilder uriBuilder,
+                                                           @PathVariable Long event_id,
+                                                           @AuthenticationPrincipal Jwt jwt
+                                                           ) throws ExceptionDateInvalid {
+        var ticket = ticketService.createTicket(dataRegisterTicket, event_id, jwt);
         var uri = uriBuilder.path("ticket/{id}").build(ticket.ticket_id());
 
         return ResponseEntity.created(uri).body(ticket);
     }
 
-    // GET ticket user
+    // PACTH
+
+//    @PatchMapping("/update")
+//    public ResponseEntity<DataDeitalTicket> addImage(@RequestBody @Valid DataRegisterTicket dataRegisterTicket) throws ExceptionDateInvalid{
+//
+//        return ResponseEntity.status(HttpStatus.OK).body();
+//    }
 
 }

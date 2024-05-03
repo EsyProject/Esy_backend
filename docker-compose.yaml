@@ -11,7 +11,7 @@ services:
     ports:
       - "6578:5432"
     volumes:
-      - tech-new-db:/var/lib/postgresql/data/
+      - esy-db:/var/lib/postgresql/data/
 
 volumes:
-  tech-new-db:
+  esy-db:

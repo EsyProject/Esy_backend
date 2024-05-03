@@ -26,8 +26,16 @@ public class Image {
     @JoinColumn(name = "event_id", nullable = true)
     private Event event;
 
+    @ManyToOne
+    @JoinColumn(name = "ticket_id", nullable = true)
+    private Ticket ticket;
+
     public Image(String imageUrl, Event product) {
         this.imgUrl = imageUrl;
         this.event = product;
+    }
+    public Image(String imageUrl, Ticket ticket){
+        this.imgUrl = imageUrl;
+        this.ticket = ticket;
     }
 }

@@ -3,7 +3,7 @@ package apiBoschEsy.apiInSpringBoot.service.dashboard;
 import apiBoschEsy.apiInSpringBoot.dto.dashboard.DataEvaluationAverage;
 import apiBoschEsy.apiInSpringBoot.dto.dashboard.DataHighPoints;
 import apiBoschEsy.apiInSpringBoot.dto.dashboard.DataSuggestion;
-import apiBoschEsy.apiInSpringBoot.infra.exception.EventNotFoundException;
+import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.EventNotFoundException;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryAssessment;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryEvent;
 import apiBoschEsy.apiInSpringBoot.service.utils.EvaluationAverage;

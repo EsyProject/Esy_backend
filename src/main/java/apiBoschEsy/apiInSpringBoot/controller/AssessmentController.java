@@ -2,7 +2,7 @@ package apiBoschEsy.apiInSpringBoot.controller;
 
 import apiBoschEsy.apiInSpringBoot.dto.assessment.DataDetailAssessment;
 import apiBoschEsy.apiInSpringBoot.dto.assessment.DataRegisterAssessment;
-import apiBoschEsy.apiInSpringBoot.infra.exception.EventNotFoundException;
+import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.EventNotFoundException;
 import apiBoschEsy.apiInSpringBoot.service.assessment.AssessmentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

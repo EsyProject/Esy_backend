@@ -3,11 +3,9 @@ package apiBoschEsy.apiInSpringBoot.service.assessment;
 import apiBoschEsy.apiInSpringBoot.dto.assessment.*;
 import apiBoschEsy.apiInSpringBoot.dto.auth.DataAuth;
 import apiBoschEsy.apiInSpringBoot.dto.comment.DataComment;
-import apiBoschEsy.apiInSpringBoot.dto.comment.DataEventWithComments_feed;
-import apiBoschEsy.apiInSpringBoot.dto.dashboard.DataSuggestion;
 import apiBoschEsy.apiInSpringBoot.entity.Assessment;
 import apiBoschEsy.apiInSpringBoot.entity.Event;
-import apiBoschEsy.apiInSpringBoot.infra.exception.EventNotFoundException;
+import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.EventNotFoundException;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryAssessment;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryEvent;
 import apiBoschEsy.apiInSpringBoot.service.utils.EvaluationAverage;
@@ -19,7 +17,6 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import javax.xml.crypto.Data;
 import java.util.stream.Stream;
 
 @Service

@@ -1,14 +1,15 @@
-package apiBoschEsy.apiInSpringBoot.infra.exception;
+package apiBoschEsy.apiInSpringBoot.infra.error;
 
 import apiBoschEsy.apiInSpringBoot.dto.error.DataError;
+import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.EventNotFoundException;
+import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.ExceptionDateInvalid;
+import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.TicketNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import javax.xml.crypto.Data;
 
 @RestControllerAdvice // Annotation for class of errosHandler
 public class ErrorHandler {
@@ -32,4 +33,8 @@ public class ErrorHandler {
     public ResponseEntity handlerErrorEvent404(EventNotFoundException exception){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new DataError(exception.getMessage()));
     }
-}
+    @ExceptionHandler(TicketNotFoundException.class)
+    public ResponseEntity handlerErrorTicket404(TicketNotFoundException exception){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new DataError(exception.getMessage()));
+        }
+    }

@@ -1,4 +1,4 @@
-package apiBoschEsy.apiInSpringBoot.infra.exception;
+package apiBoschEsy.apiInSpringBoot.infra.error.exceptions;
 
 public class ExceptionDateInvalid extends Throwable {
     public ExceptionDateInvalid(String message){

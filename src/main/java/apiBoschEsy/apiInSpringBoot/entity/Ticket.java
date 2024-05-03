@@ -4,9 +4,11 @@ import apiBoschEsy.apiInSpringBoot.dto.ticket.DataRegisterTicket;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity(name = "Ticket")
 @Table(name = "ticket")
@@ -26,12 +28,15 @@ public class Ticket {
     private LocalTime initialTimeTicket;
 
     private LocalTime finishTimeTicket;
-
+    private String author;
+    private String qrCodeNumber;
     private Boolean isPresence;
     @JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING)
     @Column(name = "date_created")
     private LocalDate date_created;
     private LocalTime time_create;
+
+    private List<String> imageUrl;
 
     // Creating a relationShip with others tables
         @ManyToOne

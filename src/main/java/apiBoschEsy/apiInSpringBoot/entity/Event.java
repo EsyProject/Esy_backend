@@ -60,8 +60,6 @@ public class Event {
         @OneToMany(mappedBy = "event", cascade = CascadeType.REMOVE)
         private List<Assessment> assessments = new ArrayList<>();
 
-
-
     public Event(DataRegisterEvent data){
         this.nameOfEvent = data.nameOfEvent();
         this.responsible_area = data.responsible_area();

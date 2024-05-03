@@ -2,6 +2,7 @@ package apiBoschEsy.apiInSpringBoot.service.image;
 
 import apiBoschEsy.apiInSpringBoot.entity.Event;
 import apiBoschEsy.apiInSpringBoot.entity.Image;
+import apiBoschEsy.apiInSpringBoot.entity.Ticket;
 import apiBoschEsy.apiInSpringBoot.service.utils.ImageHandler;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryImage;
 import jakarta.transaction.Transactional;
@@ -22,7 +23,6 @@ public class ImageService {
     private IRepositoryImage imageRepository;
 
     @Transactional
-
     public List<String> saveImages(Event product, List<MultipartFile> images) {
         List<String> imagesUrlList = new ArrayList<>();
         String imgUrl;
@@ -33,7 +33,21 @@ public class ImageService {
             image = new Image(imgUrl, product);
             imageRepository.save(image);
         }
-
         return imagesUrlList;
     }
+
+    @Transactional
+    public List<String> saveImagesTickets(Ticket ticket, List<MultipartFile> images) {
+        List<String> imagesUrlList = new ArrayList<>();
+        String imgUrl;
+        Image image;
+        for (MultipartFile imageMtp : images) {
+            imgUrl = imageHandler.saveImageToUploadDir(imageMtp);
+            imagesUrlList.add(imgUrl);
+            image = new Image(imgUrl, ticket);
+            imageRepository.save(image);
+        }
+        return imagesUrlList;
+    }
+
 }

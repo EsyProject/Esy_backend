@@ -1,14 +1,12 @@
 package apiBoschEsy.apiInSpringBoot.service.utils;
 
 import apiBoschEsy.apiInSpringBoot.entity.Assessment;
-import apiBoschEsy.apiInSpringBoot.infra.exception.EventNotFoundException;
+import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.EventNotFoundException;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryAssessment;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
-
-import java.util.List;
 
 @Component
 public class HighPointsIntegerHandler {

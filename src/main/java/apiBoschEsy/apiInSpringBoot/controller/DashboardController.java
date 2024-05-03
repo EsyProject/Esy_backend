@@ -3,7 +3,7 @@ package apiBoschEsy.apiInSpringBoot.controller;
 import apiBoschEsy.apiInSpringBoot.dto.dashboard.DataEvaluationAverage;
 import apiBoschEsy.apiInSpringBoot.dto.dashboard.DataHighPoints;
 import apiBoschEsy.apiInSpringBoot.dto.dashboard.DataSuggestion;
-import apiBoschEsy.apiInSpringBoot.infra.exception.EventNotFoundException;
+import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.EventNotFoundException;
 import apiBoschEsy.apiInSpringBoot.service.dashboard.DashBoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

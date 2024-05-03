@@ -1,8 +1,8 @@
 package apiBoschEsy.apiInSpringBoot.controller;
 
 import apiBoschEsy.apiInSpringBoot.dto.event.*;
-import apiBoschEsy.apiInSpringBoot.infra.exception.EventNotFoundException;
-import apiBoschEsy.apiInSpringBoot.infra.exception.ExceptionDateInvalid;
+import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.EventNotFoundException;
+import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.ExceptionDateInvalid;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryEvent;
 import apiBoschEsy.apiInSpringBoot.service.image.ImageService;
 import apiBoschEsy.apiInSpringBoot.service.event.EventService;

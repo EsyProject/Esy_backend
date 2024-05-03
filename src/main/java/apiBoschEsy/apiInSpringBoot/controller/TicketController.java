@@ -1,20 +1,16 @@
 package apiBoschEsy.apiInSpringBoot.controller;
 
 import apiBoschEsy.apiInSpringBoot.dto.ticket.DataDeitalTicket;
-import apiBoschEsy.apiInSpringBoot.dto.ticket.DataListTicket;
+import apiBoschEsy.apiInSpringBoot.dto.ticket.DataDeitalUpdateTicket;
+import apiBoschEsy.apiInSpringBoot.dto.ticket.DataImageTicket;
 import apiBoschEsy.apiInSpringBoot.dto.ticket.DataRegisterTicket;
-import apiBoschEsy.apiInSpringBoot.dto.ticket.DataTimeTicket;
-import apiBoschEsy.apiInSpringBoot.dto.ticket.DataDateTicket;
-import apiBoschEsy.apiInSpringBoot.entity.Ticket;
-import apiBoschEsy.apiInSpringBoot.infra.exception.ExceptionDateInvalid;
+import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.EventNotFoundException;
+import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.ExceptionDateInvalid;
+import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.TicketNotFoundException;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryTicket;
 import apiBoschEsy.apiInSpringBoot.service.ticket.TicketService;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -38,19 +34,19 @@ public class TicketController {
                                                            UriComponentsBuilder uriBuilder,
                                                            @PathVariable Long event_id,
                                                            @AuthenticationPrincipal Jwt jwt
-                                                           ) throws ExceptionDateInvalid {
+                                                           ) throws ExceptionDateInvalid, EventNotFoundException {
         var ticket = ticketService.createTicket(dataRegisterTicket, event_id, jwt);
         var uri = uriBuilder.path("ticket/{id}").build(ticket.ticket_id());
 
         return ResponseEntity.created(uri).body(ticket);
     }
 
-    // PACTH
+    // PATCH
 
-//    @PatchMapping("/update")
-//    public ResponseEntity<DataDeitalTicket> addImage(@RequestBody @Valid DataRegisterTicket dataRegisterTicket) throws ExceptionDateInvalid{
-//
-//        return ResponseEntity.status(HttpStatus.OK).body();
-//    }
+    @PatchMapping("/{ticket_id}")
+    public ResponseEntity<DataDeitalUpdateTicket> updateImageTicket(@ModelAttribute @Valid DataImageTicket dataImageTicket, @PathVariable Long ticket_id) throws TicketNotFoundException {
+        var imageTicket = ticketService.imageTicket(dataImageTicket, ticket_id);
+        return ResponseEntity.status(HttpStatus.OK).body(imageTicket);
+    }
 
 }

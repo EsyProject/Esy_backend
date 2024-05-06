@@ -12,6 +12,25 @@ services:
       - "6578:5432"
     volumes:
       - esy-db:/var/lib/postgresql/data/
+      -
+#    networks:
+#      - esy_net
+
+#  api:
+#    depends_on:
+#      - esy-db
+#    build: .
+#    container_name: esy_backend
+#    ports:
+#      - "6967:6765"
+#    environment:
+#      - URL_DB=jdbc:postgresql://esy-db:5432/esy_bosch
+#    networks:
+#      - esy_net
 
 volumes:
   esy-db:
+
+# networks:
+  # esy_net:
+    # driver: bridge

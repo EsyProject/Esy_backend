@@ -12,7 +12,6 @@ services:
       - "6578:5432"
     volumes:
       - esy-db:/var/lib/postgresql/data/
-      -
 #    networks:
 #      - esy_net
 

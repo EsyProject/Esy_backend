@@ -18,7 +18,7 @@ spring:
     host: rb-smtp-auth.rbesz01.com
     port: 25
     username: gob8ca@br.bosch.com
-    password: Gordoxes12@!
+    password: ${PASSWORD_USER}
     properties:
       mail:
         smtp:

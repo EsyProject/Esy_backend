@@ -1,5 +1,6 @@
 package apiBoschEsy.apiInSpringBoot.dto.email;
 
+import apiBoschEsy.apiInSpringBoot.constants.StatusEmail;
 import apiBoschEsy.apiInSpringBoot.entity.Email;
 
 public record DataDetailEmail(
@@ -9,6 +10,7 @@ public record DataDetailEmail(
         String emailTo,
         String title_email,
         String body,
+        StatusEmail statusEmail,
         String dateSend
 ) {
     public DataDetailEmail(Email email, String dateSend){
@@ -19,6 +21,7 @@ public record DataDetailEmail(
           email.getEmailTo(),
           email.getTitle_email(),
           email.getBody(),
+          email.getStatusEmail(),
           dateSend
         );
     }

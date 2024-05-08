@@ -2,7 +2,7 @@ spring:
   application:
     name: apiInSpringBoot
   datasource:
-    url: jdbc:postgresql://localhost:6578/esy_bosch
+    url: ${URL_DB}
     # ${URL_DB}
     # jdbc:postgresql://localhost:6578/esy_bosch
     username: postgres

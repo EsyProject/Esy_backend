@@ -1,6 +1,8 @@
-FROM openjdk:17
+FROM openjdk:17-alpine
 
-ARG JAR_FILE=out/artifacts/apiInSpringBoot_jar/*.jar
+#RUN mvn package -DskipTests
+
+ARG JAR_FILE=target/*.jar
 
 COPY ${JAR_FILE} api.jar
 

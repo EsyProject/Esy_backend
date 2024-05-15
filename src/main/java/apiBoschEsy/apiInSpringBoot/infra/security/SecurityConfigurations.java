@@ -18,6 +18,8 @@ public class SecurityConfigurations {
     @Value("${spring.security.oauth2.client.provider.azure-ad.jwk-set-uri}")
     private String jwkUri;
 
+    
+
     @Bean // Used to export a class to Spring, allowing it to load it and perform dependency injection into other classes
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http.csrf(csrf -> csrf.disable())
@@ -25,6 +27,7 @@ public class SecurityConfigurations {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> req
                         .requestMatchers("/images/**").permitAll()
+                        .requestMatchers("/hello/**").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(conf -> conf
                         .jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder())));

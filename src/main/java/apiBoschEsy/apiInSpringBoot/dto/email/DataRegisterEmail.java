@@ -7,8 +7,9 @@ public record DataRegisterEmail(
         @NotBlank
         String ownerRef,
         @NotBlank
-        @Email
         String emailTo,
+        @NotBlank
+        String emailFrom,
         @NotBlank
         String title_email
 ) {

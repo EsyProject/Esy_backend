@@ -43,13 +43,13 @@ public class Email {
         this.ownerRef = data.ownerRef();
         this.title_email = data.title_email();
         this.emailTo = data.emailTo();
+        this.emailFrom = data.emailFrom();
     }
 
     // Method
     public String emailDefaultSendTicket(String username){
         // Creating attributes
         LocalTime currentTime = LocalTime.now();
-        LocalTime inTheMorning = LocalTime.of(0,0);
 
         LocalTime inTheAfternoon = LocalTime.of(12,0);
 

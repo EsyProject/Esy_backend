@@ -6,22 +6,18 @@ import apiBoschEsy.apiInSpringBoot.dto.email.DataDetailEmail;
 import apiBoschEsy.apiInSpringBoot.dto.email.DataRegisterEmail;
 import apiBoschEsy.apiInSpringBoot.entity.Email;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryEmail;
-import apiBoschEsy.apiInSpringBoot.repository.IRepositoryImage;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryTicket;
 import apiBoschEsy.apiInSpringBoot.service.utils.FormatService;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -47,26 +43,22 @@ public class EmailService {
     @Transactional
     public DataDetailEmail sendingEmail(@AuthenticationPrincipal Jwt jwt, DataRegisterEmail dataRegisterEmail){
 
-        // My email
-        final String emailToEmail= "bruno.gomes3@br.bosch.com";
-
         // Creating a user
         DataAuth user = new DataAuth(jwt);
-
 
         Email email = new Email(dataRegisterEmail);
         email.setSendDateEmail(LocalDate.now());
         email.setTimeEmail(LocalTime.now());
-        email.setEmailTo(user.nameNetworkUser());
-        email.setEmailFrom(emailToEmail);
+        email.setEmailTo(email.getEmailTo());
+        email.setEmailFrom(email.getEmailFrom());
         email.setBody(email.emailDefaultSendTicket(user.userName()));
 
         try{
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper mimeMessageHelper;
             mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
-            mimeMessageHelper.setFrom(emailToEmail);
-            mimeMessageHelper.setTo(user.nameNetworkUser());
+            mimeMessageHelper.setFrom(email.getEmailFrom());
+            mimeMessageHelper.setTo(email.getEmailTo());
             mimeMessageHelper.setText(email.emailDefaultSendTicket(user.userName()));
             mimeMessageHelper.setSubject(email.getTitle_email());
             javaMailSender.send(mimeMessage);

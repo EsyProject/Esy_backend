@@ -1,14 +1,10 @@
 package apiBoschEsy.apiInSpringBoot.controller;
 
-import apiBoschEsy.apiInSpringBoot.dto.ticket.DataDeitalTicket;
-import apiBoschEsy.apiInSpringBoot.dto.ticket.DataDeitalUpdateTicket;
-import apiBoschEsy.apiInSpringBoot.dto.ticket.DataImageTicket;
-import apiBoschEsy.apiInSpringBoot.dto.ticket.DataRegisterTicket;
-import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.EventNotFoundException;
-import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.ExceptionDateInvalid;
-import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.TicketNotFoundException;
+import apiBoschEsy.apiInSpringBoot.dto.ticket.*;
+import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.*;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryTicket;
 import apiBoschEsy.apiInSpringBoot.service.ticket.TicketService;
+import jakarta.validation.Path;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,11 +26,12 @@ public class TicketController {
 
     // POST Ticket
     @PostMapping("/{event_id}")
-    public ResponseEntity<DataDeitalTicket> registerTicket(@ModelAttribute @Valid DataRegisterTicket dataRegisterTicket,
-                                                           UriComponentsBuilder uriBuilder,
-                                                           @PathVariable Long event_id,
-                                                           @AuthenticationPrincipal Jwt jwt
-                                                           ) throws ExceptionDateInvalid, EventNotFoundException {
+    public ResponseEntity<DataDeitalTicket> registerTicket(
+            @ModelAttribute @Valid DataRegisterTicket dataRegisterTicket,
+            UriComponentsBuilder uriBuilder,
+            @PathVariable Long event_id,
+            @AuthenticationPrincipal Jwt jwt
+    ) throws ExceptionDateInvalid, EventNotFoundException, CreateMoreTicketException, UserDontCreateTicket {
         var ticket = ticketService.createTicket(dataRegisterTicket, event_id, jwt);
         var uri = uriBuilder.path("ticket/{id}").build(ticket.ticket_id());
 
@@ -43,10 +40,22 @@ public class TicketController {
 
     // PATCH
 
-    @PatchMapping("/{ticket_id}")
-    public ResponseEntity<DataDeitalUpdateTicket> updateImageTicket(@ModelAttribute @Valid DataImageTicket dataImageTicket, @PathVariable Long ticket_id) throws TicketNotFoundException {
-        var imageTicket = ticketService.imageTicket(dataImageTicket, ticket_id);
+    @PatchMapping("/{event_id}/{ticket_id}")
+    public ResponseEntity<DataDeitalUpdateTicket> updateImageTicket(
+            @ModelAttribute @Valid DataImageTicket dataImageTicket,
+            @PathVariable Long event_id,
+            @PathVariable Long ticket_id
+    ) throws TicketNotFoundException, EventNotFoundException {
+        var imageTicket = ticketService.imageTicket(dataImageTicket, event_id, ticket_id);
         return ResponseEntity.status(HttpStatus.OK).body(imageTicket);
     }
 
+    @PatchMapping("/{event_id}/{ticket_id}/confirm")
+    public ResponseEntity<DataConfirmTicket> confirmTicket(
+            @PathVariable Long event_id,
+            @PathVariable Long ticket_id
+    ){
+        var confirm = ticketService.confirmTicket(event_id, ticket_id);
+        return ResponseEntity.status(HttpStatus.OK).body(confirm);
+    }
 }

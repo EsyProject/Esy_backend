@@ -1,9 +1,7 @@
 package apiBoschEsy.apiInSpringBoot.infra.error;
 
 import apiBoschEsy.apiInSpringBoot.dto.error.DataError;
-import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.EventNotFoundException;
-import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.ExceptionDateInvalid;
-import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.TicketNotFoundException;
+import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.*;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,5 +34,13 @@ public class ErrorHandler {
     @ExceptionHandler(TicketNotFoundException.class)
     public ResponseEntity handlerErrorTicket404(TicketNotFoundException exception){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new DataError(exception.getMessage()));
-        }
     }
+    @ExceptionHandler(CreateMoreTicketException.class)
+    public ResponseEntity handlerErrorCreateMoreTicket404(CreateMoreTicketException exception){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new DataError(exception.getMessage()));
+    }
+    @ExceptionHandler(UserDontCreateTicket.class)
+    public ResponseEntity handlerErrorUserDontCreateTicket(UserDontCreateTicket exception){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new DataError(exception.getMessage()));
+    }
+}

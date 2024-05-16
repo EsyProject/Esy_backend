@@ -30,4 +30,10 @@ public class FormatService {
         var currentDate = LocalDate.now();
         return initialDate.isAfter(currentDate) || !initialDate.equals(currentDate);
     }
+
+    public boolean isMorning(){
+        LocalTime currentTime = LocalTime.now();
+        LocalTime noonTime = LocalTime.NOON;
+        return currentTime.isBefore(noonTime);
+    }
 }

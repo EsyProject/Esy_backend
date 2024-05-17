@@ -53,22 +53,20 @@ public class TicketService {
         // Find Event by ID
         Event event = repositoryEvent.findById(event_id).orElseThrow(() -> new EventNotFoundException("Event Not found with ID: " + event_id));
 
-        // Check if the event already has tickets
-        if (!event.getTickets().isEmpty()) {
-            throw new CreateMoreTicketException("This event already has a ticket. You cannot create more tickets for this event.");
-        }
-
-        // Check if the user already has a ticket for this event
+        // Creating a user
         String username = new DataAuth(jwt).userName();
-        for (Ticket ticket : event.getTickets()) {
-            if (ticket.getAuthor().equals(username)) {
-                throw new UserDontCreateTicket("You already have a ticket for this event. You cannot create more tickets for the same event.");
+
+        // Check if the event allows multiple tickets per user
+        if (!event.isAllowMultipleTicketsPerUser()) {
+            // Check if the user already has a ticket for this event
+            boolean userHasTicket = repositoryTicket.existsByEventAndAuthor(event, username);
+            if (userHasTicket) {
+                throw new CreateMoreTicketException("This event already has a ticket. You cannot create more tickets for this event.");
             }
         }
 
         // Create the ticket
         Ticket ticket = new Ticket(dataRegisterTicket);
-
         if (!(ticket.getInitialDateTicket().isAfter(dateCurrent) || ticket.getInitialDateTicket().equals(dateCurrent))) {
             throw new ExceptionDateInvalid("Invalid date! You entered a date that has already passed. Enter a future or current date!");
         }
@@ -107,8 +105,6 @@ public class TicketService {
                 event.getNameOfEvent()
         );
     }
-
-
 
     @Transactional
     public DataDeitalUpdateTicket imageTicket(@ModelAttribute DataImageTicket dataImageTicket, @PathVariable Long event_id, @PathVariable Long ticket_id) throws TicketNotFoundException, EventNotFoundException {

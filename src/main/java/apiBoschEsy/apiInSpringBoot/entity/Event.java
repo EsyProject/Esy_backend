@@ -50,6 +50,7 @@ public class Event {
     // Deleted ?
     private Boolean delete;
     private String author;
+    private Boolean allowMultipleTicketsPerUser = false;
 
     // Creating a Relationship with others tables
         // Event with Ticket
@@ -71,5 +72,9 @@ public class Event {
         this.initial_date = data.initialDate();
         this.finish_date = data.finishDate();
         this.delete = false;
+    }
+
+    public boolean isAllowMultipleTicketsPerUser() {
+        return allowMultipleTicketsPerUser;
     }
 }

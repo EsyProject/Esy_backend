@@ -17,6 +17,7 @@ import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/assessment")
+@CrossOrigin(origins = "*")
 public class AssessmentController {
 
     // Service Assessment

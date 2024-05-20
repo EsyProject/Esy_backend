@@ -45,6 +45,20 @@ spring:
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope: openid
 
+  management:
+    endpoints:
+      web:
+        exposure:
+          include: "*"
+        cors:
+          allowed-headers:
+            - "*"
+          allowed-origin:
+            - "*"
+          allowed-methods:
+            - "*"
+          allow-credentials: true
+
 upload:
   dir: ${user.dir}/eventsUploads
 

@@ -16,7 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/ticket")
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class TicketController {
 
     // Autowired injection dependencies

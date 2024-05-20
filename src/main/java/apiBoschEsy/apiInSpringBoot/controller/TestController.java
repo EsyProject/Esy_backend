@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/hello")
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class TestController {
     @GetMapping
     public String helloBruno(){

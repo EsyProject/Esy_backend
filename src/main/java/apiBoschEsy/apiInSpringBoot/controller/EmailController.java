@@ -14,7 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/email")
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class EmailController {
     @Autowired
     private EmailService emailService;

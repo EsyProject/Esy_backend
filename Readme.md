@@ -1,6 +1,10 @@
 # Documentation API 🧠 -  Bosch Esy
 
 ## Getting Started:
+**For generate the .jar of application**
+~~~shell
+mvn package -DskipTests
+~~~
 **For create a containers of application**
 ```
 docker-compose up

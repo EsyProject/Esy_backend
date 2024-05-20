@@ -5,6 +5,7 @@ import apiBoschEsy.apiInSpringBoot.dto.auth.DataAuth;
 import apiBoschEsy.apiInSpringBoot.dto.comment.DataComment;
 import apiBoschEsy.apiInSpringBoot.entity.Assessment;
 import apiBoschEsy.apiInSpringBoot.entity.Event;
+import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.AssessmentDuplicated;
 import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.EventNotFoundException;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryAssessment;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryEvent;
@@ -17,6 +18,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 @Service
@@ -41,12 +43,18 @@ public class AssessmentService {
 
     // POST Assessment (Based in a Event)
     @Transactional
-    public DataDetailAssessment createAssessment(DataRegisterAssessment dataRegisterAssessment, Long event_id, @AuthenticationPrincipal Jwt jwt) throws EventNotFoundException {
+    public DataDetailAssessment createAssessment(DataRegisterAssessment dataRegisterAssessment, Long event_id, @AuthenticationPrincipal Jwt jwt) throws EventNotFoundException, AssessmentDuplicated {
         // Get the Token JWT SSO
         DataAuth user = new DataAuth(jwt);
         // Get event
         Event event = iRepositoryEvent.findById(event_id).orElseThrow(() -> new EventNotFoundException("Event Not found with ID: " + event_id));
         // Connect Event with assessment
+        List<Assessment> assessmentList = event.getAssessments();
+        for (Assessment assessment: assessmentList) {
+            if(assessment.getAuthor().equals(user.userName())){
+                throw new AssessmentDuplicated("You created a Assessment! Cannot create two assessment in the same Event!");
+            }
+        }
         var assessment = new Assessment(dataRegisterAssessment);
         assessment.setEvent(event);
         assessment.setAuthor(user.userName());
@@ -68,8 +76,11 @@ public class AssessmentService {
     }
 
     // Get Event with all Assessments
-    public Stream eventAssessment(@PathVariable Long event_id) {
-        var events = iRepositoryEvent.findById(event_id).stream();
-        return events.map(event -> new DataAssessmentEvent(event, formatService.formattedDate(event.getInitial_date()), formatService.formattedDate(event.getFinish_date())));
+    public Stream eventAssessment(@PathVariable Long event_id) throws EventNotFoundException {
+        var events = iRepositoryEvent.findById(event_id);
+        if(events.isEmpty()){
+            throw new EventNotFoundException("Event Not Found with the ID: " + event_id);
+        }
+        return events.stream().map(event -> new DataAssessmentEvent(event, formatService.formattedDate(event.getInitial_date()), formatService.formattedDate(event.getFinish_date())));
     }
 }

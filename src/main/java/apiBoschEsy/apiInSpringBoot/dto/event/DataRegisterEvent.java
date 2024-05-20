@@ -21,8 +21,6 @@ public record DataRegisterEvent(
         String nameOfEvent,
         @NotNull
         Area responsible_area,
-        @NotNull
-        Area access_event,
         @NotBlank
         String description,
         @JsonAlias({"image"})

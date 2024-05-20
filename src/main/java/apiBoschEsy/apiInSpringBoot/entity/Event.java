@@ -64,7 +64,6 @@ public class Event {
     public Event(DataRegisterEvent data){
         this.nameOfEvent = data.nameOfEvent();
         this.responsible_area = data.responsible_area();
-        this.access_event = data.access_event();
         this.description = data.description();
         this.localEvent = data.localEvent();
         this.initial_time = data.initialTime();

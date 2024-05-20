@@ -1,5 +1,20 @@
 # Documentation API 🧠 -  Bosch Esy
 
+## Getting Started:
+**For create a containers of application**
+```
+docker-compose up
+```
+**On wls run the following command to get docker eth0**
+~~~shell
+ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
+~~~~
+**On powershell as admin run the following command to allow the application accessible on ip address**
+~~~shell
+netsh interface portproxy add v4tov4 listenport=8765 listenaddress=0.0.0.0 connectport=8765 connectaddress=<dockerEth0>
+~~~
+<br>
+
 BaseUrl: `http://172.28.69.4:6967`
 
 ## Event 🧧 :

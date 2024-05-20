@@ -43,4 +43,8 @@ public class ErrorHandler {
     public ResponseEntity handlerErrorUserDontCreateTicket(UserDontCreateTicket exception){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new DataError(exception.getMessage()));
     }
+    @ExceptionHandler(AssessmentDuplicated.class)
+    public ResponseEntity handlerErrorAssessmentDuplicated(AssessmentDuplicated exception){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DataError(exception.getMessage()));
+    }
 }

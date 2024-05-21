@@ -3,6 +3,7 @@ package apiBoschEsy.apiInSpringBoot.controller;
 import apiBoschEsy.apiInSpringBoot.dto.event.*;
 import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.EventNotFoundException;
 import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.ExceptionDateInvalid;
+import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.NameEventDuplicated;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryEvent;
 import apiBoschEsy.apiInSpringBoot.service.image.ImageService;
 import apiBoschEsy.apiInSpringBoot.service.event.EventService;
@@ -25,7 +26,6 @@ import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/event")
-//@CrossOrigin(origins = "*")
 public class EventController {
 
     @Autowired
@@ -43,7 +43,7 @@ public class EventController {
             @ModelAttribute @Valid DataRegisterEvent dataRegisterEvent,
             UriComponentsBuilder uriBuilder,
             @AuthenticationPrincipal Jwt jwt
-            ) throws ExceptionDateInvalid {
+            ) throws ExceptionDateInvalid, NameEventDuplicated {
         var event = eventService.createEvent(dataRegisterEvent, jwt);
         var uri = uriBuilder.path("/event/{id}").build(event.event_id());
 

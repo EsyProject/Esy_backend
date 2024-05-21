@@ -14,14 +14,13 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/email")
-//@CrossOrigin(origins = "*")
 public class EmailController {
     @Autowired
     private EmailService emailService;
 
     @PostMapping("/{event_id}")
-    public ResponseEntity<DataDetailEmail> registerEmail(@RequestBody @Valid DataRegisterEmail dataRegisterEmail, UriComponentsBuilder uriBuilder, @AuthenticationPrincipal Jwt jwt, @PathVariable Long event_id) throws EventNotFoundException {
-        var email = emailService.sendingEmail(jwt, dataRegisterEmail, event_id);
+    public ResponseEntity<DataDetailEmail> registerEmail(UriComponentsBuilder uriBuilder, @AuthenticationPrincipal Jwt jwt, @PathVariable Long event_id, @RequestBody @Valid DataRegisterEmail dataRegisterEmail) throws EventNotFoundException {
+        var email = emailService.sendingEmail(jwt, event_id, dataRegisterEmail);
         var uri = uriBuilder.path("/email/{email_id}").build(email.email_id());
         return ResponseEntity.created(uri).body(email);
     }

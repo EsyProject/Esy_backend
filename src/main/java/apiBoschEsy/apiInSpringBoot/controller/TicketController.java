@@ -16,7 +16,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/ticket")
-//@CrossOrigin(origins = "*")
 public class TicketController {
 
     // Autowired injection dependencies
@@ -27,16 +26,17 @@ public class TicketController {
 
     // POST Ticket
     @PostMapping("/{event_id}")
-    public ResponseEntity<DataDeitalTicket> registerTicket(
+    public ResponseEntity<DataDeitalRegisterTicket> registerTicket(
             @ModelAttribute @Valid DataRegisterTicket dataRegisterTicket,
             UriComponentsBuilder uriBuilder,
             @PathVariable Long event_id,
             @AuthenticationPrincipal Jwt jwt
-    ) throws ExceptionDateInvalid, EventNotFoundException, CreateMoreTicketException, UserDontCreateTicket {
-        var ticket = ticketService.createTicket(dataRegisterTicket, event_id, jwt);
-        var uri = uriBuilder.path("ticket/{id}").build(ticket.ticket_id());
+    ) throws ExceptionDateInvalid, EventNotFoundException, CreateMoreTicketException, UserDontCreateTicket, NeedSamePeopleForCreate, OnlyOneTicket {
+        var ticket = ticketService.createTicketEventMain(dataRegisterTicket, event_id, jwt);
+//        var uri = uriBuilder.path("ticket/{id}").build(ticket.ticket_id());
 
-        return ResponseEntity.created(uri).body(ticket);
+//        return ResponseEntity.created(uri).body(ticket);
+        return ResponseEntity.status(HttpStatus.CREATED).body(ticket);
     }
 
     // PATCH

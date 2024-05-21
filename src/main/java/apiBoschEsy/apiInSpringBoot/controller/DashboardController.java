@@ -14,7 +14,6 @@ import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/dashboard")
-//@CrossOrigin(origins = "*")
 public class DashboardController {
     @Autowired
     private DashBoardService dashBoardService;

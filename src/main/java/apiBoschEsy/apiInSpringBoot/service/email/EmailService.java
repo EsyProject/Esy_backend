@@ -13,8 +13,10 @@ import apiBoschEsy.apiInSpringBoot.repository.IRepositoryTicket;
 import apiBoschEsy.apiInSpringBoot.service.utils.FormatService;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -22,10 +24,13 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class EmailService {
@@ -50,7 +55,7 @@ public class EmailService {
 
     // POST
     @Transactional
-    public DataDetailEmail sendingEmail(@AuthenticationPrincipal Jwt jwt, DataRegisterEmail dataRegisterEmail, @PathVariable Long event_id) throws EventNotFoundException {
+    public DataDetailEmail sendingEmail(@AuthenticationPrincipal Jwt jwt, @PathVariable Long event_id, @RequestBody @Valid DataRegisterEmail dataRegisterEmail) throws EventNotFoundException {
 
         // Creating a user
         DataAuth user = new DataAuth(jwt);
@@ -77,7 +82,9 @@ public class EmailService {
         email.setTimeEmail(LocalTime.now());
         email.setEmailTo(email.getEmailTo());
         email.setEmailFrom(email.getEmailFrom());
-        email.setBody(emailDefault.emailDefault(nameOfEvent, imageTicket, user));
+        email.setOwnerRef(user.userName());
+        email.setBody(emailDefault.emailDefault(nameOfEvent, user));
+        email.setTitle_email(emailDefault.titleEmail(nameOfEvent));
 
         try{
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -85,12 +92,19 @@ public class EmailService {
             mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
             mimeMessageHelper.setFrom(email.getEmailFrom());
             mimeMessageHelper.setTo(email.getEmailTo());
-            mimeMessageHelper.setText(emailDefault.emailDefault(nameOfEvent, imageTicket, user));
+            mimeMessageHelper.setText(emailDefault.emailDefault(nameOfEvent,user));
             mimeMessageHelper.setSubject(email.getTitle_email());
+
+            if(imageTicket != null){
+                FileSystemResource file = new FileSystemResource(new File(imageTicket));
+                mimeMessageHelper.addAttachment(Objects.requireNonNull(file.getFilename()), file);
+            }
             javaMailSender.send(mimeMessage);
             email.setStatusEmail(StatusEmail.SENT);
+
         }catch (MailException e){
             email.setStatusEmail(StatusEmail.ERROR);
+            System.out.println(e.getMessage());
         }finally {
             repositoryEmail.save(email);
             return new DataDetailEmail(email, formatService.formattedDate(email.getSendDateEmail()));

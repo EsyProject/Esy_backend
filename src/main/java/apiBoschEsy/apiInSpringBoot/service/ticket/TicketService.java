@@ -42,7 +42,55 @@ public class TicketService {
 
     // Methods Controller
 
-    // POST ticket
+    // POST Register Ticket (ADMIN)
+    @Transactional
+    public DataDeitalRegisterTicket createTicketEventMain(@RequestBody @Valid DataRegisterTicket dataRegisterTicket, @PathVariable Long event_id, @AuthenticationPrincipal Jwt jwt) throws ExceptionDateInvalid, EventNotFoundException, NeedSamePeopleForCreate, OnlyOneTicket {
+        // Date and Time
+        LocalDate dateCurrent = formatService.getCurrentDate();
+        String timeCurrent = formatService.getCurrentTimeFormatted();
+
+        // Find Event by ID
+        Event event = repositoryEvent.findById(event_id).orElseThrow(() -> new EventNotFoundException("Event Not found with ID: " + event_id));
+
+        // Creating a user
+        String username = new DataAuth(jwt).userName();
+
+        // Create the ticket
+        if(!(event.getAuthor().equals(username))){
+            throw new NeedSamePeopleForCreate("You don't created this event, so you cannot create ticket for event!");
+        }
+        // Check if a ticket already exists for this event
+        if (event.getTickets() != null && !event.getTickets().isEmpty()) {
+            throw new OnlyOneTicket("A ticket for this event already exists. Only one ticket can be created per event.");
+        }
+        Ticket ticket = new Ticket(dataRegisterTicket);
+        ticket.setTicket_id(1L);
+        if (!(ticket.getInitialDateTicket().isAfter(dateCurrent) || ticket.getInitialDateTicket().equals(dateCurrent))) {
+            throw new ExceptionDateInvalid("Invalid date! You entered a date that has already passed. Enter a future or current date!");
+        }
+
+        // Set ticket details
+        ticket.setDate_created(dateCurrent);
+        ticket.setTime_create(LocalTime.parse(timeCurrent));
+        ticket.setEvent(event);
+
+
+        // Generate the QRCode
+        var qrCodeNumber = qrCode.generateRandomNumbers(7);
+        ticket.setQrCodeNumber(qrCodeNumber);
+
+        // Save the ticket
+        repositoryTicket.save(ticket);
+
+        return new DataDeitalRegisterTicket(
+                formatService.formattedDate(ticket.getInitialDateTicket()),
+                formatService.formattedDate(ticket.getFinishDateTicket()),
+                ticket.getInitialTimeTicket(),
+                ticket.getFinishTimeTicket()
+        );
+    }
+
+    // POST (get ticket event (user default))
     @Transactional
     public DataDeitalTicket createTicket(@RequestBody @Valid DataRegisterTicket dataRegisterTicket, @PathVariable Long event_id, @AuthenticationPrincipal Jwt jwt) throws ExceptionDateInvalid, EventNotFoundException, CreateMoreTicketException, UserDontCreateTicket {
 
@@ -56,54 +104,11 @@ public class TicketService {
         // Creating a user
         String username = new DataAuth(jwt).userName();
 
-        // Check if the event allows multiple tickets per user
-        if (!event.isAllowMultipleTicketsPerUser()) {
-            // Check if the user already has a ticket for this event
-            boolean userHasTicket = repositoryTicket.existsByEventAndAuthor(event, username);
-            if (userHasTicket) {
-                throw new CreateMoreTicketException("This event already has a ticket. You cannot create more tickets for this event.");
-            }
-        }
+        // GET list Tickets
+        var tickets = event.getTickets();
 
-        // Create the ticket
-        Ticket ticket = new Ticket(dataRegisterTicket);
-        if (!(ticket.getInitialDateTicket().isAfter(dateCurrent) || ticket.getInitialDateTicket().equals(dateCurrent))) {
-            throw new ExceptionDateInvalid("Invalid date! You entered a date that has already passed. Enter a future or current date!");
-        }
 
-        // Set ticket details
-        ticket.setDate_created(dateCurrent);
-        ticket.setTime_create(LocalTime.parse(timeCurrent));
-        ticket.setEvent(event);
 
-        // Set the ticket ID to 1 if it's the first ticket, else auto-increment ID
-        if (event.getTickets().isEmpty()) {
-            ticket.setTicket_id(1L);
-        } else {
-            // Retrieve the maximum ticket ID and increment it by 1
-            Long maxTicketId = event.getTickets().stream().mapToLong(Ticket::getTicket_id).max().orElse(0L);
-            ticket.setTicket_id(maxTicketId + 1);
-        }
-
-        // Set the author of the ticket
-        DataAuth user = new DataAuth(jwt);
-        ticket.setAuthor(user.userName());
-
-        // Generate the QRCode
-        var qrCodeNumber = qrCode.generateRandomNumbers(7);
-        ticket.setQrCodeNumber(qrCodeNumber);
-
-        // Save the ticket
-        repositoryTicket.save(ticket);
-
-        // Return the ticket details
-        return new DataDeitalTicket(ticket,
-                formatService.formattedDate(ticket.getInitialDateTicket()),
-                formatService.formattedDate(ticket.getFinishDateTicket()),
-                qrCodeNumber,
-                user.userName(),
-                event.getNameOfEvent()
-        );
     }
 
     @Transactional

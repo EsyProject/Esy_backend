@@ -91,25 +91,25 @@ public class TicketService {
     }
 
     // POST (get ticket event (user default))
-    @Transactional
-    public DataDeitalTicket createTicket(@RequestBody @Valid DataRegisterTicket dataRegisterTicket, @PathVariable Long event_id, @AuthenticationPrincipal Jwt jwt) throws ExceptionDateInvalid, EventNotFoundException, CreateMoreTicketException, UserDontCreateTicket {
-
-        // Date and Time
-        LocalDate dateCurrent = formatService.getCurrentDate();
-        String timeCurrent = formatService.getCurrentTimeFormatted();
-
-        // Find Event by ID
-        Event event = repositoryEvent.findById(event_id).orElseThrow(() -> new EventNotFoundException("Event Not found with ID: " + event_id));
-
-        // Creating a user
-        String username = new DataAuth(jwt).userName();
-
-        // GET list Tickets
-        var tickets = event.getTickets();
-
-
-
-    }
+//    @Transactional
+//    public DataDeitalTicket createTicket(@RequestBody @Valid DataRegisterTicket dataRegisterTicket, @PathVariable Long event_id, @AuthenticationPrincipal Jwt jwt) throws ExceptionDateInvalid, EventNotFoundException, CreateMoreTicketException, UserDontCreateTicket {
+//
+//        // Date and Time
+//        LocalDate dateCurrent = formatService.getCurrentDate();
+//        String timeCurrent = formatService.getCurrentTimeFormatted();
+//
+//        // Find Event by ID
+//        Event event = repositoryEvent.findById(event_id).orElseThrow(() -> new EventNotFoundException("Event Not found with ID: " + event_id));
+//
+//        // Creating a user
+//        String username = new DataAuth(jwt).userName();
+//
+//        // GET list Tickets
+//        var tickets = event.getTickets();
+//
+//
+//
+//    }
 
     @Transactional
     public DataDeitalUpdateTicket imageTicket(@ModelAttribute DataImageTicket dataImageTicket, @PathVariable Long event_id, @PathVariable Long ticket_id) throws TicketNotFoundException, EventNotFoundException {

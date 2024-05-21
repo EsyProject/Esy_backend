@@ -1,5 +1,6 @@
 package apiBoschEsy.apiInSpringBoot.entity;
 
+import apiBoschEsy.apiInSpringBoot.dto.event.DataRegisterEvent;
 import apiBoschEsy.apiInSpringBoot.dto.ticket.DataRegisterTicket;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
@@ -21,13 +22,13 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ticket_id;
-    private LocalDate initialDateTicket;
+        private LocalDate initialDateTicket;
 
-    private LocalDate finishDateTicket;
+        private LocalDate finishDateTicket;
 
-    private LocalTime initialTimeTicket;
+        private LocalTime initialTimeTicket;
 
-    private LocalTime finishTimeTicket;
+        private LocalTime finishTimeTicket;
     private String author;
     private String qrCodeNumber;
     private Boolean isPresence;

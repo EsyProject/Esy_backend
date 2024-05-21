@@ -4,8 +4,6 @@ import apiBoschEsy.apiInSpringBoot.constants.StatusEmail;
 import apiBoschEsy.apiInSpringBoot.dto.email.DataRegisterEmail;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.cglib.core.Local;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -35,32 +33,13 @@ public class Email {
     private LocalDate sendDateEmail;
     private LocalTime timeEmail;
     private StatusEmail statusEmail;
-//    private MultipartFile imageQRCode;
 
-    // Constructor
+    //    private MultipartFile imageQRCode;
 
-    public Email(DataRegisterEmail data){
-        this.ownerRef = data.ownerRef();
-        this.title_email = data.title_email();
-        this.emailTo = data.emailTo();
-        this.emailFrom = data.emailFrom();
+    // Constructor with DataRegisterEmail
+    public Email(DataRegisterEmail dataRegisterEmail){
+        this.emailFrom = dataRegisterEmail.emailFrom();
+        this.emailTo = dataRegisterEmail.emailTo();
     }
 
-    // Method
-    public String emailDefaultSendTicket(String username){
-        // Creating attributes
-        LocalTime currentTime = LocalTime.now();
-
-        LocalTime inTheAfternoon = LocalTime.of(12,0);
-
-        if(currentTime.isBefore(inTheAfternoon)){
-            return "Bom Dia " + username + "!" + "Nós agradecemos por estar interessado em ir ao nosso evento.\n" +
-                    "Espero que goste!" +
-                    "\nEstamos enviando a imagem do seu QRCode para que possa autenticar na hora da entrada: ";
-
-        }
-        return "Bom Tarde " + username + "!" + "Nós agradecemos por estar interessado em ir no nosso evento.\n" +
-                "Espero que goste!\n" +
-                "\nEstamos enviando a imagem do seu QRCode para que possa autenticar na hora da entrada: ";
-    }
 }

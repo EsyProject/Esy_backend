@@ -29,7 +29,6 @@ public class Event {
     @Column (unique = true)
     private String nameOfEvent;
     private Area responsible_area;
-    private Area access_event;
     @Column(columnDefinition = "TEXT")
     private String description;
     private List<String> imgUrl;

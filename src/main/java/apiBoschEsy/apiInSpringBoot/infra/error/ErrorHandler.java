@@ -47,4 +47,16 @@ public class ErrorHandler {
     public ResponseEntity handlerErrorAssessmentDuplicated(AssessmentDuplicated exception){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DataError(exception.getMessage()));
     }
+    @ExceptionHandler(NeedSamePeopleForCreate.class)
+    public ResponseEntity handlerErrorNeedSamePeopleForCreate(NeedSamePeopleForCreate exception){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DataError(exception.getMessage()));
+    }
+    @ExceptionHandler(OnlyOneTicket.class)
+    public ResponseEntity handlerErrorOnlyOneTicket(OnlyOneTicket exception){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DataError(exception.getMessage()));
+    }
+    @ExceptionHandler(NameEventDuplicated.class)
+    public ResponseEntity handlerErrorNameEventDuplicated(NameEventDuplicated exception){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DataError(exception.getMessage()));
+    }
 }

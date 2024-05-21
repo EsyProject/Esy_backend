@@ -39,6 +39,7 @@ public record DataRegisterEvent(
         LocalTime initialTime,
         @NotNull
         LocalTime finishTime
-) {
+)
+{
 
 }

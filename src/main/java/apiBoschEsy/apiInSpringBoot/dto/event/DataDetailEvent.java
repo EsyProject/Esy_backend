@@ -3,6 +3,7 @@ package apiBoschEsy.apiInSpringBoot.dto.event;
 import apiBoschEsy.apiInSpringBoot.constants.Place;
 import apiBoschEsy.apiInSpringBoot.entity.Event;
 import apiBoschEsy.apiInSpringBoot.constants.Area;
+import apiBoschEsy.apiInSpringBoot.entity.Ticket;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -22,6 +23,7 @@ public record DataDetailEvent(
         LocalDate date_created,
         LocalTime time_created,
         String author
+
 ) {
     public DataDetailEvent(Event event, String initialDate, String finishDate, String author){
        this(
@@ -40,5 +42,4 @@ public record DataDetailEvent(
                author
                );
     }
-
-    }
+}

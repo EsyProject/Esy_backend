@@ -10,23 +10,15 @@ import java.util.Optional;
 public record DataDeitalTicket(
         Long ticket_id,
         String event_name,
-        String initialDate,
-        String finishDate,
-        LocalTime initialTime,
-        LocalTime finishTime,
         String qrCodeNumber,
         String author,
         LocalDate date_created,
         LocalTime timeCreated
 ) {
-    public DataDeitalTicket(Ticket ticket, String initialDate, String finishDate, String qrCodeNumber, String author, String name_event){
+    public DataDeitalTicket(Ticket ticket, String qrCodeNumber, String author, String name_event){
         this(
                 ticket.getTicket_id(),
                 name_event,
-                initialDate,
-                finishDate,
-                ticket.getInitialTimeTicket(),
-                ticket.getFinishTimeTicket(),
                 qrCodeNumber,
                 author,
                 ticket.getDate_created(),

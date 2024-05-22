@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.xml.crypto.Data;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -34,7 +35,7 @@ public class TicketService {
     @Autowired
     private FormatService formatService;
     @Autowired
-    private GenerateNumberQRCode qrCode;
+    private GenerateNumberQRCode qrCodeService;
     @Autowired
     private IRepositoryEvent repositoryEvent;
     @Autowired
@@ -75,10 +76,6 @@ public class TicketService {
         ticket.setEvent(event);
 
 
-        // Generate the QRCode
-        var qrCodeNumber = qrCode.generateRandomNumbers(7);
-        ticket.setQrCodeNumber(qrCodeNumber);
-
         // Save the ticket
         repositoryTicket.save(ticket);
 
@@ -91,25 +88,53 @@ public class TicketService {
     }
 
     // POST (get ticket event (user default))
-//    @Transactional
-//    public DataDeitalTicket createTicket(@RequestBody @Valid DataRegisterTicket dataRegisterTicket, @PathVariable Long event_id, @AuthenticationPrincipal Jwt jwt) throws ExceptionDateInvalid, EventNotFoundException, CreateMoreTicketException, UserDontCreateTicket {
-//
-//        // Date and Time
-//        LocalDate dateCurrent = formatService.getCurrentDate();
-//        String timeCurrent = formatService.getCurrentTimeFormatted();
-//
-//        // Find Event by ID
-//        Event event = repositoryEvent.findById(event_id).orElseThrow(() -> new EventNotFoundException("Event Not found with ID: " + event_id));
-//
-//        // Creating a user
-//        String username = new DataAuth(jwt).userName();
-//
-//        // GET list Tickets
-//        var tickets = event.getTickets();
-//
-//
-//
-//    }
+    @Transactional
+    @Deprecated
+    public DataDeitalTicket createTicket(@PathVariable Long event_id, @AuthenticationPrincipal Jwt jwt) throws ExceptionDateInvalid, EventNotFoundException, CreateMoreTicketException, UserDontCreateTicket {
+
+        // Date and Time
+        LocalDate dateCurrent = formatService.getCurrentDate();
+        String timeCurrent = formatService.getCurrentTimeFormatted();
+
+        // Find Event by ID
+        Event event = repositoryEvent.findById(event_id).orElseThrow(() -> new EventNotFoundException("Event Not found with ID: " + event_id));
+
+        // Creating a user
+        String username = new DataAuth(jwt).userName();
+
+        // Check if user already created a ticket
+        boolean userHasTicket = event.getTickets().stream().anyMatch(ticket -> ticket.getAuthor().equals(username));
+        if (userHasTicket) {
+            throw new CreateMoreTicketException("User has already created a ticket.");
+        }
+
+        // Creating a number for QRCode
+        var qrCode = qrCodeService.generateRandomNumbers(7);
+
+        // Create new ticket
+        var newTicket = new Ticket();
+        newTicket.setDate_created(dateCurrent);
+        newTicket.setTime_create(LocalTime.now());
+        newTicket.setQrCodeNumber(qrCode);
+        newTicket.setAuthor(username);
+
+        // Set ticket ID sequentially (if not handled by the database)
+        newTicket.setTicket_id((long) (event.getTickets().size() + 1));
+
+        // Add ticket to event and save
+        event.getTickets().add(newTicket);
+        repositoryTicket.save(newTicket);
+
+        return new DataDeitalTicket(
+                newTicket.getTicket_id(),
+                event.getNameOfEvent(),
+                newTicket.getQrCodeNumber(),
+                username,
+                newTicket.getDate_created(),
+                timeCurrent
+        );
+    }
+
 
     @Transactional
     public DataDeitalUpdateTicket imageTicket(@ModelAttribute DataImageTicket dataImageTicket, @PathVariable Long event_id, @PathVariable Long ticket_id) throws TicketNotFoundException, EventNotFoundException {

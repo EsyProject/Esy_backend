@@ -13,16 +13,16 @@ public record DataDeitalTicket(
         String qrCodeNumber,
         String author,
         LocalDate date_created,
-        LocalTime timeCreated
+        String timeCreated
 ) {
-    public DataDeitalTicket(Ticket ticket, String qrCodeNumber, String author, String name_event){
+    public DataDeitalTicket(Ticket ticket, String qrCodeNumber, String author, String name_event, String timeCreated){
         this(
                 ticket.getTicket_id(),
                 name_event,
                 qrCodeNumber,
                 author,
                 ticket.getDate_created(),
-                ticket.getTime_create()
+                timeCreated
         );
     }
 }

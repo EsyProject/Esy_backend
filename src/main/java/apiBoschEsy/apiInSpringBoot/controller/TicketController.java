@@ -39,6 +39,12 @@ public class TicketController {
         return ResponseEntity.status(HttpStatus.CREATED).body(ticket);
     }
 
+    @PostMapping("/getTicket/{event_id}")
+    public ResponseEntity<DataDeitalTicket> getTicketPerUser(@PathVariable Long event_id, @AuthenticationPrincipal Jwt jwt) throws ExceptionDateInvalid, CreateMoreTicketException, EventNotFoundException, UserDontCreateTicket {
+        var ticketUser = ticketService.createTicket(event_id, jwt);
+        return ResponseEntity.status(HttpStatus.CREATED).body(ticketUser);
+    }
+
     // PATCH
 
     @PatchMapping("/{event_id}/{ticket_id}")

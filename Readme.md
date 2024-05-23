@@ -19,7 +19,7 @@ netsh interface portproxy add v4tov4 listenport=8765 listenaddress=0.0.0.0 conne
 ~~~
 <br>
 
-BaseUrl: `http://172.28.69.4:6967`
+BaseUrl: `http://10.234.89.187:6968`
 
 ## Event 🧧 :
 
@@ -34,7 +34,6 @@ Attributes:
 ```
 nameOfEvent: String
 responsivle_area: String
-access_event: String
 description: String
 images: file (Optional)
 localEvent: String
@@ -51,7 +50,6 @@ Return:
 	"event_id": "Long",
 	"nameOfEvent": "String",
 	"responsible_area": "String",
-	"access_event": "String",
 	"description": "String",
 	"imgUrl": "List<String> url",
 	"localEvent": "String",
@@ -141,27 +139,6 @@ Return:
 	"initialTime": "Time",
 	"local": "String",
 	"responsible_are": "String"
-}
-~~~
-
-
-### GET Event feed:
-
-Endpoint: `/event/feed`
-
-Return:
-
-~~~json
-{
-	"event_id": "Long",
-	"nameOfEvent": "String",
-	"initialDate": "Date",
-	"initialTime": "Time",
-	"finishTime": "Time",
-	"description": "String",
-	"local": "Time",
-	"responsible_area": "String",
-	"imgUrl": "List<String> Url"
 }
 ~~~
 
@@ -319,7 +296,7 @@ Rerturn:
 
 ### POST Ticket:
 
-Endpoint: `/ticket`
+Endpoint: `/ticket/{event_id}`
 
 Type: JSON
 
@@ -336,13 +313,65 @@ Return:
 
 ~~~json
 {
-	"ticket_id": "Long",
-	"initialDate": "Date",
-	"finishDate": "Date",
-	"initialTime": "Time",
-	"finishTime": "Time",
-	"date_created": "LocalDate",
-	"timeCreated": "LocalTime",
-	"qrCodeNumber": "Integer"
+  "initialDate": "Date",
+  "finishDate": "Date",
+  "initialTime": "Time",
+  "finishTime": "Time",
+  "authorTicket": "String"
+}
+~~~
+
+### POST (GET ticket) ticket:
+
+Endpoint: `/ticket/getTicket/{event_id}`
+
+Return:
+
+~~~json
+{
+  "ticket_id": "Long",
+  "event_name": "String",
+  "qrCodeNumber": "Integer",
+  "author": "String",
+  "date_created": "Date",
+  "timeCreated": "Time"
+}
+~~~
+
+### PATCH Ticket Image:
+
+Endpoint: `/ticket/{event_id}/{ticket_id}`
+
+Attributes:
+```
+   images: List<String>
+```
+
+Return:
+
+~~~json
+{
+  "ticket_id": "Long",
+  "imageUrl": "List<String>",
+  "author": "String",
+  "date_created": "Date",
+  "time_created": "Time"
+}
+~~~
+
+### PATCH Confirm ticket:
+
+Endpoint: `/ticket/{event_id/{ticket_id}/confirm`
+
+Return:
+
+~~~json
+{
+  "ticket_id": "Long",
+  "author": "String",
+  "isPresence": true,
+  "date_created": "Date",
+  "time_created": "Time"
+}
 }
 ~~~

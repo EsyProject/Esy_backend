@@ -8,14 +8,16 @@ public record DataDeitalRegisterTicket(
         String initialDate,
         String finishDate,
         LocalTime initialTime,
-        LocalTime finishTime
+        LocalTime finishTime,
+        String authorTicket
 ) {
-    public DataDeitalRegisterTicket(String initialDate, String finishDate, Ticket ticket){
+    public DataDeitalRegisterTicket(String initialDate, String finishDate, Ticket ticket, String authorTicket){
         this(
                 initialDate,
                 finishDate,
                 ticket.getInitialTimeTicket(),
-                ticket.getFinishTimeTicket()
+                ticket.getFinishTimeTicket(),
+                authorTicket
         );
     }
 }

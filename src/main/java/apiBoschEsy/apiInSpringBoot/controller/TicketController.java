@@ -27,7 +27,7 @@ public class TicketController {
     // POST Ticket
     @PostMapping("/{event_id}")
     public ResponseEntity<DataDeitalRegisterTicket> registerTicket(
-            @ModelAttribute @Valid DataRegisterTicket dataRegisterTicket,
+            @RequestBody @Valid DataRegisterTicket dataRegisterTicket,
             UriComponentsBuilder uriBuilder,
             @PathVariable Long event_id,
             @AuthenticationPrincipal Jwt jwt
@@ -41,7 +41,7 @@ public class TicketController {
 
     @PostMapping("/getTicket/{event_id}")
     public ResponseEntity<DataDeitalTicket> getTicketPerUser(@PathVariable Long event_id, @AuthenticationPrincipal Jwt jwt) throws ExceptionDateInvalid, CreateMoreTicketException, EventNotFoundException, UserDontCreateTicket {
-        var ticketUser = ticketService.createTicket(event_id, jwt);
+        var ticketUser = ticketService.getTicketOfEvent(event_id, jwt);
         return ResponseEntity.status(HttpStatus.CREATED).body(ticketUser);
     }
 

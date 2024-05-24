@@ -9,11 +9,11 @@ import java.time.LocalTime;
 
 public record DataRegisterTicket(
         @NotNull
-        @DateTimeFormat(pattern = "dd/MM/yyyy")
+        @DateTimeFormat( iso = DateTimeFormat.ISO.DATE, pattern = "dd/MM/yyyy")
         @JsonFormat(pattern = "dd/MM/yyyy")
         LocalDate initialDateTicket,
         @NotNull
-        @DateTimeFormat(pattern = "dd/MM/yyyy")
+        @DateTimeFormat( iso = DateTimeFormat.ISO.DATE, pattern = "dd/MM/yyyy")
         @JsonFormat(pattern = "dd/MM/yyyy")
         LocalDate finishDateTicket,
         @NotNull

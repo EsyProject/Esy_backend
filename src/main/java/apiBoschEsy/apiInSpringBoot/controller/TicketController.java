@@ -33,9 +33,6 @@ public class TicketController {
             @AuthenticationPrincipal Jwt jwt
     ) throws ExceptionDateInvalid, EventNotFoundException, CreateMoreTicketException, UserDontCreateTicket, NeedSamePeopleForCreate, OnlyOneTicket {
         var ticket = ticketService.createTicketEventMain(dataRegisterTicket, event_id, jwt);
-//        var uri = uriBuilder.path("ticket/{id}").build(ticket.ticket_id());
-
-//        return ResponseEntity.created(uri).body(ticket);
         return ResponseEntity.status(HttpStatus.CREATED).body(ticket);
     }
 

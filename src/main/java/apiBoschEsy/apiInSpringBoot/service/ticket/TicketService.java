@@ -21,12 +21,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.xml.crypto.Data;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Optional;
-
+    
 @Service
 public class TicketService {
 
@@ -178,4 +176,3 @@ public class TicketService {
         return null;
     }
 }
-

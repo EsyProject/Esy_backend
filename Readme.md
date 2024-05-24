@@ -373,9 +373,5 @@ Return:
   "date_created": "Date",
   "time_created": "Time"
 }
-<<<<<<< HEAD
 ~~~
-=======
-}
-~~~
->>>>>>> 89878438d9bb21d19b43f1c887de74361fc98678
+

@@ -62,7 +62,7 @@ public class EventService {
                 // Validation
 
                 if (!(event.getInitial_date().isAfter(dateCurrent) || event.getInitial_date().equals(dateCurrent))) {
-                    throw new ExceptionDateInvalid("Invalid date! You entered a date that has already passed. Enter a future or current date!");
+                    throw new ExceptionDateInvalid("Data Inválida!");
                 }
 
                 // Valid nameOfEvent already exist

@@ -313,10 +313,10 @@ Return:
 
 ~~~json
 {
-  "initialDate": "Date",
-  "finishDate": "Date",
-  "initialTime": "Time",
-  "finishTime": "Time",
+  "initialDateTicket": "Date",
+  "finishDateTicket": "Date",
+  "initialTimeTicket": "Time",
+  "finishTimeTicket": "Time",
   "authorTicket": "String"
 }
 ~~~

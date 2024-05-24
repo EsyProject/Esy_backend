@@ -24,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-    
+
 @Service
 public class TicketService {
 
@@ -51,6 +51,8 @@ public class TicketService {
 
         // Find Event by ID
         Event event = repositoryEvent.findById(event_id).orElseThrow(() -> new EventNotFoundException("Event Not found with ID: " + event_id));
+        // Find List Tickets
+        List<Ticket> listOfTickets = event.getTickets();
 
         // Creating a user
         String username = new DataAuth(jwt).userName();
@@ -75,8 +77,12 @@ public class TicketService {
         ticket.setEvent(event);
         ticket.setAuthor(username);
 
+
         // Save the ticket
         repositoryTicket.save(ticket);
+        // Add in list
+        listOfTickets.add(ticket);
+
 
         return new DataDeitalRegisterTicket(
                 formatService.formattedDate(ticket.getInitialDateTicket()),
@@ -120,6 +126,7 @@ public class TicketService {
         ticket.setEvent(event);
         ticket.setIsPresence(false);
         repositoryTicket.save(ticket);
+        listTickets.add(ticket);
 
         return new DataDeitalTicket(
                 ticket.getTicket_id(),

@@ -3,6 +3,8 @@ package apiBoschEsy.apiInSpringBoot.dto.assessment;
 import apiBoschEsy.apiInSpringBoot.constants.HighlightPoint;
 import apiBoschEsy.apiInSpringBoot.entity.Assessment;
 
+import java.util.List;
+
 public record DataDetailAssessment(
         Long assessment_id,
         String author,

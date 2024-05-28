@@ -16,7 +16,6 @@ public record DataHighPoints(
                 topics_addressed,
                 punctuality,
                 social_interactions
-
         );
     }
 }

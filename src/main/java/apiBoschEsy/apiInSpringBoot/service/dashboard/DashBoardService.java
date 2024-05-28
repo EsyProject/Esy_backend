@@ -1,14 +1,15 @@
 package apiBoschEsy.apiInSpringBoot.service.dashboard;
 
-import apiBoschEsy.apiInSpringBoot.dto.dashboard.DataEvaluationAverage;
-import apiBoschEsy.apiInSpringBoot.dto.dashboard.DataHighPoints;
-import apiBoschEsy.apiInSpringBoot.dto.dashboard.DataSuggestion;
+import apiBoschEsy.apiInSpringBoot.dto.dashboard.*;
+import apiBoschEsy.apiInSpringBoot.entity.Ticket;
 import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.EventNotFoundException;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryAssessment;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryEvent;
+import apiBoschEsy.apiInSpringBoot.repository.IRepositoryTicket;
 import apiBoschEsy.apiInSpringBoot.service.utils.EvaluationAverage;
 import apiBoschEsy.apiInSpringBoot.service.utils.FormatService;
 import apiBoschEsy.apiInSpringBoot.service.utils.HighPointsIntegerHandler;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,8 @@ public class DashBoardService {
     private EvaluationAverage evaluationAverage;
     @Autowired
     private IRepositoryEvent repositoryEvent;
+    @Autowired
+    private IRepositoryTicket repositoryTicket;
     @Autowired
     private IRepositoryAssessment repositoryAssessment;
     @Autowired
@@ -63,4 +66,54 @@ public class DashBoardService {
 
         return assessment.stream().map(assessment1 -> new DataSuggestion(assessment1.getAssessment_id(), formatService.formattedDate(assessment1.getDate_created()), assessment1.getSuggestion()));
     }
+
+    // GET  Inscription
+    public DataInscription numberOfInscription(@PathVariable Long event_id) throws EventNotFoundException {
+
+        // Get event
+        var event = repositoryEvent.findById(event_id).orElseThrow(() -> new EventNotFoundException("Event Not found with ID: " + event_id));
+
+        // Get list of Tickets
+        List<Ticket> listOfTickets = event.getTickets();
+
+        Integer numberOfTicketsOnEvent = listOfTickets.size() - 1;
+
+        return new DataInscription(numberOfTicketsOnEvent);
+    }
+
+    // GET Participation
+    public DataParticipation getNumberParticipation(@PathVariable Long event_id) throws EventNotFoundException {
+
+        // GET event
+        var event = repositoryEvent.findById(event_id).orElseThrow(() -> new EventNotFoundException("Event Not Found with ID: " + event_id));
+
+        // GET listOfTickets
+        List<Ticket> listOfTickets = event.getTickets();
+
+        Long presenceCount = listOfTickets.stream()
+                .filter(Ticket::getIsPresence)
+                .count();
+
+        return new DataParticipation(presenceCount.intValue());
+    }
+
+    // GET Absence
+    public DataAbsence getNumberAbsense(@PathVariable Long event_id) throws EventNotFoundException {
+
+        // GET Event
+        var event = repositoryEvent.findById(event_id).orElseThrow(() -> new EventNotFoundException("Event Not Found with ID: " + event_id));
+
+        // GET listOfTickets
+        List<Ticket> listOfTickets = event.getTickets();
+
+        Long absenceCount = listOfTickets.stream()
+                .filter(ticket -> !ticket.getIsPresence())
+                .count() - 1;
+
+        return new DataAbsence(Math.toIntExact(absenceCount.intValue()));
+    }
+
+    // GET success event
+    public 
+
 }

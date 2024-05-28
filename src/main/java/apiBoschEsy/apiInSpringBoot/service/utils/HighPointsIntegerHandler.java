@@ -16,11 +16,8 @@ public class HighPointsIntegerHandler {
     private IRepositoryEvent repositoryEvent;
     public Integer returnHigh(@PathVariable Long event_id, String highPoints) throws EventNotFoundException {
         // Access the vent
-        var event = repositoryEvent.findById(event_id);
-        if(!event.isPresent()){
-            throw new EventNotFoundException("Event Not Fount!");
-        }
-        var listAsssessmentBasedInThisEvent = event.get().getAssessments();
+        var event = repositoryEvent.findById(event_id).orElseThrow(() -> new EventNotFoundException("Event Not found with ID: " + event_id));
+        var listAsssessmentBasedInThisEvent = event.getAssessments();
 
         // Logic
         int count = 0;

@@ -1,8 +1,6 @@
 package apiBoschEsy.apiInSpringBoot.controller;
 
-import apiBoschEsy.apiInSpringBoot.dto.dashboard.DataEvaluationAverage;
-import apiBoschEsy.apiInSpringBoot.dto.dashboard.DataHighPoints;
-import apiBoschEsy.apiInSpringBoot.dto.dashboard.DataSuggestion;
+import apiBoschEsy.apiInSpringBoot.dto.dashboard.*;
 import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.EventNotFoundException;
 import apiBoschEsy.apiInSpringBoot.service.dashboard.DashBoardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +33,26 @@ public class DashboardController {
     public ResponseEntity<Stream<DataSuggestion>> getAllSuggestion(@PathVariable Long event_id) throws EventNotFoundException {
         var suggestion = dashBoardService.returnSuggestion(event_id);
         return ResponseEntity.status(HttpStatus.OK).body(suggestion);
+    }
+
+    // Inscription
+    @GetMapping("/inscription/{event_id}")
+    public ResponseEntity<DataInscription> getNumberOfTicketEvents(@PathVariable Long event_id)throws EventNotFoundException{
+        var inscription = dashBoardService.numberOfInscription(event_id);
+        return ResponseEntity.status(HttpStatus.OK).body(inscription);
+    }
+
+    // Participation
+    @GetMapping("/participation/{event_id}")
+    public ResponseEntity<DataParticipation> getNumberOfParticipation(@PathVariable Long event_id) throws EventNotFoundException{
+        var participation = dashBoardService.getNumberParticipation(event_id);
+        return ResponseEntity.status(HttpStatus.OK).body(participation);
+    }
+
+    // Absence
+    @GetMapping("/absence/{event_id}")
+    public ResponseEntity<DataAbsence> getNumberAbsence(@PathVariable Long event_id) throws EventNotFoundException {
+        var absence = dashBoardService.getNumberAbsense(event_id);
+        return ResponseEntity.status(HttpStatus.OK).body(absence);
     }
 }

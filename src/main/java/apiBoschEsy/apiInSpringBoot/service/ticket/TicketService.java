@@ -158,28 +158,32 @@ public class TicketService {
     }
 
     @Transactional
-    public DataConfirmTicket confirmTicket(@PathVariable Long event_id, @PathVariable Long ticket_id) {
-        // Find event
-        var event = repositoryEvent.findById(event_id);
+    public DataConfirmTicket confirmTicket(@PathVariable Long event_id, @PathVariable Long ticket_id, @AuthenticationPrincipal Jwt jwt) throws EventNotFoundException, TicketNotFoundException, YouDontConfirmOtherTicketPerson {
 
-        if (event.isPresent()) {
-            // Find ticket within the event
-            var ticket = event.get().getTickets().stream()
+        // Creating a user
+        DataAuth user = new DataAuth(jwt);
+
+        // Find event
+        Event event = repositoryEvent.findById(event_id).orElseThrow(() -> new EventNotFoundException("Event not found with ID: " + event_id));
+
+        // Find ticket within the event
+        var ticket = event.getTickets().stream()
                     .filter(t -> t.getTicket_id().equals(ticket_id))
                     .findFirst();
 
-            if (ticket.isPresent()) {
-                // Set isPresence attribute to true
-                ticket.get().setIsPresence(true);
+        ticket.get().setIsPresence(true);
 
-                // Save the updated ticket
-                repositoryTicket.save(ticket.get());
+        // Save the updated ticket
+        repositoryTicket.save(ticket.get());
 
-                // Return the updated ticket
-                return new DataConfirmTicket(ticket.get(), formatService.formattedDate(ticket.get().getDate_created()));
-            }
+        if (!ticket.isPresent()) {
+            throw new TicketNotFoundException("Ticket Not found with ID: " + ticket_id);
         }
-        // Return null if event or ticket is not found
-        return null;
+        if (!ticket.get().getAuthor().equals(user.userName())){
+            throw new YouDontConfirmOtherTicketPerson("You can confirm only your ticket!");
+        }
+
+        // Return the updated ticket
+        return new DataConfirmTicket(ticket.get(), formatService.formattedDate(ticket.get().getDate_created()));
     }
 }

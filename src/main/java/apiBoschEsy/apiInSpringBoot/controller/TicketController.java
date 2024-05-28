@@ -57,9 +57,10 @@ public class TicketController {
     @PatchMapping("/{event_id}/{ticket_id}/confirm")
     public ResponseEntity<DataConfirmTicket> confirmTicket(
             @PathVariable Long event_id,
-            @PathVariable Long ticket_id
-    ){
-        var confirm = ticketService.confirmTicket(event_id, ticket_id);
+            @PathVariable Long ticket_id,
+            @AuthenticationPrincipal Jwt jwt
+    ) throws EventNotFoundException, TicketNotFoundException, YouDontConfirmOtherTicketPerson {
+        var confirm = ticketService.confirmTicket(event_id, ticket_id, jwt);
         return ResponseEntity.status(HttpStatus.OK).body(confirm);
     }
 }

@@ -68,7 +68,7 @@ public class EventService {
                 // Valid nameOfEvent already exist
                 Optional <Event> nameOfEventAlreadyExist = repositoryEvent.findEventByNameOfEvent(dataRegisterEvent.nameOfEvent());
                 if(nameOfEventAlreadyExist.isPresent()){
-                    throw new NameEventDuplicated("This event, already exist!");
+                    throw new NameEventDuplicated("Evento Existente");
                 }
                 repositoryEvent.save(event);
 

@@ -59,4 +59,8 @@ public class ErrorHandler {
     public ResponseEntity handlerErrorNameEventDuplicated(NameEventDuplicated exception){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DataError(exception.getMessage()));
     }
+    @ExceptionHandler(YouDontConfirmOtherTicketPerson.class)
+    public ResponseEntity handlerErrorYouDontConfirmOtherTicketPerson(YouDontConfirmOtherTicketPerson exception){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DataError(exception.getMessage()));
+    }
 }

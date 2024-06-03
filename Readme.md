@@ -125,21 +125,23 @@ Return:
 }
 ~~~
 
-### *GET My Events:
+### GET My Events:
 
-Endpoint: `/event/myEvent`
+Endpoint: `/event/myEvents`
 
 Return:
 
 ~~~json
-{
-  "event_id": "Long",
-  "nameOfEvent": "String",
-  "initialDate": "Date",
-  "initialTime": "Time",
-  "local": "String",
-  "responsible_are": "String"
-}
+[
+  {
+    "event_id": "Long",
+    "nameOfEvent": "String",
+    "initialDate": "Date",
+    "initialTime": "Time",
+    "local": "String",
+    "responsible_are": "String"
+  }
+]
 ~~~
 
 ### GET Card event:

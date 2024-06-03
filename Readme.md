@@ -408,3 +408,20 @@ Return:
 }
 ~~~
 
+### GET Ticket by User:
+
+Endpoint: `/ticket/myTickets`
+
+Return:
+
+~~~json
+[
+  {
+    "initial_date": "Date",
+    "nameOfEvent": "String",
+    "qrCodeTicket": "String",
+    "responsible_area": "String",
+    "imageUrl": "String"
+  }
+]
+~~~

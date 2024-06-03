@@ -4,15 +4,18 @@ import apiBoschEsy.apiInSpringBoot.dto.ticket.*;
 import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.*;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryTicket;
 import apiBoschEsy.apiInSpringBoot.service.ticket.TicketService;
-import jakarta.validation.Path;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/ticket")
@@ -62,5 +65,13 @@ public class TicketController {
     ) throws EventNotFoundException, TicketNotFoundException, YouDontConfirmOtherTicketPerson {
         var confirm = ticketService.confirmTicket(event_id, ticket_id, jwt);
         return ResponseEntity.status(HttpStatus.OK).body(confirm);
+    }
+
+    @GetMapping("/myTickets")
+    public ResponseEntity<Stream<DataTicketDetailEvent>> myTickets(
+            @AuthenticationPrincipal Jwt jwt
+    ) throws EventNotFoundException {
+        var myTickets = ticketService.allTicketsBasedInEvent(jwt);
+        return ResponseEntity.status(HttpStatus.OK).body(myTickets);
     }
 }

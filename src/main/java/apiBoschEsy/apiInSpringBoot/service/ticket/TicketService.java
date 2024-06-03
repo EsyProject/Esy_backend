@@ -24,6 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class TicketService {
@@ -119,6 +121,7 @@ public class TicketService {
         Ticket ticket = new Ticket();
         ticket.setAuthor(user.userName());
         ticket.setQrCodeNumber(qrCodeService.generateRandomNumbers(7));
+
         ticket.setDate_created(formatService.getCurrentDate());
         ticket.setTime_create(LocalTime.now());
         long nextTicketId = listTickets.size() + 1;
@@ -186,4 +189,33 @@ public class TicketService {
         // Return the updated ticket
         return new DataConfirmTicket(ticket.get(), formatService.formattedDate(ticket.get().getDate_created()));
     }
+
+    // GET ticket with details (Page)
+    public Stream<DataTicketDetailEvent> allTicketsBasedInEvent(
+            @AuthenticationPrincipal Jwt jwt
+    ) throws EventNotFoundException {
+
+        // Access all events
+        var event = repositoryEvent.findAll();
+        // Creating a user
+        DataAuth user = new DataAuth(jwt);
+
+        // Get the list of tickets for the event associated with the user
+        List<Ticket> userTickets = event.stream()
+                .flatMap(event1 -> event1.getTickets().stream())
+                .filter(ticket -> ticket.getAuthor().equals(user.userName()))
+                .collect(Collectors.toList());
+
+        // Return the detailed information of each ticket and the event
+        return userTickets.stream().map(ticket -> new DataTicketDetailEvent(
+                ticket.getTicket_id(),
+                formatService.formattedDate(ticket.getEvent().getInitial_date()), // Assuming Ticket has a getEvent method
+                ticket.getEvent().getNameOfEvent(),
+                ticket.getQrCodeNumber(),
+                ticket.getEvent().getResponsible_area(),
+                ticket.getImageUrl()
+        ));
+
+    }
+
 }

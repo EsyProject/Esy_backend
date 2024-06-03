@@ -1,11 +1,14 @@
 package apiBoschEsy.apiInSpringBoot.service.dashboard;
 
+import apiBoschEsy.apiInSpringBoot.constants.SuccessRate;
 import apiBoschEsy.apiInSpringBoot.dto.dashboard.*;
+import apiBoschEsy.apiInSpringBoot.entity.Assessment;
 import apiBoschEsy.apiInSpringBoot.entity.Ticket;
 import apiBoschEsy.apiInSpringBoot.infra.error.exceptions.EventNotFoundException;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryAssessment;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryEvent;
 import apiBoschEsy.apiInSpringBoot.repository.IRepositoryTicket;
+import apiBoschEsy.apiInSpringBoot.service.utils.DashboardMath;
 import apiBoschEsy.apiInSpringBoot.service.utils.EvaluationAverage;
 import apiBoschEsy.apiInSpringBoot.service.utils.FormatService;
 import apiBoschEsy.apiInSpringBoot.service.utils.HighPointsIntegerHandler;
@@ -31,6 +34,8 @@ public class DashBoardService {
     private IRepositoryAssessment repositoryAssessment;
     @Autowired
     private FormatService formatService;
+    @Autowired
+    private DashboardMath dashboardMath;
 
     // Average
     public DataEvaluationAverage average(@PathVariable Long event_id) throws EventNotFoundException {
@@ -114,6 +119,52 @@ public class DashBoardService {
     }
 
     // GET success event
-    public 
+    public DataSuccessRate getSuccessRateEvent(@PathVariable Long event_id) throws EventNotFoundException {
 
+        // GET Event
+        var event = repositoryEvent.findById(event_id).orElseThrow(() -> new EventNotFoundException("Event Not Found with ID: " + event_id));
+
+        // Logic get the value of assessment
+
+        List<Assessment> assessmentValue = event.getAssessments();
+
+        var sizeList = assessmentValue.size();
+
+        double totalValueAssessment = 0.0;
+
+        for (Assessment assessment: assessmentValue) {
+            totalValueAssessment += assessment.getAssessment();
+        }
+
+        // Get Tickets (Details)
+
+        List<Ticket> listOfTickets = event.getTickets();
+
+        Long absenceCount = listOfTickets.stream()
+                .filter(ticket -> !ticket.getIsPresence())
+                .count() - 1;
+
+        Long presenceCount = listOfTickets.stream()
+                .filter(Ticket::getIsPresence)
+                .count();
+
+        double average = dashboardMath.getAverageAssessment(sizeList, totalValueAssessment);
+
+
+        // Validations
+
+        // Value assessment = 0 a 2 (AVERAGE) & absenceCount > PresenceCount -> Bad Event
+        // Value assessment = 2 a 4 (AVERAGE) & PresenceCount > absenseCount -> Medium Event
+        // Value assessment = > 4 (AVERAGE) & PresenceCount > absenseCount -> Greater Event
+
+//        if((average >= 0 && average <= 2 && absenceCount > presenceCount)) return new DataSuccessRate(SuccessRate.BAD);
+//        if((average >= 2 && average <= 4 && presenceCount > absenceCount)) return new DataSuccessRate(SuccessRate.MEDIUM);
+//        if ((average >= 4 && presenceCount > absenceCount) || presenceCount == absenceCount) return new DataSuccessRate(SuccessRate.GREAT);
+
+        if((average >= 0 && average <= 2)) return new DataSuccessRate(SuccessRate.BAD);
+        if((average >= 2 && average <= 4)) return new DataSuccessRate(SuccessRate.MEDIUM);
+        if (average >= 4) return new DataSuccessRate(SuccessRate.GREAT);
+
+        return new DataSuccessRate(SuccessRate.UNKNOWN);
+    }
 }

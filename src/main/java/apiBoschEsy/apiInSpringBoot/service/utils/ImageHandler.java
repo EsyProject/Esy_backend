@@ -15,7 +15,7 @@ public class ImageHandler {
 
     @Value("${upload.dir}")
     private String uploadDir;
-    private final String baseUrl = "http://10.234.89.187:6968";
+    private final String baseUrl = "http://10.234.94.198:6968";
 
 
     public String saveImageToUploadDir(MultipartFile multipartImage) {
@@ -34,5 +34,4 @@ public class ImageHandler {
             return null;
         }
     }
-
 }

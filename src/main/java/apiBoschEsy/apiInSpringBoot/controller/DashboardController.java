@@ -55,4 +55,11 @@ public class DashboardController {
         var absence = dashBoardService.getNumberAbsense(event_id);
         return ResponseEntity.status(HttpStatus.OK).body(absence);
     }
+
+    // SuccessRate
+    @GetMapping("/successRate/{event_id}")
+    public ResponseEntity<DataSuccessRate> getSuccessorRateOfEvent(@PathVariable Long event_id) throws EventNotFoundException {
+        var successRate = dashBoardService.getSuccessRateEvent(event_id);
+        return ResponseEntity.status(HttpStatus.OK).body(successRate);
+    }
 }

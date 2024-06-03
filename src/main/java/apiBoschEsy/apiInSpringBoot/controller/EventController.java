@@ -80,9 +80,15 @@ public class EventController {
        return ResponseEntity.status(HttpStatus.OK).body(eventFeed);
     }
     // GET Page Control Event (Return NameOfEvent, initial_date, initial_time, local, area, presença?) -> My Event
-    @GetMapping("/myEvent")
-    public ResponseEntity<Page<DataMyEvents>> getMyEvents(@PageableDefault(size = 6, sort = {"nameOfEvent"}) Pageable pageable){
-        var myEvents = eventService.returnMyEvents(pageable);
+    @GetMapping("/myEvents")
+    public ResponseEntity<Stream<DataMyEvents>> getMyEvents(@AuthenticationPrincipal Jwt jwt){
+        var myEvents = eventService.myEvents(jwt);
         return ResponseEntity.status(HttpStatus.OK).body(myEvents);
+    }
+    // PUT the event
+    @PutMapping("/update/{event_id}")
+    public ResponseEntity<DataDetailUpdateEvent> updateEvent(@ModelAttribute @Valid DataToUpdate dataToUpdate,@PathVariable Long event_id, @AuthenticationPrincipal Jwt jwt) throws EventNotFoundException {
+        var updated = eventService.updateEvent(dataToUpdate, event_id, jwt);
+        return ResponseEntity.status(HttpStatus.OK).body(updated);
     }
 }

@@ -157,6 +157,39 @@ Return:
 }
 ~~~
 
+### PUT Update event:
+
+Endpoint: `/event/update/{event_id}`
+
+Attributes:
+```
+responsible_area: String
+description: String
+localEvent: String
+initialDate: Date
+finishDate: Date
+initialTime: Time
+finishTime: Time
+```
+
+~~~json
+{
+  "event_id": "Long",
+  "nameOfEvent": "String",
+  "responsible_area": "String",
+  "description": "String",
+  "imgUrl": "List<String>",
+  "localEvent": "String",
+  "initialDate": "Date",
+  "finishDate": "Date",
+  "initialTime": "Time",
+  "finishTime": "Time",
+  "date_created": "Date",
+  "time_created": "Date",
+  "author": "String"
+}
+~~~
+
 ## Assessment ⭐ :
 
 ### POST Assessment:

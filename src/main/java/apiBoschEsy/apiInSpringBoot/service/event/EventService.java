@@ -59,6 +59,9 @@ public class EventService {
         if (!(event.getInitial_date().isAfter(dateCurrent) || event.getInitial_date().equals(dateCurrent))) {
             throw new ExceptionDateInvalid("Data Inválida!");
         }
+//        if (!(event.getInitial_time().isAfter(event.getFinish_time()) || event.getFinish_time().isBefore(event.getInitial_time()))) {
+//                throw new ExceptionDateInvalid("Horário Inválida!");
+//        }
         // Valid nameOfEvent already exist
         Optional <Event> nameOfEventAlreadyExist = repositoryEvent.findEventByNameOfEvent(dataRegisterEvent.nameOfEvent());
         if(nameOfEventAlreadyExist.isPresent()){
@@ -133,7 +136,6 @@ public class EventService {
                         event.getResponsible_area()
                 ));
     }
-
 
     // PUT the event
     @Transactional
